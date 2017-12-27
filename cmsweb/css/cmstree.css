@@ -1,0 +1,456 @@
+﻿/************************************************************************/
+/************************************************************************/
+/*唯一与cmsstyle.css不同的定义*/
+/*通用的超链接的样式设置*/
+a:link {
+    font-size:12px;
+	padding-left: 3px;
+	color: #000000; text-decoration: none
+}
+/*Banks: 从none改为underline*/
+a:visited {
+    font-size:12px;
+	padding-left: 3px;
+	color: #000000; text-decoration: none
+}
+a:active {
+    font-size:12px;
+	padding-left: 3px;
+	text-decoration: none
+}
+a:hover {
+    font-size:12px;
+	padding-left: 3px;
+	color: blue; text-decoration: none
+}
+/************************************************************************/
+/************************************************************************/
+
+
+/************************************************************************/
+/*一般使用的样式*/
+body
+{
+	/*
+	scrollbar-highlight-color: buttonface;
+    scrollbar-shadow-color: buttonface;
+    scrollbar-dlight-color: buttonhighlight;
+    scrollbar-track-color: #eeeeee;
+    scrollbar-darkshadow-color: buttonshadow;
+	border-bottom:2px;
+    border-left: 2px;
+    border-right:2px;
+    border-top: 2px;
+
+    border-bottom: medium none; 
+    border-left: medium none; 
+    border-right: medium none; 
+    border-top: medium none; 
+	*/
+    margin: 0px;
+    overflow:auto;
+	/*font: Times;*/
+    font-size:12px;
+    /*background-image:url(images/body_bg_apple.gif);*/
+    /*background-repeat:repeat repeat-x repeat-y no-repeat;*/
+}
+
+/*
+a{
+	font: Times;
+	font-size:12px;
+}
+*/
+
+tr{
+	/*font: Times;*/
+	font-size:12px;
+}
+
+/*统一使用12象素的字体*/
+.font {
+	/*font: Times;*/
+	font-size:12px;
+}
+
+td{
+	/*font: Times;*/
+	font-size:12px;
+}
+
+/*Banks: 添加span默认字体*/
+span{
+	/*font: Times;*/
+	font-size:12px;
+}
+
+/*Banks: 添加label默认字体*/
+label{
+	/*font: Times;*/
+	font-size:12px;
+}
+
+/*Banks: 添加label默认字体*/
+body{
+	/*font: Times;*/
+	font-size:12px;
+}
+
+/************************************************************************/
+/*工具条上使用的样式设置*/
+/*background:url(images/toolbar_bg.gif);*/
+/*Banks: 修改了属性*/
+.toolbar_table{
+	width:100%;
+	height:24px;
+	background-color:#C4D9F9;
+	border:1px solid #cccccc;
+}
+
+/*Banks: 添加，用于CMS产品主页面的主表和关联表上Toolbar*/
+.cms_toolbar{
+	height:24px;
+	background-color:#C4D9F9;
+	border:1px solid #cccccc;
+}
+
+/*Banks: 添加，用于窗体设计页面的Toolbar*/
+.formdesign_toolbar{
+	width:100%;
+	height:24px;
+	background-color:#E7EBEF;
+	border:1px solid #cccccc;
+}
+
+.toolbar_table td.toolbar-cell{
+	behavior:url(script/toolbar.htc);
+}
+
+/************************************************************************/
+/*部门管理中树结构上的工具条使用的样式设置*/
+.toolbar_table_dep{
+	height:24px;
+	background-color:#C4D9F9;
+	color:Black;
+	border:1px solid #cccccc;
+}
+
+/************************************************************************/
+/*所有窗体外部框架Table的class*/
+.frame_table
+{
+	border: 0px solid;
+	padding-top: 1px;
+	padding-bottom: 1px;
+	padding-left: 4px;
+	padding-right: 4px;
+	width: 100%;
+}
+
+/*所有窗体的主Table的class，如果需要显示Table内部的Cell边框，只需在HTML文件的TABLE定义处加入border="1"，这里CSS内的border=1px仅指Table的外边框*/
+.form_table
+{
+	BORDER-COLLAPSE: collapse;
+	padding-top: 1px; /*每个Cell顶部稍留点空间*/
+	padding-left: 2px;
+	padding-right: 2px;
+	border: #C4D9F9 1px solid; /*Table的外边框为1*/
+	width: 100%;
+}
+
+/***************************************************************/
+/*所有窗体的主TABLE的标题栏的class*/
+.form_header
+{
+	height:24px;
+	background-color:#C4D9F9;	
+}
+
+/*窗体内各模块的标题栏的class*/
+.module_header
+{
+	height:24px;
+	background-color:#e7ebef;	
+}
+/***************************************************************/
+
+/***************************************************************/
+/*简单录入界面的上的样式  6699CC*/
+.table_level2
+{
+	padding-left:4px;
+	border: #C4D9F9 1px solid; /*#6699CC;*/
+}
+
+.header_level2
+{
+	height:24px;
+	background-color:#C4D9F9;	
+}
+
+.table_level3
+{
+	padding-left:4px;
+	border:#E7EBEF 1px solid; /*#e3e3e3;*/
+}
+
+.header_level3
+{
+	height:24px;
+	background-color:#E7EBEF;
+}
+/***************************************************************/
+
+/***************************************************************/
+/*TOP导航栏的样式设置*/
+.header_level1{
+	background-color:#639ACE;
+}
+
+.header_level1 td{
+	/*font: Times;*/
+	font-size:13px;
+}
+
+.header_level1 span{
+	/*font: Times;*/
+	font-size:13px;
+}
+/***************************************************************/
+
+
+
+/*###################################################################################################################*/
+/*###################################################################################################################*/
+/*###################################################################################################################*/
+/*餐饮菜单点菜节目的Table*/
+.canyin_menu_table
+{
+	BORDER-COLLAPSE: collapse;
+	padding-top: 1px; /*每个Cell顶部稍留点空间*/
+	padding-left: 2px;
+	padding-right: 2px;
+	border: #C4D9F9 1px solid; /*Table的外边框为1*/
+	/*width: 100%;*/
+}
+
+
+
+/*###################################################################################################################*/
+/*###################################################################################################################*/
+/*###################################################################################################################*/
+/*工作流用css*/
+/*一般使用的样式*/
+/*Banks 注释
+body{
+    margin:0px;
+	border-bottom:2px;
+    border-left: 2px;
+    border-right:2px;
+    border-top: 2px;
+    margin: 4px;
+    font-size:12px;
+}
+*/
+
+/*通用的超链接的样式设置*/
+/*Banks 注释
+a:link {
+	color: #000000;font-size:12px; text-decoration: underline
+}
+a:visited {
+	color: #000000;font-size:12px; text-decoration: underline
+}
+a:active {
+	font-size:12px;text-decoration: underline
+}
+a:hover {
+	color: blue;font-size:12px; text-decoration: underline
+}
+
+td{
+	font-size:12px;
+}
+*/
+
+/************************************************************************/
+.ButtonCommon
+{
+	font-size:12px;
+	height:22px; 
+	background-color:#f7f7f7;
+}
+
+/************************************************************************/
+.WorkflowNavigateButton
+{
+	font-size:12px;
+	height:22px; 
+	width:100%;
+	background-color:#f7f7f7;
+}
+
+/************************************************************************/
+.HeaderPage{
+	background-color:#639ACE;
+	margin:0px;
+}
+
+
+/************************************************************************/
+/*工具条上使用的样式设置*/
+.ToolBar{
+	width:730px;
+	height:25px;
+	background-color:#C4D9F9;
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+}
+
+.ToolBarItem{
+	padding:1px,1px,1px,1px;
+	border:1px outset #989898;
+	background-color:#cccccc;
+	/*behavior:url(script/toolbar.htc);   */
+}
+
+/************************************************************************/
+/*输入框上使用的样式设置*/
+.UserForm{
+	width:730px;
+	height:450px;
+	border:1px solid #cccccc;
+	overflow:auto;
+}
+
+/*列表上使用的样式设置*/
+.ListBox{
+	border-width:1px;
+	border-style:Double;
+	border-collapse:collapse;
+}
+
+.ListHeader{
+	height:22px;
+	background-color:#C4D9F9;
+}
+
+.ListItem{
+	height:22px;
+}
+
+
+.ListAlternatingItem{
+	height:22px;
+}
+
+.ListFooter{
+
+}
+
+/*提示信息使用的样式*/
+.SysInfoBox{
+	border:solid 1px #C4D9F9;
+}
+
+/*关系图使用的样式*/
+.Diagram{
+	width:765px;
+	height:250px;
+	overflow:auto;
+	border:1px solid #cccccc;
+}
+
+
+/*------------------------------------------------------------------------------
+*附件表的样式
+*/
+.AttachmentTable
+{
+	background-color:#cccccc; 
+	width:730px;
+} 
+
+.AttachmentTable THEAD
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+}
+
+.AttachmentTable THEAD td
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+	padding-left:3px;
+}
+
+.AttachmentTable tr
+{
+	background-color:#C4D9F9;
+	height:22px;
+} 
+.AttachmentTable td
+{
+	background-color:#ffffff;
+} 
+/*------------------------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------------------------
+*填写处理意见的表格的样式
+*/
+.MemoTable
+{
+	background-color:#cccccc; 
+	width:730px;
+}
+
+.MemoTable THEAD
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+}
+
+.MemoTable THEAD td
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+	padding-left:3px;
+}
+
+.MemoTable td textarea
+{
+	font-family:宋体;
+	height:60px;
+	width:100%;
+	padding:0,0,0,0;
+}
+
+.MemoTable tr
+{
+	background-color:#C4D9F9;
+	height:22px;
+} 
+.MemoTable td
+{
+	background-color:#ffffff;
+} 
+/*------------------------------------------------------------------------------*/
+
+.FlowHistoryTable
+{
+	background-color:#C4D9F9; 
+	width:100%;
+}
+
+.FlowHistoryTable tr
+{
+	background-color:#C4D9F9;
+	height:22px;
+} 
+
+.FlowHistoryTable td
+{
+	background-color:#ffffff;
+}

@@ -1,0 +1,116 @@
+body {
+	margin-left: 0px;
+	margin-top: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+	background-color: #e2eefd;
+	background-image: url(../images/pagebg01.gif);
+	background-repeat: repeat-x;
+	background-position: top;
+}
+.text1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 22px;
+	color: #052c7c;
+}
+.text2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 22px;
+	color: #000000;
+}
+.red {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF0000;
+}
+
+.use1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 22px;
+	color: #052c7c;
+}
+.copy {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #6081b2;
+}
+.link1 A:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #052c7c;
+	font-style: normal;
+	text-decoration: none;
+}
+.link1 A:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #052c7c;
+	text-decoration: none;
+}
+.link1 A:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	color: #3399FF;
+	text-decoration: none;
+}
+.biaoti1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #052c7c;
+}
+.box1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #666666;
+	border: 1px solid #838383;
+	height: 20px;
+	display: block;
+	width: 123px;
+}
+.biaoti2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 22px;
+	font-weight: bold;
+	color: #ffffff;
+}
+.bar{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #052c7c;
+	text-decoration: none;
+	border: 1px solid #9db0bc;
+	height: 20px;
+	background-color: #dfe7eb;
+	background-image: url(../images/input_bg.gif);
+	background-repeat: repeat-x;
+}
+.list1 {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #859bc4;
+	border-left-color: #859bc4;
+	background-color: #FFFFFF;
+}
+.link2 A{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.link2 A:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	color: #FF6600;
+	text-decoration: none;
+}

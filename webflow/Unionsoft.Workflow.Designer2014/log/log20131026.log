@@ -1,0 +1,55 @@
+﻿2013-10-26 12:57:39   ERROR  ExMsg: 用户登录帐号或密码错误，请重新输入！ ExFileLine: [CmsPassport.vb:540]
+2013-10-26 12:57:39   ERROR  ExMsg: 用户登录帐号或密码错误，请重新输入！ ExFileLine: [CmsError.vb:10 CmsPassport.vb:544 CmsPassport.vb:506 CmsPassport.vb:367]
+2013-10-26 12:57:40   ERROR admin登陆失败！ ExMsg: 用户登录帐号或密码错误，请重新输入！ ExFileLine: [CmsError.vb:10 CmsPassport.vb:370 CmsPassport.vb:296 frmLogin.cs:342]
+2013-10-26 13:01:46   ERROR 获取人员信息失败,账号为james的用户不存在. 
+2013-10-26 13:01:46   ERROR 显示环节信息. ExMsg: 获取人员信息失败,账号为james的用户不存在. ExFileLine: [Organization.vb:130 frmNode.cs:1064]
+2013-10-26 13:01:52   ERROR 获取人员信息失败,账号为james的用户不存在. 
+2013-10-26 13:01:52   ERROR 显示环节信息. ExMsg: 获取人员信息失败,账号为james的用户不存在. ExFileLine: [Organization.vb:130 frmNode.cs:1064]
+2013-10-26 13:52:49   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:52:53   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:52:57   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:12   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:15   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:16   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:30   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:35   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:42   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:46   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:53:59   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:54:01   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:54:58   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:55:44   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:56:47   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "Newoa1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:57:29   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:57:34   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:57:35   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:57:39   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:58:04   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 13:58:08   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 14:03:29   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 14:03:33   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-10-26 14:46:22   ERROR  ExMsg: 资源(363786514407)不存在！ ExFileLine: [CmsResource.vb:536]
+2013-10-26 14:47:01   ERROR 获取人员信息失败,账号为Admin的用户不存在. 
+2013-10-26 14:47:02   ERROR admin登陆失败！ ExMsg: 获取人员信息失败,账号为Admin的用户不存在. ExFileLine: [Organization.vb:130 frmLogin.cs:330]
+2013-10-26 14:47:06   ERROR 获取人员信息失败,账号为Admin的用户不存在. 
+2013-10-26 14:47:07   ERROR admin登陆失败！ ExMsg: 获取人员信息失败,账号为Admin的用户不存在. ExFileLine: [Organization.vb:130 frmLogin.cs:330]
+2013-10-26 14:52:33   ERROR  ExMsg: 资源(363786514407)不存在！ ExFileLine: [CmsResource.vb:536]
+2013-10-26 14:52:52   ERROR  ExMsg: 资源(363786514407)不存在！ ExFileLine: [CmsResource.vb:536]
+2013-10-26 15:14:14   ERROR 获取人员信息失败,账号为wfy的用户不存在. 
+2013-10-26 15:14:14   ERROR 显示环节信息. ExMsg: 获取人员信息失败,账号为wfy的用户不存在. ExFileLine: [Organization.vb:130 frmNode.cs:1064]
+2013-10-26 15:32:08   ERROR 加载流程的环节时发生错误 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:65]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---368119612375 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---368119613812 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---368119615203 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---368119619203 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---368119621125 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---368119624656 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]
+2013-10-26 15:32:08   ERROR 加载流程的环节连线时发生错误,环节Key---388773571343 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: [PaintFlow.cs:118]

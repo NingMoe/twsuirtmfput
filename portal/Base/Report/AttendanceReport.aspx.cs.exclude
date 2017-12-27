@@ -1,0 +1,302 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using WebServices;
+using System.Data;
+using System.Web;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public partial class Base_Report_AttendanceReport : UserPagebase
+{
+    protected string ReportKey = "KQYBB";
+    protected string ReportTitle = "员工考勤月报表";
+    protected string ReportEditPerson = "";
+    protected UserInfo User;
+    protected string DynamicHeadReportStr = "";
+    protected string AddDefinedToolBars = "";
+    protected string DelDefinedToolBars = "";
+    protected string ResID = "";
+    protected string RecID = "";
+    protected string ZXZSBH = "";
+    protected string XXMC = "";
+    protected string DefaultCon = "";
+    protected string XXBHCon = "";
+    protected string reportBaseSql = "";
+    protected string _ExcelOptionModelStr = "";
+    protected string _WordOptionModelStr = "";
+    protected string _CellInfoStr = "";
+    protected string _CellInfosStr = "";
+    protected string hasPermission = "";
+     
+    protected void Page_Load(object sender, EventArgs e)
+    {
+        User = CurrentUser;
+        GetExcelHelperOptionModel OptionModel = new GetExcelHelperOptionModel();
+        _ExcelOptionModelStr = Newtonsoft.Json.JsonConvert.SerializeObject(OptionModel);
+
+        GetWordHelperOptionModel WordOptionModel = new GetWordHelperOptionModel();
+        _WordOptionModelStr = Newtonsoft.Json.JsonConvert.SerializeObject(WordOptionModel);
+
+        CellInfo info = new CellInfo();
+        _CellInfoStr = Newtonsoft.Json.JsonConvert.SerializeObject(info);
+        CellInfos infos = new CellInfos();
+        _CellInfosStr = Newtonsoft.Json.JsonConvert.SerializeObject(infos);
+
+        DynamicHeadReportStr = Newtonsoft.Json.JsonConvert.SerializeObject(GetDynamicHeadReport());
+        ReportEditPerson = "[test][cs][vkbsadmission]";
+
+        //hasPermission = GetQX() ? "1" : "";
+        hasPermission = "1";
+        ReportKey = Request["ReportKey"] == null ? "" : Request["ReportKey"];
+
+        List<ChildDataGirdTabList> ChildTabList = GetChildTabList();
+
+        if (ChildTabList != null && ChildTabList.Count > 0)
+            Session["ChildTabList"] = ChildTabList;
+
+        List<MasterTableAssociation> AssociationList = GetMasterTableAssociationList();
+
+        if (AssociationList != null && AssociationList.Count > 0)
+            Session["AssociationList"] = AssociationList;
+
+    }
+
+    protected bool GetQX()
+    {
+        Services Resource = new Services();
+		string[] changePassWord = Common.getChangePassWord();
+        DataTable vDT = Resource.SelectData(" SELECT * FROM AM_Authority   WHERE  AuthorityType = '人事管理' AND EmpCode='" + User.ID + "'", changePassWord[0], changePassWord[1], changePassWord[2]).Tables[0];
+        if (vDT.Rows.Count > 0)
+        {
+            return true;
+        }
+        return false;
+    }
+     
+    protected DynamicHeadReport GetDynamicHeadReport()
+    {
+        List<ToColumn> NoNeedColumn = new List<ToColumn>();
+        List<ToColumn> NeedColumn = new List<ToColumn>();
+        List<ToColumn> frozenColumns = new List<ToColumn>();
+        NoNeedColumn.Add(new ToColumn("rownum"));
+        NoNeedColumn.Add(new ToColumn("ID"));
+        NoNeedColumn.Add(new ToColumn("年"));
+        NoNeedColumn.Add(new ToColumn("月"));
+        NeedColumn.Add(new ToColumn()
+        {
+            ColumnName = "早退次数",
+            ShowName = "下班未打卡"
+        });
+
+        DynamicHeadReport dh = new DynamicHeadReport()
+        {
+            NoNeedColumn = NoNeedColumn,
+            ReportKey = ReportKey,
+            CommonDynamicHeadWidth = 100,
+            NeedColumn = NeedColumn,
+            frozenColumns = frozenColumns,
+            IsAllEditColumn = false
+        };
+        return dh;
+    }
+     
+    protected List<MasterTableAssociation> GetMasterTableAssociationList()
+    {
+        List<MasterTableAssociation> AssociationList = new List<MasterTableAssociation>();
+
+        AssociationList.Add(new MasterTableAssociation()
+        {
+            ShowTitle = "当月考勤",
+            ChildOrderNo = 1,
+            RSResID = "123456",
+            ChildResId = "000001",
+            LedgerConditions = "账号=账号",
+            ChildKeyWord = "DYKQ",
+        });
+
+        AssociationList.Add(new MasterTableAssociation()
+        {
+            ShowTitle = "当月加班",
+            ChildOrderNo = 5,
+            RSResID = "123456",
+            ChildResId = "000002",
+            LedgerConditions = "账号=账号",
+            ChildKeyWord = "DYJB",
+        });
+
+        AssociationList.Add(new MasterTableAssociation()
+        {
+            ShowTitle = "当月请假",
+            ChildOrderNo = 5,
+            RSResID = "123456",
+            ChildResId = "000003",
+            LedgerConditions = "账号=账号",
+            ChildKeyWord = "DYQJ",
+        });
+        AssociationList.Add(new MasterTableAssociation()
+        {
+            ShowTitle = "当月外出",
+            ChildOrderNo = 5,
+            RSResID = "123456",
+            ChildResId = "000004",
+            LedgerConditions = "账号=账号",
+            ChildKeyWord = "DYWC",
+        });
+
+        AssociationList.Add(new MasterTableAssociation()
+        {
+            ShowTitle = "当月工时",
+            ChildOrderNo = 5,
+            RSResID = "123456",
+            ChildResId = "000005",
+            LedgerConditions = "账号=账号",
+            ChildKeyWord = "DYGS",
+        });
+        return AssociationList;
+    }
+     
+    protected List<ChildDataGirdTabList> GetChildTabList()
+    {
+        string d = "";
+
+        List<ChildDataGirdTabList> ChildTabList = new List<ChildDataGirdTabList>();
+
+        List<ToColumn> NoNeedColumn = new List<ToColumn>();
+        List<ToColumn> NeedColumn = new List<ToColumn>();
+        List<ToColumn> frozenColumns = new List<ToColumn>();
+        NoNeedColumn.Add(new ToColumn("rownum"));
+        NoNeedColumn.Add(new ToColumn("ID"));
+        NoNeedColumn.Add(new ToColumn("账号"));
+        NeedColumn.Add(new ToColumn()
+        {
+            ColumnName = "遍历日期",
+            ColumnWidth = 150
+        });
+
+        NeedColumn.Add(new ToColumn()
+        {
+            ColumnName = "说明",
+            ColumnWidth = 200
+        });
+
+        NeedColumn.Add(new ToColumn()
+        {
+            ColumnName = "人事备注",
+            ColumnWidth = 200
+        });
+
+
+
+
+        DynamicHeadReport dh = new DynamicHeadReport()
+        {
+            NoNeedColumn = NoNeedColumn,
+            ReportKey = ReportKey,
+            CommonDynamicHeadWidth = 120,
+            NeedColumn = NeedColumn,
+            frozenColumns = frozenColumns,
+            IsAllEditColumn = false
+        };
+
+
+        string ProcName = "PR_GetKQSJ";
+        string ProcInPutStr = "#账号#,#key#,#年#,#月#";
+        string ProcInPutStrByHead = ",#key#,#年#,#月#";
+        ChildTabList.Add(new ChildDataGirdTabList()
+        {
+            ChildKeyWord = "DYKQ",
+            ChildUserDefinedSql = "SELECT * FROM GetWorkInfo(2016,5) ",
+            ChildORDERBY = "ORDER BY 遍历日期 ",
+            DynamicHeadqueryParamsChild = dh,
+            GetDataByType = "0",
+            ProcName = ProcName,
+            ProcInPutStr = ProcInPutStr,
+            ProcInPutStrByHead = ProcInPutStrByHead,
+            DefinedToolBars = new UserDefinedToolBars
+            {
+                IsAddDefaultTools = false,
+                // hasPermission= hasPermission
+                hasPermission = "1"
+            }
+        });
+
+        ChildTabList.Add(new ChildDataGirdTabList()
+        {
+            ChildKeyWord = "DYJB",
+            ChildUserDefinedSql = "SELECT * FROM GetWorkInfo(2016,5) ",
+            ChildORDERBY = "ORDER BY 遍历日期 ",
+            DynamicHeadqueryParamsChild = dh,
+            GetDataByType = "0",
+            ProcName = ProcName,
+            ProcInPutStr = ProcInPutStr,
+            ProcInPutStrByHead = ProcInPutStrByHead,
+            hasPermission = hasPermission,
+            DefinedToolBars = new UserDefinedToolBars
+            {
+                IsAddDefaultTools = false,
+                hasPermission = hasPermission
+            }
+        });
+
+        ChildTabList.Add(new ChildDataGirdTabList()
+        {
+            ChildKeyWord = "DYQJ",
+            DynamicHeadqueryParamsChild = dh,
+            GetDataByType = "0",
+            ProcName = ProcName,
+            ProcInPutStr = ProcInPutStr,
+            ProcInPutStrByHead = ProcInPutStrByHead,
+            hasPermission = hasPermission
+        });
+
+        ChildTabList.Add(new ChildDataGirdTabList()
+        {
+            ChildKeyWord = "DYWC",
+            DynamicHeadqueryParamsChild = dh,
+            GetDataByType = "0",
+            ProcName = ProcName,
+            ProcInPutStr = ProcInPutStr,
+            ProcInPutStrByHead = ProcInPutStrByHead,
+            hasPermission = hasPermission
+        });
+
+        ChildTabList.Add(new ChildDataGirdTabList()
+        {
+            ChildKeyWord = "DYGS",
+            DynamicHeadqueryParamsChild = dh,
+            GetDataByType = "0",
+            ProcName = ProcName,
+            ProcInPutStr = ProcInPutStr,
+            ProcInPutStrByHead = ProcInPutStrByHead,
+            hasPermission = hasPermission
+        });
+
+        return ChildTabList; ;
+    }
+     
+    string GetUserDefinedToolBars(string keyWordValue, out string DelNameStr, string argToolBarType = "",
+      bool argIsUseNewEasyui = true)
+    {
+        List<UserDefinedToolBar> vUserDefinedToolBars = UserDefinedToolBar.GetUserDefinedToolBars(keyWordValue, argToolBarType);
+        DelNameStr = "";
+        if (vUserDefinedToolBars.Count == 0) return "''";
+        string Str = "[";
+        for (int i = 0; i < vUserDefinedToolBars.Count; i++)
+        {
+            if (!vUserDefinedToolBars[i].IsEnabled)
+            {
+                if (Str != "[") Str += ",'-',";
+                Str += "{'text':'" + vUserDefinedToolBars[i].ToolName + "','iconCls':'" + vUserDefinedToolBars[i].ToolIcon + "','disabled':" + vUserDefinedToolBars[i].IsEnabled.ToString().ToLower() + ",'handler':" + vUserDefinedToolBars[i].EventCode + "}";
+            }
+            else
+            {
+                if (DelNameStr != "") Str += ",";
+                DelNameStr += vUserDefinedToolBars[i].ToolName;
+            }
+        }
+        Str += "]";
+        return Str;
+    }
+
+}

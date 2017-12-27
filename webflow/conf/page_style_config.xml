@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<CONFIG>
+	<!--流程分类树显示设置-->
+	<FlowTree>
+		<ReceiveBox Image="images/oInbox.gif" Url="ReceiveBox.aspx" Target="FlowWorkPlat" Enable="1">待办文件</ReceiveBox>
+		<DealedBox Image="images/oInboxF.gif" Url="DealedBox.aspx" Target="FlowWorkPlat" Enable="1">已办文件</DealedBox>
+		<SendedBox Image="images/oSent.gif" Url="SendedBox.aspx" Target="FlowWorkPlat" Enable="1">已发文件</SendedBox>
+		<Draft Image="images/oDrafts.gif" Url="DraftBox.aspx" Target="FlowWorkPlat" Enable="1">草稿箱</Draft>
+		<WasteBox Image="images/recycle.gif" Url="WasteBox.aspx" Target="FlowWorkPlat" Enable="1">垃圾箱</WasteBox>
+		<ProxySetting Image="images/Proxy.gif" Url="ProxySetting.aspx" Target="FlowWorkPlat" Enable="0">代理人设置</ProxySetting>
+	</FlowTree>
+
+	<!--组织机构分类树显示图标设置-->
+	<OrganizationTree>
+		<Department Image="../images/department.gif" />
+		<Employee Image="images/worker.gif" />
+	</OrganizationTree>
+	
+	<!--管理界面中显示的-->
+	<AdminTools Image="images/oInbox.gif" Enable="1" Text="流程监控">
+		<ActiveFlow Image="images/oInbox.gif" Url="AdminActivities.aspx" Target="AdminPlatform" Enable="1">当前活动</ActiveFlow>
+		<FinishedFlow Image="images/oInbox.gif" Url="AdminEndFlows.aspx" Target="AdminPlatform" Enable="1">已完成活动</FinishedFlow>
+		<UseEfficiency Image="images/oInbox.gif" Url="AdminTools.aspx" Target="AdminPlatform" Enable="0">流程使用率</UseEfficiency>
+	</AdminTools>
+	
+</CONFIG>

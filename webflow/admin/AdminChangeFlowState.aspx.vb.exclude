@@ -1,0 +1,48 @@
+'---------------------------------------------------------------------------
+'改变流程状态
+'---------------------------------------------------------------------------
+
+Imports Unionsoft.Workflow.Items
+Imports Unionsoft.Workflow.Engine
+Imports Unionsoft.Workflow.Platform
+
+
+Public Class AdminChangeFlowState
+    Inherits AdminPageBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents lblTitle As System.Web.UI.WebControls.Label
+    Protected WithEvents lblFlowName As System.Web.UI.WebControls.Label
+    Protected WithEvents lblFlowDescription As System.Web.UI.WebControls.Label
+    Protected WithEvents btnChangeState As System.Web.UI.WebControls.Button
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim FlowID As Long = CLng(Request.QueryString("FlowID"))
+        Dim GroupID As Long = CLng(Request.QueryString("GroupID"))
+        Dim flow As WorkflowItem = (New DBFlowTrans).Load(CStr(FlowID))
+
+        If flow.IsActive = True Then
+            Me.lblTitle.Text = ""
+        Else
+            Me.lblTitle.Text = ""
+        End If
+    End Sub
+
+End Class

@@ -1,0 +1,18 @@
+<public:component>
+<public:attach event="onmouseover" onevent="onMover()" />
+<public:attach event="onmouseout" onevent="onMout()" />
+<script language="javascript">
+function onMover(){
+	var el = event.srcElement;
+	if (el.tagName == "A")
+		el.parentNode.style.border = "1px solid #ffffff";
+	else
+		el.style.border = "1px solid #ffffff";
+}
+
+function onMout(el){
+	var el = event.srcElement;
+	el.style.border = "";
+}
+</script>
+</public:component>

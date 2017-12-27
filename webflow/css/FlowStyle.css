@@ -1,0 +1,227 @@
+﻿/************************************************************************/
+/*一般使用的样式*/
+body{
+    margin:0px;
+	border-bottom:2px;
+    border-left: 2px;
+    border-right:2px;
+    border-top: 2px;
+    font-size:12px;
+    overflow:auto;
+}
+
+/*通用的超链接的样式设置*/
+a:link {
+	color: #000000;font-size:12px; text-decoration: underline
+}
+a:visited {
+	color: #000000;font-size:12px; text-decoration: underline
+}
+a:active {
+	font-size:12px;text-decoration: underline
+}
+a:hover {
+	color: blue;font-size:12px; text-decoration: underline
+}
+
+td{
+	font-size:12px;
+}
+
+/************************************************************************/
+.ButtonCommon
+{
+	font-size:12px;
+	height:22px; 
+	background-color:#f7f7f7;
+}
+
+/************************************************************************/
+.WorkflowNavigateButton
+{
+	font-size:12px;
+	height:22px; 
+	width:100%;
+	background-color:#f7f7f7;
+}
+
+/************************************************************************/
+.HeaderPage{
+	background-color:#639ACE;
+	margin:0px;
+}
+
+
+/************************************************************************/
+/*工具条上使用的样式设置*/
+.ToolBar{
+	height:25px;
+	background-color:#C4D9F9;
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+}
+
+.ToolBarItem{
+	padding:1px,1px,1px,1px;
+	border:1px outset #989898;
+	background-color:#cccccc;
+	/*behavior:url(script/toolbar.htc);   */
+}
+
+/************************************************************************/
+/*输入框上使用的样式设置*/
+.UserForm{
+	width:790px;
+	height:450px;
+	border:1px solid #cccccc;
+	overflow:auto;
+}
+
+/*列表上使用的样式设置*/
+.ListBox{
+	border-width:1px;
+	border-style:Double;
+	border-collapse:collapse;
+}
+
+.ListHeader{
+	height:22px;
+	background-color:#C4D9F9;
+}
+
+.ListItem{
+	height:22px;
+}
+
+
+.ListAlternatingItem{
+	height:22px;
+}
+
+.ListFooter{
+
+}
+
+/*提示信息使用的样式*/
+.SysInfoBox{
+	border:solid 1px #C4D9F9;
+}
+
+/*关系图使用的样式*/
+.Diagram{
+	width:700;
+	height:250px;
+	overflow:auto;
+	border:1px solid #cccccc;
+}
+
+
+/*------------------------------------------------------------------------------
+*附件表的样式
+*/
+.AttachmentTable
+{
+	background-color:#cccccc; 
+} 
+
+.AttachmentTable THEAD
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+}
+
+.AttachmentTable THEAD td
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+	padding-left:3px;
+}
+
+.AttachmentTable tr
+{
+	background-color:#C4D9F9;
+	height:22px;
+} 
+.AttachmentTable td
+{
+	background-color:#ffffff;
+} 
+/*------------------------------------------------------------------------------*/
+
+
+
+/*------------------------------------------------------------------------------
+*填写处理意见的表格的样式
+*/
+.MemoTable
+{
+	background-color:#cccccc; 
+}
+
+.MemoTable THEAD
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+}
+
+.MemoTable THEAD td
+{
+	background-color:#C4D9F9;
+	font-weight:bold;
+	padding-left:3px;
+}
+
+.MemoTable td textarea
+{
+	font-family:宋体;
+	height:60px;
+	width:100%;
+	padding:0,0,0,0;
+}
+
+.MemoTable tr
+{
+	background-color:#C4D9F9;
+	height:22px;
+} 
+.MemoTable td
+{
+	background-color:#ffffff;
+} 
+/*------------------------------------------------------------------------------*/
+
+.FlowHistoryTable
+{
+	background-color:#C4D9F9; 
+	width:100%;
+}
+
+.FlowHistoryTable tr
+{
+	background-color:#C4D9F9;
+	height:22px;
+} 
+
+.FlowHistoryTable td
+{
+	background-color:#ffffff;
+}
+
+.ActiveWorkflowItem
+{
+	background-color:red; 
+	width:100%;
+}
+
+.ActiveWorkflowItem tr
+{
+	background-color:red;
+	height:22px;
+} 
+
+.ActiveWorkflowItem td
+{
+	background-color:#ffffff;
+}
+
+

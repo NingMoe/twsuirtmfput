@@ -1,0 +1,90 @@
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="RecordTemplateAdmin.aspx.vb" Inherits="Unionsoft.Cms.Web.RecordTemplateAdmin"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>数据模板设置</title>
+		<meta http-equiv="Pragma" content="no-cache" />
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<LINK href="/cmsweb/css/cmsstyle.css" type="text/css" rel="stylesheet">
+		<script language="javascript">
+<!--
+function RowLeftClickNoPost(src){
+	try{
+		var o=src.parentNode;
+		for (var k=1;k<o.children.length;k++){
+			o.children[k].bgColor = "white";
+		}
+		src.bgColor = "#C4D9F9";
+		self.document.forms(0).RECID.value = src.RECID; //需要将用户选择的行号POST给服务器
+	}catch(ex){
+	}
+}
+-->
+		</script>
+	</HEAD>
+	<body MS_POSITIONING="GridLayout">
+		<form id="Form1" method="post" runat="server">
+			<input type="hidden" name="RECID">
+			<TABLE cellSpacing="0" cellPadding="0" width="100%" border="0">
+				<tr>
+					<td width="4"></td>
+					<td>
+						<TABLE class="table_level2" style="WIDTH: 700px" cellSpacing="0" cellPadding="0" width="700"
+							border="0">
+							<TR>
+								<TD class="header_level2" style="WIDTH: 557px" colSpan="2" height="10"><b><asp:label id="lblTitle" runat="server"></asp:label></b></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 127px; HEIGHT: 9px" align="right" width="127" height="9"></TD>
+								<TD style="WIDTH: 573px; HEIGHT: 9px" width="573" height="9"></TD>
+							</TR>
+							<TR height="21">
+								<TD style="WIDTH: 127px" align="right" width="127">当前资源：</TD>
+								<TD style="WIDTH: 573px" width="573"><asp:label id="lblResName" runat="server" DESIGNTIMEDRAGDROP="22"></asp:label></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 127px; HEIGHT: 22px" align="right" width="127"><asp:linkbutton id="lbtnAddHostRes" runat="server">添加当前资源</asp:linkbutton></TD>
+								<TD style="WIDTH: 573px; HEIGHT: 22px" width="573"><FONT face="宋体"><asp:dropdownlist id="ddlHostResCols" runat="server" Width="148px"></asp:dropdownlist></FONT></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 127px; HEIGHT: 18px" align="right" width="127"><asp:linkbutton id="lbtnAddSubRes" runat="server">添加关联子资源</asp:linkbutton></TD>
+								<TD style="WIDTH: 573px; HEIGHT: 18px" width="573"><asp:dropdownlist id="ddlSubRes" runat="server" Width="148px"></asp:dropdownlist></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 127px" align="right" width="127"><asp:linkbutton id="lbtnAddOtherRes" runat="server">添加其它资源</asp:linkbutton></TD>
+								<TD style="WIDTH: 573px" width="573"><FONT face="宋体"><asp:textbox id="txtOtherRes" runat="server" Width="148px" ReadOnly="True"></asp:textbox><asp:linkbutton id="lbtnSelRes" runat="server">选择资源</asp:linkbutton>&nbsp;<asp:dropdownlist id="ddlOtherResCols" runat="server" Width="148px"></asp:dropdownlist><asp:label id="Label1" runat="server">(添加时必须选择主资源的关联字段)</asp:label></FONT></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 127px; HEIGHT: 6px" align="right" width="127"></TD>
+								<TD style="WIDTH: 573px; HEIGHT: 6px" width="573"><FONT face="宋体"><asp:checkbox id="chkRunFormula" runat="server" Text="复制记录时运行计算公式"></asp:checkbox></FONT></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 127px; HEIGHT: 23px" align="right" width="127"></TD>
+								<TD style="WIDTH: 573px; HEIGHT: 23px" width="573"></TD>
+							</TR>
+							<TR height="23">
+								<td style="WIDTH: 557px" vAlign="top" colSpan="2" height="22">
+									<TABLE style="WIDTH: 676px" cellSpacing="0" cellPadding="0" width="676" border="0">
+										<TR>
+											<TD style="WIDTH: 455px" vAlign="top" colSpan="3"><FONT face="宋体"><asp:datagrid id="DataGrid1" runat="server"></asp:datagrid></FONT></TD>
+										</TR>
+										<TR>
+											<TD style="WIDTH: 455px; HEIGHT: 17px" vAlign="top" colSpan="3"></TD>
+										</TR>
+										<TR>
+											<TD style="WIDTH: 455px" vAlign="top" colSpan="3"><asp:button id="btnClearAll" runat="server" Width="88px" Text="清除设置"></asp:button><asp:button id="btnExit" runat="server" Width="88px" Text="退出"></asp:button>&nbsp;<FONT face="宋体">&nbsp;
+												</FONT>&nbsp;<IMG src="/cmsweb/images/Icons/up.gif" align="absMiddle" border="0" width="16" height="16"><FONT face="宋体">&nbsp;</FONT><asp:linkbutton id="lbtnMoveUp" runat="server">向上移动</asp:linkbutton><FONT face="宋体">&nbsp;
+													<IMG src="/cmsweb/images/Icons/down.gif" align="absMiddle" border="0" width="16" height="16">&nbsp; </FONT>
+												<asp:linkbutton id="lbtnMoveDown" runat="server">向下移动</asp:linkbutton></TD>
+										</TR>
+									</TABLE>
+								</td>
+							</TR>
+						</TABLE>
+					</td>
+				</tr>
+			</TABLE>
+		</form>
+	</body>
+</HTML>

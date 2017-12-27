@@ -1,0 +1,65 @@
+<%@ Page Language="vb" AutoEventWireup="false" Inherits="Unionsoft.Cms.Web.FieldAdvCalculation" validateRequest="false" CodeFile="FieldAdvCalculation.aspx.vb" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>模板窗体01</title>
+		<meta content="JavaScript" name="vs_defaultClientScript">
+		<meta content="http://schemas.microsoft.com/intellisense/ie5" name="vs_targetSchema">
+		<LINK href="/cmsweb/css/cmsstyle.css" type="text/css" rel="stylesheet">
+	</HEAD>
+	<body>
+		<form id="Form1" method="post" runat="server">
+			<TABLE class="frame_table" cellSpacing="0" cellPadding="0">
+				<tr>
+					<td>
+						<TABLE class="form_table" cellSpacing="0" cellPadding="0">
+							<TR>
+								<TD class="header_level2" colSpan="2" height="22"><b>计算公式设置</b></TD>
+							</TR>
+							<TR height="21">
+								<TD style="WIDTH: 206px" align="right" width="206"><asp:label id="Label5" runat="server">当前资源</asp:label></TD>
+								<TD align="left"><asp:textbox id="txtResName" runat="server" ReadOnly="True" Width="300px"></asp:textbox><asp:checkbox id="chkIncludeArithmetic" runat="server" Text="含数字四则运算(加减乘除)"></asp:checkbox></TD>
+							</TR>
+							<TR height="21">
+								<TD style="WIDTH: 206px" align="right" width="206"><asp:label id="lblColDesc" runat="server"></asp:label></TD>
+								<TD><asp:textbox id="txtVerifyName" runat="server" Width="300px"></asp:textbox></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 206px" align="right" width="206"><asp:label id="lblVerifyDesc" runat="server"></asp:label></TD>
+								<TD><asp:textbox id="txtVerifyTip" runat="server" Width="300px"></asp:textbox></TD>
+							</TR>
+							<TR>
+								<TD style="WIDTH: 206px; HEIGHT: 17px" vAlign="top"><FONT face="宋体"><asp:dropdownlist id="ddlSubTables" runat="server" Width="150px"></asp:dropdownlist><asp:linkbutton id="lbtnChooseOtherRes" runat="server">其它资源</asp:linkbutton></FONT></TD>
+								<TD style="HEIGHT: 17px" vAlign="top"><asp:button id="btnReset" runat="server" Width="72px" Text="清空公式"></asp:button><asp:button id="btnBackFormula" runat="server" Width="72px" Text="回滚公式"></asp:button><asp:button id="btnDel" runat="server" Width="72px" Text="删除公式" ToolTip="从数据中删除已保存的公式"></asp:button><FONT face="宋体">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<asp:button id="btnConfirm" runat="server" Width="72px" Text="保存退出"></asp:button></FONT><asp:button id="btnCancel" runat="server" Width="72px" Text="取消退出"></asp:button></TD>
+							</TR>
+							<tr>
+								<td style="WIDTH: 206px" vAlign="top"><asp:listbox id="ListBox1" runat="server" Width="200px" Height="438px"></asp:listbox></td>
+								<td vAlign="top"><asp:textbox id="txtFormulaRight" runat="server" Width="520px" Height="128px" TextMode="MultiLine"></asp:textbox><FONT face="宋体"><BR>
+										<asp:button id="btnAddColumn" runat="server" Width="100px" Text="添加字段" Height="22px"></asp:button><BR>
+										<asp:textbox id="txtFSignConstant" runat="server" Width="440px"></asp:textbox><asp:button id="btnFSignConstant" runat="server" Width="76px" Text="添加常量" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignAdd" runat="server" Width="22px" Text="+" Height="22px"></asp:button><asp:button id="btnFSignSubtract" runat="server" Width="22px" Text="-" Height="22px"></asp:button><asp:button id="btnFSignMultiply" runat="server" Width="22px" Text="*" Height="22px"></asp:button><asp:button id="btnFSignDivision" runat="server" Width="22px" Text="/" Height="22px"></asp:button>&nbsp;<asp:button id="btnFSignEqual" runat="server" Width="28px" Text="=" Height="22px"></asp:button><asp:button id="btnFSignGreater1" runat="server" Width="28px" Text=">=" Height="22px"></asp:button><asp:button id="btnFSignGreater2" runat="server" Width="28px" Text=">" Height="22px"></asp:button><asp:button id="btnFSignSmaller1" runat="server" Width="28px" Text="<=" Height="22px"></asp:button><asp:button id="btnFSignSmaller2" runat="server" Width="28px" Text="<" Height="22px"></asp:button><asp:button id="btnFSignNotEqual" runat="server" Width="28px" Text="!=" Height="22px"></asp:button>&nbsp;<asp:button id="btnFSignLeftBigbracket" runat="server" Width="22px" Text="{" Height="22px"></asp:button><asp:button id="btnFSignRightBigbracket" runat="server" Width="22px" Text="}" Height="22px"></asp:button><asp:button id="btnFSignLeftbracket" runat="server" Width="22px" Text="(" Height="22px"></asp:button><asp:button id="btnFSignRightbracket" runat="server" Width="22px" Text=")" Height="22px"></asp:button>
+										<asp:button id="btnFSignComma" runat="server" Width="40px" Text="逗号" Height="22px"></asp:button><asp:button id="btnSemicolon" runat="server" Width="40px" Text="分号" Height="22px"></asp:button><asp:button id="btnFSignSpace" runat="server" Width="40px" Text="空格" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignBase" runat="server" Width="48px" Text="BASE" Height="22px"></asp:button><asp:button id="btnFSignMax2" runat="server" Width="44px" Text="MAX2" Height="22px"></asp:button><asp:button id="btnFSignMIN2" runat="server" Width="40px" Text="MIN2" Height="22px"></asp:button><asp:button id="btnFSignUPLONG" runat="server" Width="60px" Text="UPLONG" Height="22px"></asp:button><asp:button id="btnFSignCLONG" runat="server" Width="56px" Text="CLONG" Height="22px"></asp:button><asp:button id="btnFSignNONZERO" runat="server" Width="72px" Text="NONZERO" Height="22px"></asp:button><asp:button id="btnFSignUSERID" runat="server" Width="56px" Text="USERID" Height="22px"></asp:button><asp:button id="btnFSignUSERNAME" runat="server" Width="84px" Text="USERNAME" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignIIF" runat="server" Width="48px" Text="IIF" Height="22px"></asp:button><asp:button id="btnFSignIIFOR" runat="server" Width="44px" Text="IIFOR" Height="22px"></asp:button><asp:button id="btnFSignIIF3" runat="server" Width="40px" Text="IIF3" Height="22px"></asp:button><asp:button id="btnIIFGRP" runat="server" Width="56px" Text="IIFGRP" Height="22px"></asp:button>&nbsp;<asp:button id="btnFSignAllotDate" runat="server" Width="88px" Text="ALLOTDATE" Height="22px"></asp:button><asp:button id="btnFSignCrtTime" runat="server" Width="68px" Text="CRTTIME" Height="22px"></asp:button><asp:button id="btnFSignAllotComp" runat="server" Width="88px" Text="ALLOTCOMP" Height="22px"></asp:button><asp:button id="btnFSignUABS" runat="server" Width="52px" Text="UABS" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignSum" runat="server" Width="48px" Text="SUM" Height="22px"></asp:button><asp:button id="btnFSignAvg" runat="server" Width="48px" Text="AVG" Height="22px"></asp:button><asp:button id="btnFSignMax" runat="server" Width="48px" Text="MAX" Height="22px"></asp:button><asp:button id="btnFSignMin" runat="server" Width="48px" Text="MIN" Height="22px"></asp:button><asp:button id="btnFSignCount" runat="server" Width="62px" Text="COUNT" Height="22px"></asp:button><asp:button id="btnFSignOne" runat="server" Width="48px" Text="ONE" Height="22px"></asp:button><asp:button id="btnFSignPOne" runat="server" Width="48px" Text="PONE" Height="22px"></asp:button><asp:button id="btnFIRST" runat="server" Width="48px" Text="FIRST" Height="22px"></asp:button><asp:button id="btnLAST" runat="server" Width="48px" Text="LAST" Height="22px"></asp:button><BR>
+										<asp:button id="btnNORELCOND" runat="server" Width="96px" Text="NORELCOND" Height="22px"></asp:button><asp:button id="btnLENGTH" runat="server" Width="64px" Text="LENGTH" Height="22px"></asp:button><asp:button id="btnFIRSTNUM" runat="server" Width="84px" Text="FIRSTNUM" Height="22px"></asp:button><asp:button id="btnFSignUpRmb" runat="server" Width="72px" Text="UPRMB" Height="22px"></asp:button><BR>
+										<asp:button id="btnDateNow" runat="server" Width="48px" Text="NOW" Height="22px"></asp:button><asp:button id="btnFSignToday" runat="server" Width="56px" Text="TODAY" Height="22px"></asp:button><asp:button id="btnFSignNowTime" runat="server" Width="76px" Text="NOWTIME" Height="22px"></asp:button><asp:button id="btnTOMORROW" runat="server" Width="92px" Text="TOMORROW" Height="22px"></asp:button><asp:button id="btnFSignYear" runat="server" Width="48px" Text="YEAR" Height="22px"></asp:button><asp:button id="btnFSignMonth" runat="server" Width="56px" Text="MONTH" Height="22px"></asp:button><asp:button id="btnFSignDate" runat="server" Width="44px" Text="DATE" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignDIFFYEAR" runat="server" Width="76px" Text="DIFFYEAR" Height="22px"></asp:button><asp:button id="btnFSignDIFFMONTH" runat="server" Width="80px" Text="DIFFMONTH" Height="22px"></asp:button><asp:button id="btnFSignDIFFDAY" runat="server" Width="64px" Text="DIFFDAY" Height="22px"></asp:button><asp:button id="btnDIFFHOUR" runat="server" Width="84px" Text="DIFFHOUR" Height="22px"></asp:button><asp:button id="btnDIFFMIN" runat="server" Width="72px" Text="DIFFMIN" Height="22px"></asp:button><asp:button id="btnDIFFSEC" runat="server" Width="72px" Text="DIFFSEC" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignBIRTHDAY" runat="server" Width="76px" Text="BIRTHDAY" Height="22px"></asp:button><asp:button id="btnFSignWeekday" runat="server" Width="76px" Text="WEEKDAY" Height="22px"></asp:button><asp:button id="btnWEEK2DATE" runat="server" Width="88px" Text="WEEK2DATE" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignCurYear" runat="server" Width="72px" Text="CURYEAR" Height="22px"></asp:button><asp:button id="btnFSignCurMonth" runat="server" Width="80px" Text="CURMONTH" Height="22px"></asp:button><asp:button id="btnFSignCurDay" runat="server" Width="64px" Text="CURDAY" Height="22px"></asp:button><asp:button id="btnCURHOUR" runat="server" Width="72px" Text="CURHOUR" Height="22px"></asp:button><asp:button id="btnCURMIN" runat="server" Width="72px" Text="CURMIN" Height="22px"></asp:button><asp:button id="btnCURSEC" runat="server" Width="72px" Text="CURSEC" Height="22px"></asp:button><BR>
+										<asp:button id="btnPREVWK_MON" runat="server" Width="128px" Text="PREVWK_MON" Height="22px"></asp:button><asp:button id="btnPREVWK_SAT" runat="server" Width="128px" Text="PREVWK_SAT" Height="22px"></asp:button><asp:button id="btnTHISWK_MON" runat="server" Width="128px" Text="THISWK_MON" Height="22px"></asp:button><asp:button id="btnTHISWK_SAT" runat="server" Width="128px" Text="THISWK_SAT" Height="22px"></asp:button><BR>
+										<asp:button id="btnNEXTWK_MON" runat="server" Width="128px" Text="NEXTWK_MON" Height="22px"></asp:button><asp:button id="btnNEXTWK_SAT" runat="server" Width="128px" Text="NEXTWK_SAT" Height="22px"></asp:button><asp:button id="btnNNEXTWK_MON" runat="server" Width="128px" Text="NNEXTWK_MON" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignPREVMONTH_FD" runat="server" Width="128px" Text="PREVMONTH_FD" Height="22px"></asp:button><asp:button id="btnFSignCURMONTH_FD" runat="server" Width="128px" Text="CURMONTH_FD" Height="22px"></asp:button><asp:button id="btnFSignNEXTMONTH_FD" runat="server" Width="128px" Text="NEXTMONTH_FD" Height="22px"></asp:button><asp:button id="btnNNEXTMONTH_FD" runat="server" Width="128px" Text="NNEXTMONTH_FD" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignPREVQTR_FD" runat="server" Width="128px" Text="PREVQTR_FD" Height="22px"></asp:button><asp:button id="btnFSignCURQTR_FD" runat="server" Width="128px" Text="CURQTR_FD" Height="22px"></asp:button><asp:button id="btnFSignNEXTQTR_FD" runat="server" Width="128px" Text="NEXTQTR_FD" Height="22px"></asp:button><BR>
+										<asp:button id="btnPREVYEAR_FD" runat="server" Width="128px" Text="PREVYEAR_FD" Height="22px"></asp:button><asp:button id="btnTHISYEAR_FD" runat="server" Width="128px" Text="THISYEAR_FD" Height="22px"></asp:button><asp:button id="btnNEXTYEAR_FD" runat="server" Width="128px" Text="NEXTYEAR_FD" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignEXTRACT_YEAR" runat="server" Width="128px" Text="EXTRACT_YEAR" Height="22px"></asp:button><asp:button id="btnFSignEXTRACT_MONTH" runat="server" Width="128px" Text="EXTRACT_MONTH" Height="22px"></asp:button><asp:button id="btnFSignEXTRACT_DAY" runat="server" Width="128px" Text="EXTRACT_DAY" Height="22px"></asp:button><BR>
+										<asp:button id="btnFSignAND" runat="server" Width="48px" Text="AND" ToolTip="与校验" Height="22px"></asp:button><asp:button id="btnFSignOR" runat="server" Width="48px" Text="OR" ToolTip="或校验" Height="22px"></asp:button><asp:button id="btnISNUM" runat="server" Width="56px" Text="ISNUM" ToolTip="或校验" Height="22px"></asp:button><asp:button id="btnFSignINTTIMES" runat="server" Width="72px" Text="INTTIMES" ToolTip="整除校验"
+											Height="22px"></asp:button><asp:button id="btnFSignSQL" runat="server" Width="48px" Text="SQL" Height="22px"></asp:button><asp:button id="btnFSignCUST" runat="server" Width="48px" Text="CUST" Height="22px"></asp:button><asp:button id="btnFSignCUST_ID" runat="server" Width="76px" Text="CUST_ID" Height="22px"></asp:button></FONT></td>
+							</tr>
+						</TABLE>
+					</td>
+				</tr>
+			</TABLE>
+		</form>
+	</body>
+</HTML>

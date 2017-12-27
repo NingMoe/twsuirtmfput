@@ -1,0 +1,17 @@
+<%@ Register TagPrefix="iewc" Namespace="Microsoft.Web.UI.WebControls" Assembly="Microsoft.Web.UI.WebControls, Version=1.0.2.116, Culture=neutral, PublicKeyToken=31bf3856ad364e35" %>
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="DictWorkflowCategory.aspx.vb" Inherits="Unionsoft.Workflow.Web.DictWorkflowCategory"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <title>DictWorkflowCategory</title>
+    <meta name=vs_defaultClientScript content="JavaScript">
+    <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
+    <link href="../css/flowstyle.css" type="text/css" rel="stylesheet">
+  </HEAD>
+  <body MS_POSITIONING="GridLayout">
+    <form id="Form1" method="post" runat="server">
+	<iewc:TreeView id="tvwFlowGroup" runat="server" SystemImagesPath="../webctrl_client/1_0/treeimages/"></iewc:TreeView>&nbsp;
+    </form>
+  </body>
+</HTML>
+

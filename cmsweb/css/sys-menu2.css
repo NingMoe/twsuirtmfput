@@ -1,0 +1,106 @@
+﻿
+
+#nav {
+	width:170px;
+	line-height: 24px;
+	list-style-type: none;
+	text-align:left;
+	font-size:12px;
+	list-style-position: outside;
+	list-style-image: url(../images/arrow132.gif);
+    /*定义整个ul菜单的行高和背景色*/
+}
+/*==================一级目录===================*/
+#nav a {
+ width: 170px; 
+ display: block;
+ padding-left:5px;
+ /*Width(一定要)，否则下面的Li会变形*/
+}
+#nav li {
+ background:#3399cc; /*一级目录的背景色*/
+ border-bottom:#FFF 1px solid; /*下面的一条白边*/
+ float:left;
+ font-size:12px;
+ /*float：left,本不应该设置，但由于在Firefox不能正常显示
+ 继承Nav的width,限制宽度，li自动向下延伸*/
+}
+#nav li a:hover{
+ background:#2288bb; /*一级目录onMouseOver显示的背景色*/
+}
+#nav a:link  {
+ color:#fff; text-decoration:none;
+}
+#nav a:visited  {
+ color:#fff;text-decoration:none;
+}
+#nav a:hover  {
+ color:#fefb12;text-decoration:none;font-weight:bold;
+}
+/*==================二级目录===================*/
+#nav li ul {
+ list-style:none;
+ text-align:left;
+}
+#nav li ul li{ 
+ background: #60beed; /*二级目录的背景色*/
+}
+#nav li ul a{
+         padding-left:10px;
+         width:170px;
+ /* padding-left二级目录中文字向右移动，但Width必须重新设置=(总宽度-padding-left)*/
+}
+/*下面是二级目录的链接样式*/
+#nav li ul a:link  {
+ color:#fff; text-decoration:none;
+}
+#nav li ul a:visited  {
+ color:#fff;text-decoration:none;
+}
+#nav li ul a:hover {
+ color:#0b5aab;
+ text-decoration:none;
+
+ font-weight:bold;
+ background:#9fddfc;
+ /* 二级onmouseover的字体颜色、背景色*/
+}
+/*==============================*/
+#nav li:hover ul {
+ left: auto;
+}
+#nav li.sfhover ul {
+ left: auto;
+}
+#content {
+ clear: left; 
+}
+#nav ul.collapsed {
+ display: none;
+}
+
+#PARENT{
+ width:170px;
+ padding-left:0px;
+
+}
+
+#table
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    /*background-color:blue;*/
+}
+ 
+#table tr
+{
+    height:22px;
+    background-color:#ffffff;
+}
+
+#table tr td
+{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 11px;
+    
+}

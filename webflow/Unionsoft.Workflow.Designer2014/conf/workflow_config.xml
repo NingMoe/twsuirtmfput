@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="GB2312"?>
+<CONFIG>
+
+	<!--当前登陆的用户名-->
+	<SYS_CFG>
+		<USERNAME>Admin</USERNAME>
+		<VERSION>1</VERSION>
+		<ENCRYPT>2</ENCRYPT><!--为了兼容2.0版本中的密码加密方式-->
+	</SYS_CFG>
+
+	<!--0:不在调试状态 , 1:在调试状态-->
+	<SYS_DEBUG>
+		<DEBUG>0</DEBUG>
+	</SYS_DEBUG>
+	
+	<!--流程连接上的事件设置-->
+	<!--0:不可用 , 1:可用-->
+	<LINK_EVENT_SETTINGS>
+		<SENDMAIL_MESSAGE>1</SENDMAIL_MESSAGE>
+		<SENDMOBILE_MESSAGE>1</SENDMOBILE_MESSAGE>
+		<SENDALL_MESSAGE>1</SENDALL_MESSAGE>
+	</LINK_EVENT_SETTINGS>
+
+	<MEDI_ORGANIZATION>
+		<DLL>\Unionsoft.Workflow.Organization.dll</DLL> 
+		<IMPLEMENTATION>Unionsoft.Workflow.Organization.Organization</IMPLEMENTATION> 
+		<ENABLE>1</ENABLE> 
+	</MEDI_ORGANIZATION>
+	
+	<!--<ORGANIZATION_SETTING>
+		<COLUMN>
+			<NAME>职务</NAME>
+			<DSPWIDTH>120</DSPWIDTH>
+			<FIELD>C3_337790108500</FIELD>
+		</COLUMN>
+	</ORGANIZATION_SETTING>-->
+	
+</CONFIG>

@@ -1,0 +1,237 @@
+﻿此报告显示将 Web 应用程序从 ASP.NET 1.1 转换为 ASP.NET 2.0 所执行的步骤。
+可能存在一些未解决的转换问题，您需要对这些问题进行手动修复。
+有关详细信息，请参考 http://go.microsoft.com/fwlink/?LinkId=46995 或搜索帮助主题“从 Visual Studio .NET 2002 或 2003 转换”。
+从位于 ?? 01 2011, 17:22:29 的项目文件 Unionsoft.Workflow.Web.vbproj 开始转换。
+
+=========================错误===================
+错误: 无法转换项目引用 Unionsoft.Workflow.Engine。
+错误: 无法转换项目引用 Unionsoft.Workflow.Items。
+错误: 无法转换项目引用 Unionsoft.Workflow.Organization。
+错误: 无法转换项目引用 Unionsoft.Workflow.Platform。
+错误: 下列文件未迁移，因为未在项目文件中找到它们或者关联的“BuildAction”设置为“None”。
+您可能需要在转换过程之后将这些文件从项目中排除掉，这样才能编译您的网站: 
+文件列表 == admin\adminpausedflows.aspx.vb,admin\adminwartch.aspx.vb,admin\adminflowadjust.aspx.vb,dictionary\dictworkflowcategory.aspx,
+admin\adminpausedflows.aspx,admin\adminauthorization.aspx,admin\adminlogfileview.aspx,dictionary\dictworkflowitems.aspx.vb,admin\adminlogfiledown.aspx,
+admin\adminmodifyformdata.aspx,2009\proxymian.aspx,admin\adminlogs.aspx.vb,admin\adminflowlist.aspx.vb,admin\adminprocessweekanalyse.aspx.vb,
+admin\adminauthorization.aspx.vb,admin\adminsystemlog.aspx,admin\adminactivities.aspx,admin\adminentrance.aspx.vb,admin\adminflowlist.aspx,
+admin\adminendflowsquery.aspx,flowgrouptreebiz.vb,dictionary\dictworkflowmain.aspx,modules\cmspagebase.vb,admin\adminflowadjust.aspx,
+admin\adminendflows.aspx,dictionary\dictworkflowmain.aspx.vb,workflowform.aspx.vb,recordeditbase.vb,signpicture.aspx.vb,workflowform.aspx,
+admin\adminpausedworkflowinstances.aspx.vb,admin\adminendflows.aspx.vb,signpicture.aspx,modules\favoritemanager.vb,dictionary\dictworkflowcategory.aspx.vb,
+admin\adminlogfileview.aspx.vb,admin\adminendflowsquery.aspx.vb,admin\adminlogs.aspx,admin\adminactivities.aspx.vb,admin\adminsystemlog.aspx.vb,
+2009\proxymian.aspx.vb,redirectemployeeselect.aspx,admin\adminwartch.aspx,admin\adminpausedworkflowinstances.aspx,
+dictionary\dictworkflowitems.aspx,admin\adminmodifyformdata.aspx.vb,redirectemployeeselect.aspx.vb,admin\adminwastebox.aspx.vb,cmsparamsentrance.aspx,
+admin\adminentrance.aspx,admin\adminchangeflowstate.aspx,admin\adminlogfiledown.aspx.vb,admin\adminchangeflowstate.aspx.vb,admin\adminwastebox.aspx。
+
+=========================警告=================
+警告: 在代码隐藏文件“admin\AdminProcessWeekAnalyse.aspx.vb”中发现了一个附加类“AdminProcessWeekAnalyse”。已为此类创建了新文件“admin\AdminProcessWeekAnalyse_aspx_vb_AdminProcessWeekAnalyse.vb”并将该文件移到“App_Code\Migrated”文件夹中。    admin\AdminProcessWeekAnalyse.aspx.vb (Line 6)
+警告: 此 Web 项目已转换为一个基于文件的 Web 应用程序。如果您的站点包含任何 IIS 元数据信息，例如，标记为虚拟目录的子文件夹，则建议您关闭此网站，再通过使用“打开网站”命令并选择“本地 IIS”选项卡来重新打开它。
+
+=========================注释=================
+Web.Config: 已添加“xhtmlConformance”属性。
+Web.Config: 已为程序集 System.Windows.Forms 添加了引用。
+Web.Config: 已为程序集 Microsoft.VisualBasic 添加了引用。
+Web.Config: 已为程序集 System.Management 添加了引用。
+已从文件 CreateWorkflow.aspx 中移除属性 Codebehind。
+已从文件 CreateWorkflow.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 CreateWorkFlow.aspx.vb 中(第 17 行)的访问级别“Unionsoft.Workflow.Web.CreateWorkflow”更改为“Partial”。
+已在文件“CreateWorkflow.aspx”中使用值“Unionsoft.Workflow.Web.RecordEditBase”更新了属性“CodeFileBaseClass”。
+含有对“~/admin/redirectemployeeselect.aspx”的引用的“Reference”标记已添加到文件 CreateWorkflow.aspx 中。
+已从文件 DownloadFile.aspx 中移除属性 Codebehind。
+警告: 已将文件 DownloadFile.aspx.vb 中(第 9 行)的访问级别“Unionsoft.Workflow.Web.DownloadFile”更改为“Partial”。
+已在文件“DownloadFile.aspx”中使用值“Unionsoft.Workflow.Web.PageBase”更新了属性“CodeFileBaseClass”。
+已从文件 EmployeeSelect.aspx 中移除属性 Codebehind。
+警告: 已将文件 EmployeeSelect.aspx.vb 中(第 22 行)的访问级别“Unionsoft.Workflow.Web.EmployeeSelect”更改为“Partial”。
+已在文件“EmployeeSelect.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+含有对“~/2009/item.aspx”的引用的“Reference”标记已添加到文件 EmployeeSelect.aspx 中。
+已从文件 ExitSystem.aspx 中移除属性 Codebehind。
+警告: 已将文件 ExitSystem.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.ExitSystem”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 ExitSystem.aspx 中。
+已从文件 FileWebAdapter.aspx 中移除属性 Codebehind。
+警告: 已将文件 FileWebAdapter.aspx.vb 中(第 18 行)的访问级别“Unionsoft.Workflow.Web.FileWebAdapter”更改为“Partial”。
+已在文件“FileWebAdapter.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 FileWebEditor.aspx 中移除属性 Codebehind。
+警告: 已将文件 FileWebEditor.aspx.vb 中(第 8 行)的访问级别“Unionsoft.Workflow.Web.FileWebEditor”更改为“Partial”。
+已在文件“FileWebEditor.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 FileWebSave.aspx 中移除属性 Codebehind。
+警告: 已将文件 FileWebSave.aspx.vb 中(第 23 行)的访问级别“Unionsoft.Workflow.Web.FileWebSave”更改为“Partial”。
+已在文件“FileWebSave.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 Global.asax 中移除属性 Codebehind。
+已从文件 Index.aspx 中移除属性 Codebehind。
+警告: 已将文件 Index.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.Index”更改为“Partial”。
+已在文件“Index.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 PrintWorkflow.aspx 中移除属性 Codebehind。
+警告: 已将文件 PrintWorkflow.aspx.vb 中(第 11 行)的访问级别“Unionsoft.Workflow.Web.PrintWorkflow”更改为“Partial”。
+已在文件“PrintWorkflow.aspx”中使用值“Unionsoft.Workflow.Web.RecordEditBase”更新了属性“CodeFileBaseClass”。
+已从文件 SysInfomation.aspx 中移除属性 Codebehind。
+警告: 已将文件 SysInfomation.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.SysInfomation”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 SysInfomation.aspx 中。
+已从文件 TranactWorkflow.aspx 中移除属性 Codebehind。
+已从文件 TranactWorkflow.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 TranactWorkflow.aspx.vb 中(第 22 行)的访问级别“Unionsoft.Workflow.Web.TranactWorkFlow”更改为“Partial”。
+已在文件“TranactWorkflow.aspx”中使用值“Unionsoft.Workflow.Web.RecordEditBase”更新了属性“CodeFileBaseClass”。
+含有对“~/controls/ctlflowhistory.ascx”的引用的“Reference”标记已添加到文件 TranactWorkflow.aspx 中。
+含有对“~/admin/redirectemployeeselect.aspx”的引用的“Reference”标记已添加到文件 TranactWorkflow.aspx 中。
+已从文件 UserValidate.aspx 中移除属性 Codebehind。
+警告: 已将文件 UserValidate.aspx.vb 中(第 12 行)的访问级别“Unionsoft.Workflow.Web.UserValidate”更改为“Partial”。
+已在文件“UserValidate.aspx”中使用值“Unionsoft.Workflow.Web.PageBase”更新了属性“CodeFileBaseClass”。
+已从文件 ViewFlowHistroy.aspx 中移除属性 Codebehind。
+警告: 已将文件 ViewFlowHistroy.aspx.vb 中(第 13 行)的访问级别“Unionsoft.Workflow.Web.ViewFlowHistroy”更改为“Partial”。
+已在文件“ViewFlowHistroy.aspx”中使用值“Unionsoft.Workflow.Web.RecordEditBase”更新了属性“CodeFileBaseClass”。
+含有对“~/controls/ctlflowhistory.ascx”的引用的“Reference”标记已添加到文件 ViewFlowHistroy.aspx 中。
+含有对“~/controls/ctlflowdiagram.ascx”的引用的“Reference”标记已添加到文件 ViewFlowHistroy.aspx 中。
+已从文件 ViewWorkflow.aspx 中移除属性 Codebehind。
+已从文件 ViewWorkflow.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 ViewWorkFlow.aspx.vb 中(第 17 行)的访问级别“Unionsoft.Workflow.Web.ViewWorkFlow”更改为“Partial”。
+已在文件“ViewWorkflow.aspx”中使用值“Unionsoft.Workflow.Web.RecordEditBase”更新了属性“CodeFileBaseClass”。
+含有对“~/controls/ctlflowhistory.ascx”的引用的“Reference”标记已添加到文件 ViewWorkflow.aspx 中。
+已从文件 2009\celendar.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\celendar.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.celendar”更改为“Partial”。
+已在文件“2009\celendar.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\default.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\default.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web._default”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 2009\default.aspx 中。
+已从文件 2009\head.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\head.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.head”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 2009\head.aspx 中。
+已从文件 2009\item.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\item.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.item”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 2009\item.aspx 中。
+已从文件 2009\list.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\list.aspx.vb 中(第 8 行)的访问级别“Unionsoft.Workflow.Web.list”更改为“Partial”。
+已在文件“2009\list.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\listassociate.aspx 中移除属性 Codebehind。
+已从文件 2009\listassociate.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 2009\listassociate.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.listassociate”更改为“Partial”。
+已在文件“2009\listassociate.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\listdraft.aspx 中移除属性 Codebehind。
+已从文件 2009\listdraft.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 2009\listdraft.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.listdraft”更改为“Partial”。
+已在文件“2009\listdraft.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\listfavorite.aspx 中移除属性 Codebehind。
+已从文件 2009\listfavorite.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 2009\listfavorite.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.listfavorite”更改为“Partial”。
+已在文件“2009\listfavorite.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\listframe.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\listframe.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.listframe”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 2009\listframe.aspx 中。
+已从文件 2009\liststart.aspx 中移除属性 Codebehind。
+已从文件 2009\liststart.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 2009\liststart.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.liststart”更改为“Partial”。
+已在文件“2009\liststart.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\login.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\login.aspx.vb 中(第 10 行)的访问级别“Unionsoft.Workflow.Web.login1”更改为“Partial”。
+已在文件“2009\login.aspx”中使用值“Unionsoft.Workflow.Web.PageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\message.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\message.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.message”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 2009\message.aspx 中。
+已从文件 2009\personalize.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\personalize.aspx.vb 中(第 6 行)的访问级别“Unionsoft.Workflow.Web.personalize”更改为“Partial”。
+已在文件“2009\personalize.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\processes.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\processes.aspx.vb 中(第 8 行)的访问级别“Unionsoft.Workflow.Web.processes”更改为“Partial”。
+已在文件“2009\processes.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\proxymain.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\proxymain.aspx.vb 中(第 7 行)的访问级别“Unionsoft.Workflow.Web.proxymain”更改为“Partial”。
+已在文件“2009\proxymain.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\proxyselector.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\proxyselector.aspx.vb 中(第 10 行)的访问级别“Unionsoft.Workflow.Web.proxyselector”更改为“Partial”。
+已在文件“2009\proxyselector.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\proxyworklist.aspx 中移除属性 Codebehind。
+已从文件 2009\proxyworklist.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 2009\proxyworklist.aspx.vb 中(第 8 行)的访问级别“Unionsoft.Workflow.Web.proxyworklist”更改为“Partial”。
+已在文件“2009\proxyworklist.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 2009\tools.aspx 中移除属性 Codebehind。
+警告: 已将文件 2009\tools.aspx.vb 中(第 8 行)的访问级别“Unionsoft.Workflow.Web.tools”更改为“Partial”。
+已在文件“2009\tools.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\activitylist.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\ActivityList.aspx.vb 中(第 12 行)的访问级别“Unionsoft.Workflow.Web.ActivityList”更改为“Partial”。
+已在文件“admin\activitylist.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\admineditpermissoin.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminEditPermissoin.aspx.vb 中(第 9 行)的访问级别“Unionsoft.Workflow.Web.AdminEditPermissoin”更改为“Partial”。
+已在文件“admin\admineditpermissoin.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminemployeeselect.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminEmployeeSelect.aspx.vb 中(第 11 行)的访问级别“Unionsoft.Workflow.Web.AdminEmployeeSelect”更改为“Partial”。
+已在文件“admin\adminemployeeselect.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminheader.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminHeader.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.AdminHeader”更改为“Partial”。
+已在文件“admin\adminheader.aspx”中使用值“Unionsoft.Workflow.Web.PageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminindex.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminIndex.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.AdminIndex”更改为“Partial”。
+已在文件“admin\adminindex.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminprocessweekanalyse.aspx 中移除属性 Codebehind。
+已从文件 admin\adminsearch.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminSearch.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.AdminSearch”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 admin\adminsearch.aspx 中。
+已从文件 admin\admintools.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminTools.aspx.vb 中(第 9 行)的访问级别“Unionsoft.Workflow.Web.AdminTools”更改为“Partial”。
+已在文件“admin\admintools.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminwelcome.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminWelcome.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.AdminWelcome”更改为“Partial”。
+已在文件“admin\adminwelcome.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminworkflowinstances.aspx 中移除属性 Codebehind。
+已从文件 admin\adminworkflowinstances.aspx 中的 @ Register 标记中移除 Assembly 属性。
+警告: 已将文件 admin\AdminWorkflowInstances.aspx.vb 中(第 12 行)的访问级别“Unionsoft.Workflow.Web.AdminWorkflowInstances”更改为“Partial”。
+已在文件“admin\adminworkflowinstances.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\adminworkflowinstdetail.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminWorkflowInstDetail.aspx.vb 中(第 9 行)的访问级别“Unionsoft.Workflow.Web.AdminWorkflowInstDetail”更改为“Partial”。
+已在文件“admin\adminworkflowinstdetail.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+含有对“~/controls/ctlflowdiagram.ascx”的引用的“Reference”标记已添加到文件 admin\adminworkflowinstdetail.aspx 中。
+已从文件 admin\adminworkflowlist.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\AdminWorkflowList.aspx.vb 中(第 9 行)的访问级别“Unionsoft.Workflow.Web.AdminWorkflowList”更改为“Partial”。
+已在文件“admin\adminworkflowlist.aspx”中使用值“Unionsoft.Workflow.Web.AdminPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 admin\header.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\header.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.header1”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 admin\header.aspx 中。
+已从文件 admin\redirectemployeeselect.aspx 中移除属性 Codebehind。
+警告: 已将文件 admin\RedirectEmployeeSelect.aspx.vb 中(第 11 行)的访问级别“Unionsoft.Workflow.Web.RedirectEmployeeSelect”更改为“Partial”。
+已在文件“admin\redirectemployeeselect.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 attachmentservice\down.aspx 中移除属性 Codebehind。
+警告: 已将文件 attachmentservice\down.aspx.vb 中(第 10 行)的访问级别“Unionsoft.Workflow.Web.down”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 attachmentservice\down.aspx 中。
+已从文件 attachmentservice\filewebsave.aspx 中移除属性 Codebehind。
+警告: 已将文件 attachmentservice\FileWebSave.aspx.vb 中(第 12 行)的访问级别“Unionsoft.Workflow.Web.upload”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 attachmentservice\filewebsave.aspx 中。
+已从文件 common\blank.aspx 中移除属性 Codebehind。
+警告: 已将文件 common\blank.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.blank”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 common\blank.aspx 中。
+已从文件 controls\ctlflowdiagram.ascx 中移除属性 TargetSchema。
+已从文件 controls\ctlflowdiagram.ascx 中移除属性 Codebehind。
+警告: 已将文件 controls\CtlFlowDiagram.ascx.vb 中(第 14 行)的访问级别“Unionsoft.Workflow.Web.CtlFlowDiagram”更改为“Partial”。
+已从文件 controls\ctlflowhistory.ascx 中移除属性 TargetSchema。
+已从文件 controls\ctlflowhistory.ascx 中移除属性 Codebehind。
+警告: 已将文件 controls\CtlFlowHistory.ascx.vb 中(第 10 行)的访问级别“Unionsoft.Workflow.Web.CtlFlowHistory”更改为“Partial”。
+已从文件 process\director.aspx 中移除属性 Codebehind。
+警告: 已将文件 process\director.aspx.vb 中(第 13 行)的访问级别“Unionsoft.Workflow.Web.director”更改为“Partial”。
+已在文件“process\director.aspx”中使用值“Unionsoft.Workflow.Web.UserPageBase”更新了属性“CodeFileBaseClass”。
+已从文件 process\process.aspx 中移除属性 Codebehind。
+警告: 已将文件 process\process.aspx.vb 中(第 3 行)的访问级别“Unionsoft.Workflow.Web.process”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 process\process.aspx 中。
+已从文件 setup\default.aspx 中移除属性 Codebehind。
+警告: 已将文件 setup\default.aspx.vb 中(第 15 行)的访问级别“Unionsoft.Workflow.Web._default1”更改为“Partial”。
+含有对“~/admin/adminprocessweekanalyse.aspx”的引用的“Reference”标记已添加到文件 setup\default.aspx 中。
+已添加文件夹 App_Code\modules。
+已将文件 modules\userpagebase.vb 移动到 App_Code\modules\ 目录中。
+在文件“controls\nodeactionbar.vb”的第“118”行找到了对代码隐藏类“Unionsoft.Workflow.Web.PrintWorkflow”的引用。“Unionsoft.Workflow.Web.PrintWorkflow”的一个 stub 类将在“App_Code\Migrated”文件夹中生成。
+已添加文件夹 App_Code\controls。
+已将文件 controls\nodeactionbar.vb 移动到 App_Code\controls\ 目录中。
+在文件“modules\pagebase.vb”的第“16”行找到了对代码隐藏类“System.Web.UI.Page”的引用。“System.Web.UI.Page”的一个 stub 类将在“App_Code\Migrated”文件夹中生成。
+已将文件 modules\pagebase.vb 移动到 App_Code\modules\ 目录中。
+已将文件 modules\organizationtree.vb 移动到 App_Code\modules\ 目录中。
+已将文件 modules\debugcenter.vb 移动到 App_Code\modules\ 目录中。
+已将文件 modules\configuration.vb 移动到 App_Code\modules\ 目录中。
+已将文件 modules\adminpagebase.vb 移动到 App_Code\modules\ 目录中。
+已将文件 Global.asax.vb 移动到 App_Code\ 目录中。
+已添加文件夹 App_Code\Migrated\admin。
+已添加文件夹 App_Code\CmsPlugin。
+已将文件 cmsplugin\cmspagebase.vb 移动到 App_Code\CmsPlugin\ 目录中。
+已将文件 AssemblyInfo.vb 移动到 App_Code\ 目录中。
+已将文件 controls\workflowpager.vb 移动到 App_Code\controls\ 目录中。
+已将文件 cmsplugin\recordeditbase.vb 移动到 App_Code\CmsPlugin\ 目录中。
+已在文件“PrintWorkflow.aspx”中使用值“Unionsoft.Workflow.Web.Migrated_PrintWorkflow”更新了属性“Inherits”。
+代码文件“App_Code\Migrated\Stub_PrintWorkflow_aspx_vb.vb”已创建，其中包含一个抽象类“Migrated_PrintWorkflow”，该类用作类“Unionsoft.Workflow.Web.PrintWorkflow”的基类。    PrintWorkflow.aspx.vb
+所有项目的 HTML 验证架构都已更改为“Internet Explorer 6.0”。
+已移除文件 Bin\Unionsoft.Workflow.Web.dll。
+已移除文件 Bin\Unionsoft.Workflow.Web.pdb。
+已移除文件 Unionsoft.Workflow.Web.vbproj。
+已移除文件 Unionsoft.Workflow.Web.vbproj.webinfo。
+项目 Unionsoft.Workflow.Web.vbproj 已在 ?? 01 2011, 17:23:13 成功转换。

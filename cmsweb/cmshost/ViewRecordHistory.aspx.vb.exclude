@@ -1,0 +1,589 @@
+
+Imports NetReusables
+Imports Cms.Platform
+Public Class ViewRecordHistory
+    Inherits Cms.Web.RecordEditBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents Form1 As System.Web.UI.HtmlControls.HtmlForm
+    Protected WithEvents Image3 As System.Web.UI.WebControls.Image
+    Protected WithEvents lnkExit As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lblHeader As System.Web.UI.WebControls.Label
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Panel1 As Panel = Nothing
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        '在此处放置初始化页的用户代码
+        PageSaveParametersToViewState() '将传入的参数保留为ViewState变量，便于在页面中提取和修改
+        PageInitialize() '初始化页面
+
+        Dim lngCurResID As Long = RLng("PAGE_RESID")
+        If Not IsPostBack Then
+            'Dim datForm As DataInputForm = LoadDatForm(CmsPass, Panel1, VLng("PAGE_HOSTRESID"), VLng("PAGE_HOSTRECID"), lngCurResID, RLng("id"), VImd("PAGE_INMODE"), VStr("PAGE_FORMNAME"), Nothing, True, VStr("PAGE_NOCHECK_RECLOCK"), , , False)
+            Dim datForm As DataInputForm = LoadDatForm(CmsPass, Panel1, VLng("PAGE_HOSTRESID"), VLng("PAGE_HOSTRECID"), lngCurResID, RLng("id"), InputMode.ViewInHostTable, VStr("PAGE_FORMNAME"), Nothing, True, VStr("PAGE_NOCHECK_RECLOCK"), , , False)
+        End If
+    End Sub
+    '--------------------------------------------------------------------------
+    '初始化页面
+    '--------------------------------------------------------------------------
+    Private Sub PageInitialize()
+        '初始化Panel
+        Panel1 = New Panel
+        Panel1.ID = "Panel1"
+        Panel1.EnableViewState = False
+        Dim strStyle As String = "Z-INDEX: 101; LEFT: 4px; POSITION: absolute; TOP: 28px"
+        Panel1.BorderColor = Color.FromName("#D7E7FF")
+        Panel1.Attributes.Add("style", strStyle)
+        Panel1.BorderWidth = Unit.Pixel(1)
+        Me.Form1.Controls.Add(Panel1)
+
+
+
+        Dim lngMode As InputMode = VImd("PAGE_INMODE")
+        If lngMode = InputMode.AddInHostTable Then Session("CMS_HOSTTABLE_RECID") = "" '清空当前选中记录ID
+
+
+        '显示标题，表示当前状态（添加、修改、查阅、...）
+        Dim lngCurResID As Long = VLng("PAGE_RESID")
+        Dim strResName As String = ResFactory.ResService.GetResName(CmsPass, lngCurResID)
+        lblHeader.Text = strResName
+
+
+    End Sub
+    Private Sub lnkExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lnkExit.Click
+        Session("PAGE_EDITADV_DATAFORM") = Nothing
+        Response.Redirect(VStr("PAGE_BACKPAGE"), False)
+    End Sub
+
+    Private Function LoadDatForm(ByRef pst As CmsPassport, _
+        ByRef Panel1 As System.Web.UI.WebControls.Panel, _
+        ByVal lngHostResID As Long, _
+        ByVal lngHostRecID As Long, _
+        ByVal lngResID As Long, _
+        ByRef lngRecID As Long, _
+        ByRef lngMode As InputMode, _
+        ByRef strFormName As String, _
+        ByRef forceRights As ForceRightsInForm, _
+        Optional ByVal blnCheckColRights As Boolean = False, _
+        Optional ByVal strNoCheckRecLock As String = "0", _
+        Optional ByVal lblHeaderAction1 As System.Web.UI.WebControls.Label = Nothing, _
+        Optional ByVal lnkSave As System.Web.UI.WebControls.LinkButton = Nothing, _
+        Optional ByVal blnShowSaveButton As Boolean = True) As DataInputForm
+        'Dim datForm As DataInputForm = FormManager.LoadForm(pst, Panel1, Nothing, lngResID, lngMode, strFormName, hashFieldRelVal, lngRecID, , , , forceRights, True, blnCheckColRights, blnCheckRecLock, lngHostResID, lngHostRecID, blnShowSaveButton, True)
+
+        Dim hashFieldRelVal As New Hashtable
+
+        Dim datForm As DataInputForm
+        Dim lngFormType As FormType = FormTools.GetFormType(0)
+        If CTableForm.HasDesignedForms(pst, lngResID, "", lngFormType, 0, False) Then
+            'Load已有设计窗体
+            datForm = LoadDesignedForm(Panel1, Nothing, pst, lngResID, lngMode, strFormName, hashFieldRelVal, lngRecID, False, 1, False, False, forceRights, False, blnCheckColRights, False, lngHostResID, lngHostRecID, blnShowSaveButton)
+            datForm.blnHasDesignedForm = True
+        Else
+            'Load默认窗体（无已设计窗体）
+            If lngFormType = FormType.PrintForm Then Return New DataInputForm '打印窗体不支持默认窗体
+            datForm = LoadDefaultForm(Panel1, Nothing, pst, lngResID, lngMode, strFormName, hashFieldRelVal, lngRecID, False, 1, False, False, forceRights, False, blnCheckColRights, False, lngHostResID, lngHostRecID, False)
+            datForm.blnHasDesignedForm = False
+        End If
+
+        datForm.hashFieldRelVal = hashFieldRelVal
+        Return datForm
+    End Function
+
+
+    '--------------------------------------------------------------------
+    '在窗体中显示原先定义的字段布局信息
+    '--------------------------------------------------------------------
+    Private Function LoadDefaultForm( _
+        ByRef panelForm As Panel, _
+        ByRef panelWin As System.Windows.Forms.Panel, _
+        ByRef pst As CmsPassport, _
+        ByVal lngResID As Long, _
+        ByRef lngMode As InputMode, _
+        ByRef strFormName As String, _
+        Optional ByRef hashFieldRelVal As Hashtable = Nothing, _
+        Optional ByVal lngRecIDForEdit As Long = 0, _
+        Optional ByVal blnEnableViewState As Boolean = True, _
+        Optional ByVal shtFirstTabIndex As Short = 1, _
+        Optional ByVal blnShowDocButton As Boolean = False, _
+        Optional ByVal blnShowSubResTableOnPrintForm As Boolean = False, _
+        Optional ByRef forceRights As ForceRightsInForm = Nothing, _
+        Optional ByVal blnUseUIValue As Boolean = False, _
+        Optional ByVal blnCheckColRights As Boolean = False, _
+        Optional ByVal blnCheckRecLock As Boolean = True, _
+        Optional ByVal lngHostResID As Long = 0, _
+        Optional ByVal lngHostRecID As Long = 0, _
+        Optional ByVal blnShowSaveButton As Boolean = True _
+        ) As DataInputForm
+        '窗体生成完成后需返回的信息结构
+        Dim datForm As New DataInputForm
+
+        '获取当前输入窗体中所有的资源ID列表，Key：资源ID；Value：0或NULL：本资源；1：是CI_RESID资源的关联主资源；2：是CI_RESID资源的关联子资源；
+        Dim hashColResIDs As Hashtable = CTableForm.GetColResIDs(pst, lngResID, strFormName, FormType.InputForm, lngMode, False)
+
+        '设置默认窗体中Label的宽度
+        Dim intLabelWidth As Integer = FormManager.LABEL_W_DEFFORM
+        If lngMode = InputMode.DesignInputForm OrElse lngMode = InputMode.DesignPrintForm Then intLabelWidth = FormManager.LABEL_W_DESIGN
+
+        '-------------------------------------------------------------------
+        '仅用于编辑模式下提取所有字段的值
+        Dim hashAllCtrlValueFromDB As Hashtable = Nothing
+        Dim drvOldVal As DataRowView
+        Dim strResTableType As String = pst.GetDataRes(lngResID).ResTableType
+        If (lngRecIDForEdit <> 0 AndAlso (lngMode = InputMode.AddInHostTable OrElse lngMode = InputMode.AddInRelTable)) OrElse lngMode = InputMode.EditInHostTable OrElse lngMode = InputMode.EditInRelTable OrElse lngMode = InputMode.ViewInHostTable OrElse lngMode = InputMode.ViewInRelTable OrElse lngMode = InputMode.PrintInHostTable OrElse lngMode = InputMode.PrintInRelTable Then
+            hashAllCtrlValueFromDB = GetRecordValue(pst, lngResID, lngRecIDForEdit)
+            If hashAllCtrlValueFromDB Is Nothing Then hashAllCtrlValueFromDB = New Hashtable
+            If blnUseUIValue = True AndAlso Not hashFieldRelVal Is Nothing Then
+                Dim obj As Object
+                Dim en As IDictionaryEnumerator = hashFieldRelVal.GetEnumerator()
+                While en.MoveNext
+                    HashField.SetObj(hashAllCtrlValueFromDB, CStr(en.Key), en.Value)
+                End While
+            End If
+        End If
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '查看记录锁定信息，如果指定字段值等于锁定值，则锁定记录，即将当前修改状态改为浏览状态
+        If blnCheckRecLock = True And (lngMode = InputMode.EditInHostTable OrElse lngMode = InputMode.EditInRelTable) Then
+            Dim blnLocked As Boolean = ResFactory.TableService(pst.GetDataRes(lngResID).ResTableType).IsRecordLocked(pst, lngResID, hashAllCtrlValueFromDB, True)
+            If blnLocked = True Then '满足锁定条件，记录被锁定
+                If lngMode = InputMode.EditInHostTable Then lngMode = InputMode.ViewInHostTable
+                If lngMode = InputMode.EditInRelTable Then lngMode = InputMode.ViewInRelTable
+            End If
+        End If
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '获取所有自动编码字段
+        If lngMode = InputMode.AddInHostTable OrElse lngMode = InputMode.AddInRelTable Then 'OrElse lngMode = InputMode.MultiAddInHostTable OrElse lngMode = InputMode.MultiAddInRelTable Then
+            Dim alistACodeFields As ArrayList = CTableColACoding.GetAutocodeFields(pst, lngResID) '存放需返回的自动编码字段名称列表
+            Dim strACodeColName As String
+            For Each strACodeColName In alistACodeFields
+                Dim strACode As String = CTableColACoding.GenerateAutoCode(pst, lngResID, strACodeColName)
+                datForm.hashACodeValue.Add(TextboxName.GetCtrlName(strACodeColName, lngResID), strACode)
+            Next
+        End If
+        '-------------------------------------------------------------------
+
+        '窗体的高度、宽度
+        Dim yCurLabel As Integer = FormManager.PADDING_T
+        Dim intFormWidth As Integer = FormManager.LABEL_X + intLabelWidth + FormManager.PADDING_X
+
+        '如果是文档管理，则创建File文件上传控件
+        If strResTableType = "DOC" Then
+            '创建文件上传控件之前的说明用Label
+            FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, Nothing, lngMode, "lbl_" & TimeId.CurrentMilliseconds(), "label", "文件上传", FormManager.LABEL_X, (yCurLabel + 4), intLabelWidth)
+            Dim strCtrlName As String = "CmsFileDoc"
+            FormItems.LoadItem_FileForDocTable(pst, lngResID, lngRecIDForEdit, strCtrlName, FieldFormType.File, lngMode, panelForm, panelWin, datForm.hashUICtls, (FormManager.LABEL_X + intLabelWidth + FormManager.PADDING_X), yCurLabel, FormManager.TEXT_W, 20, blnEnableViewState, blnShowDocButton)
+            intFormWidth = intFormWidth + FormManager.TEXT_W + FormManager.PADDING_R
+            yCurLabel += FormManager.CTRL_H + FormManager.PADDING_Y
+        Else
+            intFormWidth = intFormWidth + FormManager.TEXT_W + FormManager.PADDING_R '无File控件时的窗体默认宽度
+        End If
+
+        '获取当前用户有权限的字段列表
+        Dim strColsOfNoRights As String = FormTools.GetColsOfNoRights(pst, lngResID, blnCheckColRights)
+
+        '获取当前资源的所有字段的多选一选择项定义
+        Dim hashOpts As Hashtable = CTableColRadio.GetAllRadioGroups(pst, lngResID)
+
+        Dim shtTabIndex As Short = 1 '为了方便用户在界面输入时使用Tab键，必须从1开始
+        Dim alistColumns As ArrayList = CTableStructure.GetColumnsByArraylist(pst, lngResID, False, True)
+        Dim datCol As DataTableColumn = Nothing
+        Dim intHeight As Integer = 0
+        For Each datCol In alistColumns
+            '判断用户有无对当前字段的访问权限
+            Dim blnHasRights As Boolean = FormTools.HasColumnRights(pst, blnCheckColRights, strColsOfNoRights, datCol)
+            If blnHasRights = True Then '有权限才显示字段
+                '创建Label，字段的窗体元素的前缀说明信息
+                If datCol.ColValType <> FieldValueType.RadioGroup AndAlso datCol.ColValType <> FieldValueType.Checkbox Then 'AndAlso datCol.ColValType <> FieldValueType.DirectoryFile Then
+                    FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, datCol, lngMode, "lbl_" & TimeId.CurrentMilliseconds(), "label", datCol.ColDispName, FormManager.LABEL_X, (yCurLabel + 4), intLabelWidth)
+                End If
+
+                '设置元素位置
+                datCol.FrmAlign = 0
+                datCol.FrmLeft = FormManager.LABEL_X + intLabelWidth + FormManager.PADDING_X '窗体元素的x坐标
+                datCol.FrmTop = yCurLabel '窗体元素的y坐标
+                datCol.FrmWidth = FormManager.TEXT_W '窗体元素的宽度
+                datCol.FrmHeight = FormManager.CTRL_H '窗体元素的高度
+
+                '-------------------------------------------------------------------------
+                '根据元素类型创建窗体元素显示
+                If datCol.ColType = FieldDataType.LongBinary Then
+                    '创建二进制字段的文件控件
+                    FormFieldsFile.AddField_FileForBinColumn(panelForm, panelWin, lngMode, lngResID, datCol)
+                    intHeight = FormManager.CTRL_H '增加1行后调整当前高度
+                ElseIf datCol.ColValType = FieldValueType.DirectoryFile Then
+                    FormFieldsFile.AddField_FileForDirFileColumn(pst, panelForm, panelWin, lngMode, lngResID, datCol)
+                    intHeight = FormManager.CTRL_H '增加1行后调整当前高度
+                ElseIf datCol.ColValType = FieldValueType.OptionValue Then
+                    Dim blnShowAsTextbox As Boolean = FormTools.IsDropDownListReadonly(pst, datCol, lngMode, hashFieldRelVal, hashAllCtrlValueFromDB)
+                    If blnShowAsTextbox = True Then
+                        FormItems.LoadItem_Text(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    Else
+                        FormItems.LoadItem_Ddlist(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, True, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    End If
+                    intHeight = FormManager.CTRL_H '增加1行后调整当前高度
+                ElseIf datCol.ColValType = FieldValueType.RadioGroup Then
+                    FormItems.LoadItem_Radiobox(pst, panelForm, panelWin, datForm.hashUICtls, lngResID, datCol, lngMode, datCol.ColName, hashOpts, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, hashColResIDs, lngRecIDForEdit, datCol.FrmLeft, datCol.FrmTop, FormManager.TEXT_W, 45, blnEnableViewState)
+                    intHeight = 45 '增加1行后调整当前高度
+                ElseIf datCol.ColValType = FieldValueType.Checkbox Then
+                    FormItems.LoadItem_Checkbox(pst, panelForm, panelWin, datForm.hashUICtls, lngResID, datCol, lngMode, datCol.ColName, hashOpts, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, hashColResIDs, lngRecIDForEdit, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState)
+                    intHeight = FormManager.CTRL_H '增加1行后调整当前高度
+                Else
+                    '获取当前窗体中的第一个输入型控件的字段内部名称
+                    If datForm.strFirstColName = "" Then
+                        datForm.strFirstColName = FormTools.GetFirstColumnForDefaultForm(datCol.ColName, lngResID, lngMode, datCol) '获取当前窗体中的第一个输入型控件的字段内部名称
+                    End If
+
+                    FormItems.LoadItem_Text(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    intHeight = FormManager.CTRL_H '增加1行后调整当前高度
+                End If
+                '-------------------------------------------------------------------------
+            End If
+
+            yCurLabel += intHeight + FormManager.PADDING_Y '增加1行后调整当前高度
+            intHeight = 0
+        Next
+
+        '设置默认窗体的高度、宽度
+        panelForm.Width = Unit.Pixel(intFormWidth)
+        panelForm.Height = Unit.Pixel(yCurLabel + FormManager.CTRL_H + FormManager.PADDING_B)
+        Return datForm
+    End Function
+
+    '--------------------------------------------------------------------
+    '在窗体中显示原先定义的字段布局信息
+    '参数：
+    '   lngMode：运行模式，即InputMode中定义的模式
+    '   lngRecIDForEdit：仅在编辑模式下有用
+    '--------------------------------------------------------------------
+    Private Function LoadDesignedForm( _
+        ByRef panelForm As Panel, _
+        ByRef panelWin As System.Windows.Forms.Panel, _
+        ByRef pst As CmsPassport, _
+        ByVal lngResID As Long, _
+        ByRef lngMode As InputMode, _
+        ByRef strFormName As String, _
+        Optional ByRef hashFieldRelVal As Hashtable = Nothing, _
+        Optional ByVal lngRecIDForEdit As Long = 0, _
+        Optional ByVal blnEnableViewState As Boolean = True, _
+        Optional ByVal shtFirstTabIndex As Short = 1, _
+        Optional ByVal blnShowDocButton As Boolean = False, _
+        Optional ByVal blnShowSubResTableOnPrintForm As Boolean = False, _
+        Optional ByRef forceRights As ForceRightsInForm = Nothing, _
+        Optional ByVal blnUseUIValue As Boolean = False, _
+        Optional ByVal blnCheckColRights As Boolean = False, _
+        Optional ByVal blnCheckRecLock As Boolean = True, _
+        Optional ByVal lngHostResID As Long = 0, _
+        Optional ByVal lngHostRecID As Long = 0, _
+        Optional ByVal blnShowSaveButton As Boolean = True _
+        ) As DataInputForm
+        '-------------------------------------------------------------------
+        '第一步：初始化
+        '设置空名的默认窗体
+        If strFormName = "" Then strFormName = CTableForm.DEF_DESIGN_FORM
+        Dim lngFormType As FormType = FormTools.GetFormType(lngMode)
+
+        '先清空Panel中所有控件
+        If lngMode <> InputMode.DesignInputForm AndAlso lngMode <> InputMode.DesignPrintForm Then panelForm.Controls.Clear()
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '第二步：用于Edit、View、Print模式下提取所有字段的值
+        Dim hashAllCtrlValueFromDB As Hashtable = Nothing
+        If (lngRecIDForEdit <> 0 AndAlso (lngMode = InputMode.AddInHostTable OrElse lngMode = InputMode.AddInRelTable)) OrElse lngMode = InputMode.EditInHostTable OrElse lngMode = InputMode.EditInRelTable OrElse lngMode = InputMode.ViewInHostTable OrElse lngMode = InputMode.ViewInRelTable OrElse lngMode = InputMode.PrintInHostTable OrElse lngMode = InputMode.PrintInRelTable Then
+            '先获取当前资源的指定记录ID的记录信息
+            hashAllCtrlValueFromDB = New Hashtable
+            'CmsTableRelation.GetCtrlValuesOfOneResourceFromDB(pst, hashAllCtrlValueFromDB, lngResID, "ID", lngRecIDForEdit, lngFormType)
+            CmsTableRelation.GetCtrlValuesOfOneResourceFromDB(pst, hashAllCtrlValueFromDB, lngResID, "ID", lngRecIDForEdit)
+            ''判断有无窗体自动选择条件
+            'Dim strOldFormName As String = strFormName
+            'strFormName = CTableForm.GetCondFormName(pst, lngResID, hashAllCtrlValueFromDB, strFormName, lngMode)
+
+            '再获取当前资源的所有关联主资源的对应记录的记录信息
+            hashAllCtrlValueFromDB = GetRecordValue(pst, lngResID, lngRecIDForEdit)
+
+            If hashAllCtrlValueFromDB Is Nothing Then hashAllCtrlValueFromDB = New Hashtable
+            If blnUseUIValue = True AndAlso Not hashFieldRelVal Is Nothing Then
+                Dim obj As Object
+                Dim en As IDictionaryEnumerator = hashFieldRelVal.GetEnumerator()
+                While en.MoveNext
+                    HashField.SetObj(hashAllCtrlValueFromDB, CStr(en.Key), en.Value)
+                End While
+            End If
+        End If
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '获取当前输入窗体中所有的资源ID列表，Key：资源ID；Value：0或NULL：本资源；1：是CI_RESID资源的关联主资源；2：是CI_RESID资源的关联子资源；
+        Dim hashColResIDs As Hashtable = CTableForm.GetColResIDs(pst, lngResID, strFormName, FormType.InputForm, lngMode, False)
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '第三步：查看记录锁定信息，如果指定字段值等于锁定值，则锁定记录，即将当前修改状态改为浏览状态
+        If blnCheckRecLock = True And (lngMode = InputMode.EditInHostTable OrElse lngMode = InputMode.EditInRelTable) Then
+
+            Dim blnLocked As Boolean = ResFactory.TableService(pst.GetDataRes(lngResID).ResTableType).IsRecordLocked(pst, lngResID, hashAllCtrlValueFromDB, True)
+            If blnLocked = True Then '满足锁定条件，记录被锁定
+                If lngMode = InputMode.EditInHostTable Then
+                    lngMode = InputMode.ViewInHostTable
+                ElseIf lngMode = InputMode.EditInRelTable Then
+                    lngMode = InputMode.ViewInRelTable
+                End If
+            End If
+        End If
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '第四步：获取所有自动编码字段
+        '窗体生成完成后需返回的信息结构
+        Dim datForm As New DataInputForm
+        If lngMode = InputMode.AddInHostTable OrElse lngMode = InputMode.AddInRelTable Then
+            Dim lngResPID As Long = pst.GetDataRes(lngResID).IndepParentResID
+            Dim alistResIDs As ArrayList = CTableForm.GetResIDsInDesignedForm(pst, lngResID, strFormName, lngFormType, lngMode, False)
+            Dim lngOneResID As Long
+            For Each lngOneResID In alistResIDs
+                Dim alistACodeFields As ArrayList = CTableColACoding.GetAutocodeFields(pst, lngOneResID) '存放需返回的自动编码字段名称列表
+                Dim strACodeColName As String
+                For Each strACodeColName In alistACodeFields
+                    Dim strACode As String = CTableColACoding.GenerateAutoCode(pst, lngOneResID, strACodeColName)
+
+                    Dim lngResIDTemp As Long = lngOneResID
+                    If lngOneResID = lngResPID Then lngResIDTemp = lngResID
+                    datForm.hashACodeValue.Add(TextboxName.GetCtrlName(strACodeColName, lngResIDTemp), strACode)
+                Next
+            Next
+        End If
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '获取当前用户有权限的字段列表
+        Dim strColsOfNoRights As String = FormTools.GetColsOfNoRights(pst, lngResID, blnCheckColRights)
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '打印窗体中替换指定的文本（窗体属性中设置）
+        Dim hashReplaceText As New Hashtable
+        If lngMode = InputMode.PrintInHostTable OrElse lngMode = InputMode.PrintInRelTable Then
+            Dim datFormInfo As DataDesignedForm = CTableForm.GetDesignedFormInfo(pst, lngResID, strFormName, lngFormType, lngMode, False)
+            Dim strReplaceSrc As String = CmsDbBase.GetFieldStr(pst, CmsTables.ColInputList, "CILST_REPLACE_SRC", "CILST_RESID=" & datFormInfo.lngResIDToUse & " AND CILST_FORMNAME='" & strFormName & "' AND CILST_FORMTYPE=" & lngFormType)
+            Dim strReplaceDest As String = CmsDbBase.GetFieldStr(pst, CmsTables.ColInputList, "CILST_REPLACE_DEST", "CILST_RESID=" & datFormInfo.lngResIDToUse & " AND CILST_FORMNAME='" & strFormName & "' AND CILST_FORMTYPE=" & lngFormType)
+            Dim alistReplaceSrc As ArrayList = StringDeal.Split(strReplaceSrc, ";;", False, False) '此处不可忽略空格，也不可用Trim
+            Dim alistReplaceDest As ArrayList = StringDeal.Split(strReplaceDest, ";;", False, False) '此处不可忽略空格，也不可用Trim
+            If alistReplaceSrc.Count > 0 And alistReplaceSrc.Count = alistReplaceDest.Count Then
+                Dim i As Integer = 0
+                For i = 0 To (alistReplaceSrc.Count - 1)
+                    HashField.SetStr(hashReplaceText, CStr(alistReplaceSrc(i)), CStr(alistReplaceDest(i)))
+                Next
+            End If
+        End If
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '获取当前资源的所有字段的多选一选择项定义
+        Dim hashOpts As Hashtable = CTableColRadio.GetAllRadioGroups(pst, lngResID)
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '开始创建所有字段的页面显示
+        Dim shtTabIndex As Short = shtFirstTabIndex '为了方便用户在界面输入时使用Tab键，必须从1开始
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '获取所有字段的定义列表
+        Dim alistFieldsLayout As ArrayList = CTableForm.GetLayoutDesigned(pst, lngResID, strFormName, lngFormType, lngMode, datForm.lngFormRecID)
+        '-------------------------------------------------------------------
+
+        '-------------------------------------------------------------------
+        '获取当前窗体中的第一个输入型控件的字段内部名称
+        datForm.strFirstColName = FormTools.GetFirstColumnForDesignedForm(alistFieldsLayout, lngResID, lngMode)
+        '-------------------------------------------------------------------
+
+        Dim datCol As DataTableColumn
+        For Each datCol In alistFieldsLayout
+            Select Case datCol.FrmFieldFormType
+                Case FieldFormType.FormSelf '是窗体本身
+                    panelForm.Width = Unit.Pixel(CInt(datCol.FrmWidth))
+                    panelForm.Height = Unit.Pixel(CInt(datCol.FrmHeight))
+                    panelForm.EnableViewState = False
+
+                Case FieldFormType.Label '是Label
+                    Dim strTextVal As String = ""
+                    If lngMode = InputMode.PrintInHostTable OrElse lngMode = InputMode.PrintInRelTable Then
+                        '2006-07-16 仅为了与历史版本兼容，因为今日之前的打印窗体中控件都保存为Label，即：CI_TYPE=2     CI_COLNAME=字段内部名称     CI_TEXT=[字段显示名称]{资源名称}
+                        If datCol.FrmColName.StartsWith("lbl") = True Then '是真的Label
+                            strTextVal = datCol.FrmText
+                        Else
+                            strTextVal = HashField.GetStr(hashAllCtrlValueFromDB, TextboxName.GetCtrlName(datCol.FrmColName, datCol.FrmColResID))
+                            strTextVal = strTextVal.Replace("  ", Chr(255)).Replace(Chr(13) + Chr(10), "<br>")
+                        End If
+                        FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, datCol, lngMode, datCol.FrmColName, "label", strTextVal, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign, blnEnableViewState, hashReplaceText)
+                    ElseIf lngMode = InputMode.DesignPrintForm Then
+                        strTextVal = datCol.FrmText
+                        '2006-07-16 仅为了与历史版本兼容，将窗体重新保存后将使用最新的格式 TextboxInPrint 而非 label
+                        If datCol.FrmColName.StartsWith("lbl") = True Then '是真的Label
+                            FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, datCol, lngMode, datCol.FrmColName, "label", strTextVal, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign, blnEnableViewState, hashReplaceText)
+                        Else '是TextBox等控件
+                            FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, datCol, lngMode, datCol.FrmColName, "TextboxInPrint", strTextVal, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign, blnEnableViewState, hashReplaceText)
+                        End If
+                    Else
+                        strTextVal = datCol.FrmText
+                        FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, datCol, lngMode, datCol.FrmColName, "label", strTextVal, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign, blnEnableViewState, hashReplaceText)
+                    End If
+
+                Case FieldFormType.TextboxInPrint '是打印窗体中所有控件
+                    Dim strTextVal As String = ""
+                    If lngMode = InputMode.PrintInHostTable OrElse lngMode = InputMode.PrintInRelTable Then
+                        strTextVal = HashField.GetStr(hashAllCtrlValueFromDB, TextboxName.GetCtrlName(datCol.ColName, datCol.FrmColResID))
+                    ElseIf lngMode = InputMode.DesignPrintForm Then '是打印窗体的设计窗体
+                        If datCol.FrmColResType <> ResRelation.Self Then
+                            If datCol.FrmText.IndexOf("{") > 0 AndAlso datCol.FrmText.IndexOf("}") > 0 Then
+                                '已经包含资源名称
+                                strTextVal = datCol.FrmText
+                            Else
+                                Dim strResName As String = pst.GetDataRes(datCol.FrmColResID).ResName
+                                strTextVal = datCol.FrmText & "{" & strResName & "}"
+                            End If
+                        Else
+                            strTextVal = datCol.FrmText
+                        End If
+                    Else
+                        '不应该到达这里
+                        SLog.Warn("不应该到达这里，TextboxInPrint仅在打印窗体和打印设计窗体中出现。")
+                        strTextVal = datCol.FrmText
+                    End If
+                    FormItems.LoadItem_Label(pst, panelForm, panelWin, lngResID, datCol, lngMode, TextboxName.GetCtrlName(datCol.FrmColName, datCol.FrmColResID), "TextboxInPrint", strTextVal, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign, blnEnableViewState, hashReplaceText)
+
+                Case FieldFormType.Image '是二进制字段
+                    If lngMode = InputMode.DesignPrintForm OrElse lngMode = InputMode.PrintInHostTable OrElse lngMode = InputMode.PrintInRelTable Then
+                        '在打印窗体中显示为图片
+                        FormFieldsImage.AddField_PrintformImageForBinColumn(panelForm, panelWin, lngResID, hashAllCtrlValueFromDB, datCol, True)
+                    Else
+                        '在输入窗体中显示为文件控件
+                        FormFieldsFile.AddField_FileForBinColumn(panelForm, panelWin, lngMode, lngResID, datCol)
+                    End If
+
+                Case FieldFormType.ImageForInputform '是二进制字段
+                    '在输入窗体中显示为图片
+                    FormFieldsImage.AddField_InputformImageFromBinColumn(lngResID, datCol, lngMode, panelForm, panelWin, hashAllCtrlValueFromDB)
+
+                Case FieldFormType.ImageForUrlCol '是存放Url的字段
+                    FormFieldsImage.AddField_ImageForUrlCol(lngResID, datCol, lngMode, panelForm, panelWin, hashAllCtrlValueFromDB)
+
+                Case FieldFormType.ImageForDirFile
+                    FormFieldsImage.AddField_ImageForDirFileColumn(pst, panelForm, panelWin, lngResID, hashAllCtrlValueFromDB, datCol)
+
+                Case FieldFormType.FileForDirFile
+                    FormFieldsFile.AddField_FileForDirFileColumn(pst, panelForm, panelWin, lngMode, lngResID, datCol)
+
+                Case FieldFormType.ImageForPageUrl '是页面图形文件
+                    FormFieldsImage.AddField_ImageForPageUrl(pst, panelForm, panelWin, datCol)
+
+                Case FieldFormType.ResTable '是资源表单
+                    'FormItemSubResTable.LoadItem_ResTable(pst, datCol, panelForm, panelWin, lngResID, pst.GetDataRes(lngResID).ResName, lngMode, datForm, lngRecIDForEdit, blnShowSubResTableOnPrintForm, forceRights, blnShowSaveButton)
+
+                Case FieldFormType.Line '是线条
+                    FormFields.AddField_Line(panelForm, panelWin, datCol, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight)
+
+                Case FieldFormType.Button '是按钮
+                    FormFields.AddField_Button(panelForm, panelWin, lngMode, datForm, datCol, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign)
+
+                Case FieldFormType.LinkButton '是链接
+                    FormFields.AddField_LinkButton(panelForm, panelWin, lngMode, datForm, datCol, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, datCol.FrmAlign)
+
+                Case FieldFormType.RadioGroup '是多选一选择项
+                    FormItems.LoadItem_Radiobox(pst, panelForm, panelWin, datForm.hashUICtls, lngResID, datCol, lngMode, datCol.ColName, hashOpts, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, hashColResIDs, lngRecIDForEdit, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState)
+
+                Case FieldFormType.Checkbox '是否选择项
+                    FormItems.LoadItem_Checkbox(pst, panelForm, panelWin, datForm.hashUICtls, lngResID, datCol, lngMode, datCol.ColName, hashOpts, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, hashColResIDs, lngRecIDForEdit, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState)
+
+                Case FieldFormType.File '是文件上传控件
+                    FormItems.LoadItem_FileForDocTable(pst, lngResID, lngRecIDForEdit, datCol.FrmColName, datCol.FrmFieldFormType, lngMode, panelForm, panelWin, datForm.hashUICtls, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState, blnShowDocButton)
+
+                Case FieldFormType.DropDownList '是下拉框
+                    '判断用户有无对当前字段的访问权限
+                    Dim blnHasRights As Boolean = FormTools.HasColumnRights(pst, blnCheckColRights, strColsOfNoRights, datCol)
+
+                    Dim blnShowAsTextbox As Boolean = FormTools.IsDropDownListReadonly(pst, datCol, lngMode, hashFieldRelVal, hashAllCtrlValueFromDB)
+                    If blnShowAsTextbox = True Then
+                        FormItems.LoadItem_Text(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    Else
+                        FormItems.LoadItem_Ddlist(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    End If
+
+                Case FieldFormType.Textbox '是Textbox
+                    '判断用户有无对当前字段的访问权限
+                    Dim blnHasRights As Boolean = FormTools.HasColumnRights(pst, blnCheckColRights, strColsOfNoRights, datCol)
+                    If lngMode <> InputMode.DesignInputForm AndAlso lngMode <> InputMode.DesignPrintForm AndAlso datCol.ColValType = FieldValueType.RadioGroup Then
+                        If blnHasRights = True Then
+                            'RadioGroup在设计窗体中被保存为FieldFormType.Textbox
+                            FormItems.LoadItem_Radiobox(pst, panelForm, panelWin, datForm.hashUICtls, lngResID, datCol, lngMode, datCol.ColName, hashOpts, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, hashColResIDs, lngRecIDForEdit, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState)
+                        End If
+                    ElseIf datCol.ColValType = FieldValueType.OptionValue Then
+                        FormItems.LoadItem_Ddlist(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    Else
+                        '判断用户有无对当前字段的访问权限
+                        FormItems.LoadItem_Text(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    End If
+                Case FieldFormType.HtmlEdit '是HTML编辑器 @guoja
+                    Dim blnHasRights As Boolean = FormTools.HasColumnRights(pst, blnCheckColRights, strColsOfNoRights, datCol)
+                    If lngMode <> InputMode.DesignInputForm AndAlso lngMode <> InputMode.DesignPrintForm AndAlso datCol.ColValType = FieldValueType.RadioGroup Then
+                    Else
+                        '判断用户有无对当前字段的访问权限
+                        'FormItems.LoadItem_PageImage(pst, panelForm, panelWin, datCol)
+
+                        FormItems.DesingHTMLEdit(pst, lngResID, datCol, lngMode, panelForm, panelWin, datForm.hashUICtls, hashFieldRelVal, hashAllCtrlValueFromDB, datForm.hashACodeValue, shtTabIndex, datCol.FrmLeft, datCol.FrmTop, datCol.FrmWidth, datCol.FrmHeight, blnEnableViewState, hashColResIDs, blnHasRights, lngRecIDForEdit)
+                    End If
+            End Select
+        Next
+        '-------------------------------------------------------------------
+
+        Return datForm
+    End Function
+
+    Private Function GetRecordValue(ByRef pst As CmsPassport, ByVal lngResID As Long, ByVal lngRecID As Long) As Hashtable
+        Dim datRes As DataResource = pst.GetDataRes(lngResID)
+
+        Dim strSql As String
+        If datRes.ResTableType = "DOC" Then '文档表暂不支持，该sql有错
+            strSql = "SELECT " & CmsDatabase.DocDatabaseLink & ".DOC2_COMMENTS, " & CmsDatabase.DocDatabaseLink & ".DOC2_KEYWORDS, " & datRes.ResTable & ".* FROM " & datRes.ResTable & ", " & CmsDatabase.DocDatabaseLink & " WHERE ID=" & lngRecID & " AND DOC2_ID=DOCID"
+        Else '二维表
+            strSql = "SELECT * FROM " & datRes.ResTable & "_history WHERE PriId=" & lngRecID
+        End If
+        Dim ds As DataSet = SDbStatement.Query(strSql)
+        Dim dv As DataView = ds.Tables(0).DefaultView
+        Dim hashFieldVal1 As New Hashtable
+        Dim intCount As Integer = dv.Count
+        If intCount > 0 Then
+            Dim drv As DataRowView = dv(0)
+
+            Dim datCol As DataColumn
+            For Each datCol In ds.Tables(0).Columns
+                Dim strColName As String = datCol.ColumnName
+
+                If Not (hashFieldVal1 Is Nothing) Then
+                    hashFieldVal1.Add(TextboxName.GetCtrlName(strColName, lngResID), DbField.GetObj(drv, strColName))
+                End If
+            Next
+        End If
+        Return hashFieldVal1
+    End Function
+End Class

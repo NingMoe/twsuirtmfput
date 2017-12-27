@@ -1,0 +1,58 @@
+<%@ Register TagPrefix="Pager" NameSpace="Cms.Web" Assembly="cmsweb"%>
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="ViewHistoryList.aspx.vb" Inherits="Cms.Web.ViewHistoryList"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>ViewHistoryList</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<LINK href="/cmsweb/css/cmsstyle.css" type="text/css" rel="stylesheet">
+		<SCRIPT language="JavaScript" src="/cmsweb/script/jscommon.js"></SCRIPT>
+		<SCRIPT language="JavaScript" src="/cmsweb/script/base.js"></SCRIPT>
+		<script language="JavaScript" src="/cmsweb/script/poslib.js"></script>
+		<script language="JavaScript" src="/cmsweb/script/menu4.js"></script>
+		<script language="JavaScript" src="/cmsweb/script/scrollbutton.js"></script>
+		<SCRIPT language="JavaScript" src="/cmsweb/script/CmsScript.js"></SCRIPT>
+		<script language="javascript">
+		function RowLeftClickInHostTableNoPost(src)
+		{
+			
+				//µ¥Ñ¡¼ÇÂ¼
+				var o=src.parentNode;
+				for (var k=1;k<o.children.length;k++){
+					if (o.children[k].bgColor_bak == null || o.children[k].bgColor_bak == ""){
+						o.children[k].bgColor = "white";
+					}else{
+						o.children[k].bgColor = o.children[k].bgColor_bak;
+					}
+				}
+				src.bgColor = "#C4D9F9";				
+			
+		}
+		function DoubleClick(src)
+		{
+	
+			location.href = "ViewRecordHistory.aspx?PAGE_RESID=<%=RLng("mnuresid")%>&id=" + src.RECID;
+		}
+		</script>
+	</HEAD>
+	<body MS_POSITIONING="GridLayout">
+		<form id="Form1" method="post" runat="server">
+			<TABLE class="cms_toolbar" cellSpacing="0" width=100%  border="0">
+				<TR>
+					<TD width="1"></TD>
+					<TD vAlign="bottom" noWrap align="right" width="100%">
+						<Pager:CmsPager id="Cmspager1" runat="server"></Pager:CmsPager></TD>
+				</TR>
+				<TR>
+					<TD vAlign="top" height="10" bgcolor=white colspan=2>
+						<asp:DataGrid id="dgridHostTable" runat="server">
+							<PagerStyle Visible="False"></PagerStyle>
+						</asp:DataGrid></TD>
+				</TR>
+			</TABLE>
+		</form>
+	</body>
+</HTML>

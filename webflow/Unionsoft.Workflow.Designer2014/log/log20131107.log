@@ -1,0 +1,3 @@
+﻿2013-11-07 13:21:51   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-11-07 13:21:54   ERROR admin登陆失败！ ExMsg: 无法打开登录所请求的数据库 "NewOA1_empty"。登录失败。 ExFileLine: [Organization.vb:113 frmLogin.cs:330]
+2013-11-07 14:32:15    WARN 表单FLW_FORM中不存在列DataSourceType 数据库表单有不一致现象。 

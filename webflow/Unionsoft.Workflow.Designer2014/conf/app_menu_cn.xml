@@ -1,0 +1,162 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <!-- 主界面主表菜单：记录操作。以下所有关键字名称必须小写
+         参数：MNUTYPE：菜单类型。=GET =POST =POPUP =POPUPDOC
+               MNUNAME：菜单显示名称
+               MNUFORMNAME：窗体设计的名称。利用记录编辑页面，但编辑的窗体名称不同。
+               MNURIGHTS：权限定义，该值即是数据库中定义的权限值，如：View = 1 '浏览权限； Add = 3 '增加权限； Edit = 5 '修改权限； Del = 9 '删除； 0 表示无权限限制；
+               MNURESLOCATE: =1:仅在主表出现；=2:仅在子表出现；=3：仅在主表和子表出现
+			   MNUSELREC: =0: 菜单操作无需选中记录；1：菜单操作必须选中记录
+               MNUCMD：菜单请求命令。非空值表示POST方式；空值表示GET方式。当前常用命令有：MenuRecordAdd、MenuRecordEdit、MenuFlowController、MenuFlowControllerByEditForm、MenuFlowControllerForReport、MenuFlowEditResRecords
+               MNUURL：菜单请求的URL，用于GET方式。URL中务必不能包含GET参数，即?x=123之类，因为程序中会加入?以及基本参数
+               MNUTARGET：POST方式中需要用到的target属性。=_blank 表示跳出新窗体
+               mnuallowadmin: =1 即只要是部门管理员必然显示，不管MNURIGHTS中的权限设置，但必须是功能权限sysfunc许可的。=其它值，忽略此设置
+               mnuimage：菜单的图标
+               mnuconfirm：菜单点击后先提示的信息，是可选项。
+               mnurestype：=TWOD; =DOC 只有在资源类型与这里指定的类型相同时才显示
+               mnuhasreltable：=1: 只有含有关联表的资源才显示；其它值或空：无此限制
+               sysfunc: ="XXX" XXX是app_config.xml的SYS_FUNCTION中的Key名称。表示只有该功能值为1（支持该功能）时此菜单才显示
+               isreportservice：=1: 仅为ReportService所作的URL；=0或其它值：反之
+			   MENUFROM: =1: 仅在内容管理中显示；2：仅在编辑窗体中显示；4：仅在资源树结构中显示；上述值可以做任何与组合，譬如：1+2=3表示同时在内容管理和编辑窗体中显示
+               
+			   以下条目只有在跳出新窗体时才需要，即MNUTYPE设置为：POPUP POPUPDOC
+               newwin_left：=xx: 跳出新窗体时新窗体的左坐标
+               newwin_top：=xx: 跳出新窗体时新窗体的右坐标
+               newwin_width：=xx: 跳出新窗体时新窗体的宽度
+               newwin_height：=xx: 跳出新窗体时新窗体的高度
+               newwin_menubar：=yes: 跳出新窗体时有菜单条；no：没有
+               newwin_toolbar：=yes: 跳出新窗体时有工具条；no：没有
+               newwin_location：=yes: 跳出新窗体时有地址条；no：没有
+               newwin_resizable：=yes: 跳出新窗体时有窗体Size可变条；no：没有
+			   newwin_scrollbars：=yes: 跳出新窗体时有滚动条；no：没有
+         注意1：MENU_RECADD等的Key名称没有实际意义，只需取不同名字即可
+         注意2：值含有&符号的必须用CDATA包含
+
+		 SECTION的属性：
+		 HASHOST: =1:有主表菜单；=其它值:没有主表菜单
+		 HASREL: =1:有子表菜单；=其它值:没有子表菜单
+    -->
+    <!--
+        项目定制扩展功能菜单，特殊规则：
+          1、SECTION开头是：MENU_RES_ + 资源ID
+		  2、POST菜单类型的定制命令MNUCMD必须以"CLIENT_"开头，一个格式为："CLIENT_" + 客户简称 + 命令意义名称
+
+		定制菜单的状态流程控制：
+			FLOW_SAVETITLE：编辑窗体左上角“保存”按钮的名称
+			FLOW_MSG_OK：校验或操作失败后在界面上需要提示的(错误)信息
+			FLOW_MSG_FAIL：操作成功后在界面上需要提示的信息
+			FLOW_STOP_FORMULA：1：禁止运行计算公式；其它值：在有设置字段值的情况下运行计算公式。有窗体的菜单命令则有窗体设计控制是否运算计算公式
+			FLOW_REDIRECT_URL：在当前操作正确完成后重定向至指定URL
+			FLOW_NOCHECK_RECLOCK: =1 要求当前窗体不作记录锁定校验，仅在MNUCMD=MenuFlowControllerByEditForm时有效
+			FLOW_COLCOND: 字段条件，元素值为条件值。多个条件值则用两个;;隔开。以下是此元素的属性：
+				NAME: 条件字段的显示名称，仅为了方便查看，不用于程序
+				COLNAME: 指定资源或当前资源的字段内部名称
+				COMPOP: = DY(>) DYDY(>=) XY(<) XYDY(<=) !=
+				LOGICOP：AND：与；  OR以及其它值都认为是：OR。重要提示：所有OR条件必须放在所有AND条件之前
+				RESID：=0: 是当前资源；=xxx：资源ID
+				RESTYPE：0：当前资源；1：是当前资源的父资源；2：是当前资源的子资源
+				ERRMSG：该条件不能满足时返回的错误提示信息
+			FLOW_COLSET: 待赋值的字段值，值支持以下关键字：[CUR_USERID] [CUR_USERNAME] [CUR_USERDEPNAME] [CUR_YEAR] [CUR_DATE] [CUR_TIME] [CUR_MONTH_FSTDAY] [CUR_MONTH_LSTDAY]。以下是此元素的属性：
+				NAME: 待复制的字段显示名称，仅为了方便查看，不用于程序
+				COLNAME: 待设置值的字段名称
+				RESID: 待设置值的字段所在资源ID，0表示当前资源
+				RESTYPE: 待设置值的字段所在资源的类型，0：当前资源；1：是当前资源的父资源；2：是当前资源的子资源；3：其它资源
+				RESCONDCOL1: 为子资源设置值时的条件字段，没有条件则为空
+				RESCONDCOL1VAL: 为子资源设置值时的条件字段的条件值，没有条件则为空，支持关键字：[CURCOL_XXX] XXX为当前资源的当前记录的字段名称
+				RESCONDCOL2: 为子资源设置值时的条件字段，没有条件则为空
+				RESCONDCOL2VAL: 为子资源设置值时的条件字段的条件值，没有条件则为空
+		注意事项：字段值条件的排序有一个规则：所有的OR条件的排在前面，这样软件在判断时只要满足条件则不必再提取其它条件
+
+		菜单定义的属性：
+			HASHOST：="1" 表示需要在主表中出现
+			HASREL：="1" 表示需要在关联子表中出现
+			MNUNAME：菜单显示名称
+			DESC：菜单描述
+	-->
+    <!--
+        打印辅助操作的定义规则：
+		1、SECTION: MENU_PRINT_ + 资源ID + 菜单的Key名称
+		2、赋值的定义规则与菜单定义相同
+	-->
+    <MENU_RECORD HASHOST="1" HASREL="1" MNUNAME="记录操作">
+        <MENU_RECADD_INREL MNUNAME="添加记录" MNUCMD="MenuRecordAdd" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_RECADD_INREL>
+        <MENU_RECEDIT MNUNAME="修改记录" MNUCMD="MenuRecordEdit" MNURIGHTS="5" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_RECEDIT>
+        <MENU_RECDELETE MNUNAME="删除记录" MNUCMD="MenuRecordDelete" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=images/titleicon/delete.gif;;mnuconfirm=记录信息删除后不能恢复，确定要删除当前选中的记录吗？</MENU_RECDELETE>
+        <MENU_RECVIEW MNUNAME="查阅记录" MNUCMD="MenuRecordView" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_RECVIEW>
+        <MENU_RECCUT MNUNAME="剪切记录" MNUCMD="MenuRecordCut" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=images/cut.jpg</MENU_RECCUT>
+        <MENU_RECPASTE MNUNAME="粘贴记录" MNUCMD="MenuRecordPaste" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/paste.jpg</MENU_RECPASTE>
+        <MENU_SEP>-</MENU_SEP>
+		<MENU_DATATEMPLATE MNUNAME="粘贴模板" MNUCMD="MenuRecordCopyDataTemplate" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=;;mnuimage=;;mnuconfirm=确定要复制当前模板记录吗？;;mnurestype=TWOD;;sysfunc=FUNC_DATA_TEMPLATE</MENU_DATATEMPLATE>
+		<MENU_DATATEMPLATE_DELETE MNUNAME="删除模板" MNUCMD="MenuRecordDeleteDataTemplate" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=;;mnuimage=;;mnuconfirm=确定要删除当前模板记录吗？;;mnurestype=TWOD;;sysfunc=FUNC_DATA_TEMPLATE_DELETE</MENU_DATATEMPLATE_DELETE>
+		<MENU_DICTTEMPLATE MNUNAME="字典模板" MNUCMD="" MNURIGHTS="3" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/DictTemplateCopy.aspx;;mnuimage=;;mnurestype=TWOD;;sysfunc=FUNC_DICT_TEMPLATE</MENU_DICTTEMPLATE>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_RECPRINT MNUNAME="打印记录" MNUCMD="" MNURIGHTS="17" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/RecordPrintSimple.aspx;;mnuimage=images/record_print.gif;;sysfunc=FUNC_PRINTFORM;;newwin_left=20;;newwin_top=20;;newwin_width=775;;newwin_height=580;;newwin_menubar=yes;;newwin_toolbar=yes;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes</MENU_RECPRINT>
+        <MENU_PRINT_LIST MNUNAME="打印列表" MNUCMD="" MNURIGHTS="4294967297" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/RecordPrintList.aspx?mnunopost=yes;;mnuimage=;;newwin_left=20;;newwin_top=20;;newwin_width=760;;newwin_height=560;;newwin_menubar=yes;;newwin_toolbar=yes;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes;;newwin_titlebar=no;;newwin_fullscreen=no</MENU_PRINT_LIST>
+		<!--此菜单Key: MENU_STARTFLOW 已经被固定写入代码，所以不能修改-->
+		<!--<MENU_STARTFLOW MNUNAME="启用工作流" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=;;mnuimage=;;sysfunc=FUNC_WORKFLOW</MENU_STARTFLOW>-->
+        <MENU_SHOWRELTABLES MNUNAME="关联表设置" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ConfigRelTables.aspx;;mnuimage=</MENU_SHOWRELTABLES>
+        <MENU_EMAIL MNUNAME="发送邮件短信" MNUCMD="" MNURIGHTS="268435457" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/CommSendRecord.aspx;;mnuimage=images/titleicon/email.gif;;sysfunc=FUNC_COMM_EMAILPHONE</MENU_EMAIL>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_REFRESH MNUNAME="刷新" MNUCMD="MenuRecordRefresh" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/refresh.gif</MENU_REFRESH>
+    </MENU_RECORD>
+    <MENU_DOC HASHOST="1" HASREL="1" MNUNAME="文档操作">
+        <MENU_DOCADD MNUNAME="添加文档" MNUCMD="MenuRecordAdd" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_DOCADD>
+        <MENU_DOCEDIT MNUNAME="修改文档属性" MNUCMD="MenuRecordEdit" MNURIGHTS="5" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_DOCEDIT>
+        <MENU_DOCDELETE MNUNAME="删除文档" MNUCMD="MenuRecordDelete" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=images/titleicon/delete.gif;;mnuconfirm=记录信息删除后不能恢复，确定要删除当前选中的记录吗？</MENU_DOCDELETE>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_CHECKOUT MNUNAME="签出文档(开始修改)" MNUCMD="DocCheckout" MNURIGHTS="65" MENUFROM="1" MNUTYPE="POPUPDOC" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="">MNUURL=/cmsweb/DocRetrieve.aspx;;mnuimage=;;newwin_left=20;;newwin_top=20;;newwin_width=700;;newwin_height=500;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes</MENU_CHECKOUT>
+        <MENU_CHECKIN MNUNAME="签入文档(修改完毕)" MNUCMD="MenuDocCheckin" MNURIGHTS="33" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_CHECKIN>
+        <MENU_GETDOC MNUNAME="提取文档" MNUCMD="DocGet" MNURIGHTS="129" MENUFROM="1" MNUTYPE="POPUPDOC" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="">MNUURL=/cmsweb/DocRetrieve.aspx;;mnuimage=;;newwin_left=20;;newwin_top=20;;newwin_width=700;;newwin_height=500;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes</MENU_GETDOC>
+        <MENU_ONLINEVIEW MNUNAME="在线浏览文档" MNUCMD="" MNURIGHTS="257" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocAgent.aspx?cmsdocmode=1;;mnuimage=;;sysfunc=FUNC_ONLINEVIEW;;newwin_left=10;;newwin_top=10;;newwin_width=950;;newwin_height=660;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes;;newwin_titlebar=no;;newwin_fullscreen=no</MENU_ONLINEVIEW>
+		<MENU_ONLINEEDIT MNUNAME="在线编辑文档" MNUCMD="" MNURIGHTS="17179869185" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocAgent.aspx?cmsdocmode=2;;mnuimage=;;sysfunc=FUNC_ONLINEEDIT;;newwin_left=10;;newwin_top=10;;newwin_width=950;;newwin_height=660;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes;;newwin_titlebar=no;;newwin_fullscreen=no</MENU_ONLINEEDIT>
+		<!--此菜单Key: MENU_DOCHISTORY 已经被固定写入代码，所以不能修改-->
+        <MENU_DOCHISTORY MNUNAME="查阅历史版本" MNUCMD="" MNURIGHTS="513" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocHistoryList.aspx;;mnuimage=;;sysfunc=FUNC_DOCHISTORY</MENU_DOCHISTORY>
+        <MENU_SHARE MNUNAME="共享文档" MNUCMD="" MNURIGHTS="1025" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocShare.aspx;;mnuimage=</MENU_SHARE>
+        <MENU_SEP>-</MENU_SEP>
+    </MENU_DOC>
+    <MENU_RESACTION HASHOST="1" HASREL="1" MNUNAME="资源操作">
+        <MENU_RIGHTSSET MNUNAME="权限设置" MNUCMD="" MNURIGHTS="65537" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/RightsSet.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/key1.gif</MENU_RIGHTSSET>
+        <MENU_COLUMNSET MNUNAME="字段设置" MNUCMD="" MNURIGHTS="131073" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceColumnSet.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/field.gif;;sysfunc=FUNC_COLUMN_SET</MENU_COLUMNSET>
+        <MENU_COLUMNSHOWSET MNUNAME="显示设置" MNUCMD="" MNURIGHTS="262145" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceColumnShowSet.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/table.gif;;sysfunc=FUNC_COLUMNSHOW_SET</MENU_COLUMNSHOWSET>
+        <MENU_INPUTFORM MNUNAME="输入窗体设计" MNUCMD="" MNURIGHTS="524289" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/FormDesign.aspx?mnuformtype=0;;mnuallowadmin=1;;mnuimage=images/treeimages/res_twod.gif</MENU_INPUTFORM>
+        <MENU_PRINTFORM MNUNAME="打印窗体设计" MNUCMD="" MNURIGHTS="1048577" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/FormDesign.aspx?mnuformtype=1;;mnuallowadmin=1;;mnuimage=images/titleicon/print.gif;;sysfunc=FUNC_PRINTFORM</MENU_PRINTFORM>
+        <MENU_RELATEDTABLE MNUNAME="关联表设置" MNUCMD="" MNURIGHTS="2097153" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceRelationList.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/associated2.gif;;sysfunc=FUNC_RELATION_TABLE</MENU_RELATEDTABLE>
+        <MENU_FORMULA MNUNAME="计算公式设置" MNUCMD="" MNURIGHTS="2147483649" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/FieldAdvCalculationList.aspx;;mnuallowadmin=1;;mnuimage=;;sysfunc=FUNC_FORMULA</MENU_FORMULA>
+        <MENU_ROWCOLOR MNUNAME="行颜色设置" MNUCMD="" MNURIGHTS="4194305" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceRowColor.aspx;;mnuallowadmin=1;;mnuimage=;;sysfunc=FUNC_RES_ROWCOLOR</MENU_ROWCOLOR>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_RESEXPORT MNUNAME="导出资源数据" MNUCMD="" MNURIGHTS="67108865" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceExport.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/window.gif;;sysfunc=FUNC_RES_EXP_OTHERTABLE</MENU_RESEXPORT>
+        <MENU_RESEXPORT_SEARCH MNUNAME="导出查询结果" MNUCMD="" MNURIGHTS="67108865" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceExport.aspx?getsearchresult=1;;mnuallowadmin=1;;mnuimage=images/titleicon/window.gif;;sysfunc=FUNC_RES_EXP_OTHERTABLE</MENU_RESEXPORT_SEARCH>
+        <MENU_RESIMPORT MNUNAME="导入资源数据" MNUCMD="" MNURIGHTS="134217729" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceImportStep1.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/window.gif;;sysfunc=FUNC_RES_IMP_OTHERTABLE</MENU_RESIMPORT>
+        <MENU_EMAILSMSSET MNUNAME="邮箱手机字段" MNUCMD="" MNURIGHTS="16777217" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/EmailSmsConfig.aspx;;mnuallowadmin=1;;mnuimage=;;sysfunc=FUNC_COMM_EMAILPHONE</MENU_EMAILSMSSET>
+        <MENU_BATCHUPDATE_FIELD MNUNAME="批量修改字段" MNUCMD="" MNURIGHTS="1073741825" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/BatchUpdateField.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/creat.gif;;sysfunc=FUNC_RES_BATCHUPDATEROW</MENU_BATCHUPDATE_FIELD>
+    </MENU_RESACTION>
+    <MENU_SEARCH HASHOST="1" HASREL="1" MNUNAME="检索统计">
+        <MENU_SEARCH MNUNAME="开始查询" MNUCMD="MenuSearch" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/icons/xpLens.gif</MENU_SEARCH>
+        <MENU_SEARCH_CONTINUE MNUNAME="再次查询" MNUCMD="MenuSearchAgain" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/icons/xpLens2.gif;;sysfunc=FUNC_SEARCH_CONTINUE</MENU_SEARCH_CONTINUE>
+        <MENU_SEARCH_FULLTABLE MNUNAME="全表查询" MNUCMD="MenuSearchFullTable" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FULLTABLE_SEARCH;;mnurestype=TWOD</MENU_SEARCH_FULLTABLE>
+		<!--此菜单Key: MENU_FTSEARCH 已经被固定写入代码，所以不能修改-->
+        <MENU_FTSEARCH MNUNAME="全文检索" MNUCMD="MenuSearchFullText" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/Icons/oMessage.gif;;mnurestype=DOC;;sysfunc=FUNC_FULLTEXT_SEARCH</MENU_FTSEARCH>
+        <MENU_SEARCH_CANCEL MNUNAME="取消查询" MNUCMD="MenuRecordRefresh" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_SEARCH_CANCEL>
+        <MENU_SEP>-</MENU_SEP>
+		<MENU_SEARCH_MULTITABLE MNUNAME="多表统计" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearchColDef.aspx?mtstype=2;;mnuimage=;;sysfunc=FUNC_MULTITABLE_SEARCH;;mnurestype=TWOD</MENU_SEARCH_MULTITABLE>
+        <MENU_SEARCH_MULTITABLE_LIST MNUNAME="多表统计列表" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearch.aspx?mtstype=1;;mnuimage=;;sysfunc=FUNC_MULTITABLE_SEARCH;;mnurestype=TWOD</MENU_SEARCH_MULTITABLE_LIST>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_GENERAL_ROWWHERE MNUNAME="通用行过滤" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearch.aspx?mtstype=3;;mnuimage=;;sysfunc=FUNC_ROWWHERE;;mnurestype=TWOD</MENU_GENERAL_ROWWHERE>
+        <MENU_PERSONAL_ROWWHERE MNUNAME="个人行过滤" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearch.aspx?mtstype=4;;mnuimage=;;sysfunc=FUNC_ROWWHERE;;mnurestype=TWOD</MENU_PERSONAL_ROWWHERE>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_SUM MNUNAME="列合计值" MNUCMD="MenuStatisticSum" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_SUM>
+        <MENU_AVG MNUNAME="列平均值" MNUCMD="MenuStatisticAvg" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_AVG>
+        <MENU_MAX MNUNAME="列最大值" MNUCMD="MenuStatisticMax" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_MAX>
+        <MENU_MIN MNUNAME="列最小值" MNUCMD="MenuStatisticMin" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_MIN>
+        <MENU_UNIQUE MNUNAME="列无重复数量" MNUCMD="MenuStatisticUnique" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_UNIQUE>
+    </MENU_SEARCH>
+    <MENU_RESMANAGER HASHOST="1" HASREL="1" MNUNAME="收藏夹">
+        <MENU_DAILYWORK_ADD MNUNAME="加入收藏夹" MNUCMD="MenuFavoriteAdd" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_ADD>
+        <MENU_DAILYWORK_DEL MNUNAME="移离收藏夹" MNUCMD="MenuFavoriteDel" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_DEL>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_DAILYWORK_MOVEUP MNUNAME="向上移动" MNUCMD="MenuFavoriteMoveUp" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_MOVEUP>
+        <MENU_DAILYWORK_MOVEDOWN MNUNAME="向下移动" MNUCMD="MenuFavoriteMoveDown" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_MOVEDOWN>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_DAILYWORK_REFRESH MNUNAME="刷新" MNUCMD="MenuFavoriteRefresh" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_REFRESH>
+    </MENU_RESMANAGER>
+</CONFIG>

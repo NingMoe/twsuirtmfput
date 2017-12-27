@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <!-- 资源管理的功能实现模块的配置信息 -->
+    <MEDI_RESOURCE>
+        <!-- dll路径支持2种格式：1）绝对路径，如：D:\projects\cms\code\dll\CmsOrganization\bin\CmsOrganization.dll；2）WEB相对路径，如：\bin\CmsOrganization.dll -->
+        <DLL>\bin\Unionsoft.Implement.dll;\Unionsoft.Implement.dll</DLL>
+        <IMPLEMENTATION>Unionsoft.Implement.CmsResource</IMPLEMENTATION>
+        <ENABLE>1</ENABLE>
+    </MEDI_RESOURCE>
+    <!-- 文档信息表实现模块的配置信息 -->
+    <MEDI_DOC>
+        <DLL>\bin\Unionsoft.Implement.dll;\Unionsoft.Implement.dll</DLL>
+        <IMPLEMENTATION>Unionsoft.Implement.CTableDataDoc</IMPLEMENTATION>
+        <ENABLE>1</ENABLE>
+    </MEDI_DOC>
+    <!-- 二维信息表实现模块的配置信息 -->
+    <MEDI_TWOD>
+        <DLL>\bin\Unionsoft.Implement.dlll;\Unionsoft.Implement.dll</DLL>
+        <IMPLEMENTATION>Unionsoft.Implement.CTableData2D</IMPLEMENTATION>
+        <ENABLE>1</ENABLE>
+    </MEDI_TWOD>
+    <!-- 人员管理信息表实现模块的配置信息 -->
+    <MEDI_EMP>
+        <DLL>\bin\Unionsoft.Implement.dll;\Unionsoft.Implement.dll</DLL>
+        <IMPLEMENTATION>Unionsoft.Implement.CTableDataEmp</IMPLEMENTATION>
+        <ENABLE>1</ENABLE>
+    </MEDI_EMP>
+</CONFIG>

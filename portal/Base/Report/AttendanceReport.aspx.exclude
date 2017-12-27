@@ -1,0 +1,387 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="AttendanceReport.aspx.cs" Inherits="Base_Report_AttendanceReport" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+   <title>  <%=ReportTitle%></title>
+    <%=this.GetScript1_4_3 %>
+    <style type="text/css">
+        .headerSearchClass_0, .headerSearchClass_3 {
+            border: 1px solid #999999;
+            padding: 2px;
+        }
+    </style>
+    <%-- <script src="../../Scripts/jquery-1.8.0.min.js"></script>--%>
+    <script src="../../Scripts/CommonJS.js"></script>
+    <script src="../../Scripts/UserDataGridForJS.js"></script>
+    <script src="../../Scripts/DataGridFieldStyle.js"></script>
+    <script src="../../Scripts/jquery-easyui-datagridview/jquery-easyui-datagridview/jquery-easyui-datagridview/datagrid-detailview.js"></script>
+    <script type="text/javascript">
+        var _UserID = '<%=User.ID %>';
+        var _UserName = '<%=User.Name %>';
+        var _keyWordValue = '<%=ReportKey %>';
+        var _DataGridData = "";
+        var _BaseColumn = "";
+        var CommonSearchField = [];
+        var _DynamicHeadReportStr = '<%=DynamicHeadReportStr%>';
+        var SeniorSearchStr = "";
+        var SelectInit = false;
+        var _Init = 0
+        var layerIndex = 0
+        var _headerSearchStr = "";
+        var _UserDefinedSql_Head = ''
+        var _UserDefinedSql = _UserDefinedSql_Head + " "
+        var _ORDER = 'order by 账号   ';
+        var SelectYear = 0;
+        var SelectMonth = 0;
+        var SelectEmp = "";
+        var hasPermission = '<%=hasPermission%>';
+        var _ExcelOptionModelStr = '<%=_ExcelOptionModelStr%>';
+        var _WordOptionModelStr = '<%=_WordOptionModelStr%>';
+        var _CellInfoStr = '<%=_CellInfoStr%>';
+        var _CellInfosStr = '<%=_CellInfosStr%>';
+        var ImportDataOptionModel = "";
+        var ImportParams = "";
+        window.onresize = function () {
+            if (window.outerHeigth == screen.heigth && window.outerWidth == screen.width) {
+                setDataGridData();
+            } else {
+                setDataGridData();
+            }
+        }
+
+        $(document).ready(function () {
+            if (hasPermission == "") {
+                $("#ygzh").val(_UserID)
+                $("#ygzh").attr("disabled", "disabled")
+            }
+            GetSelect(0);
+            setDataGridData()
+        });
+
+        function GetSelect(type) {
+            SelectYear = $("#year").val();
+            SelectMonth = $("#month").val();
+            SelectEmp = $("#ygzh").val();
+
+            if (type == 1)
+                setDataGridData()
+
+        }
+
+
+        function setDataGridData() {
+            //var HideStr = ""
+            //if (SelectYear != "")
+            //    HideStr += "," +  SelectYear + " 年 "
+            //if (SelectMonth != "")
+            //    HideStr += "," + SelectMonth + " 月 "
+
+            _UserDefinedSql_Head = " SELECT * from Funciton_YGQK ('" + SelectEmp + "'," + SelectYear + "," + SelectMonth + ",0) "
+
+            _UserDefinedSql = " SELECT * from Funciton_YGQK ('" + SelectEmp + "'," + SelectYear + "," + SelectMonth + ",1) "
+
+            var CommonGetDataUrl = "../Common/CommonGetInfo_ajax.aspx?typeValue=GetDataByUserDefinedSql";
+            var ROW_NUMBER_ORDER = _ORDER
+
+            var HeaderSearchType = [];
+            HeaderSearchType.push({
+                HeaderName: "年级编号",
+                HeaderType: 5
+            });
+
+            HeaderSearchType.push({
+                HeaderName: "遍历日期",
+                HeaderType: 1
+            });
+
+            var GetDynamicHeadqueryParams = {
+                UserDefinedSql: _UserDefinedSql_Head,
+                SortField: "",
+                SortBy: "",
+                Condition: '',
+                ROW_NUMBER_ORDER: ROW_NUMBER_ORDER,
+                IsExport: 1,
+                DynamicHeadReportStr: _DynamicHeadReportStr,
+            }
+
+
+            var SelectDataqueryParams = {
+                UserDefinedSql: _UserDefinedSql + _headerSearchStr,
+                SortField: "",
+                SortBy: "",
+                Condition: '',
+                // NoPaging:true,
+                ROW_NUMBER_ORDER: ROW_NUMBER_ORDER,
+                DynamicHeadReportStr: _DynamicHeadReportStr,
+            }
+
+            //var ReportGetDataQueryParams = {
+            //    UserDefinedSql: _ReportUserDefinedSql + _headerSearchStr,
+            //    SortField: "",
+            //    SortBy: "",
+            //    Condition: '',
+            //    ROW_NUMBER_ORDER: ROW_NUMBER_ORDER,
+            //    DynamicHeadReportStr: _DynamicHeadReportStr,
+            //    IsExport: 1
+            //}
+
+
+            $.ajax({
+                type: "POST",
+                url: "../Common/CommonGetInfo_ajax.aspx?typeValue=GetDataOfReportOfDynamicHeadReportColumnStrBySqlStr",
+                data: GetDynamicHeadqueryParams,
+                success: function (BaseColumns) {
+                    var BaseColumn = BaseColumns.split("#")[0]
+                    var datagridFilterColumn = BaseColumns.split("#")[1]
+                    var frozenColumnsJson = BaseColumns.split("#")[2]
+                    var GridHeight = $(window).height() - 40
+                    _BaseColumn = BaseColumn
+
+                    $("#UserDataGrid_<%=ReportKey %>").css("height", GridHeight)
+                    var DataGridData = {
+                        InitializationStr: "#UserDataGrid_TB_<%=ReportKey %>",
+                        CommonGetDataUrl: CommonGetDataUrl,
+                        pageSize: 50,
+                        //  HeaderSearchType: HeaderSearchType,
+                        idField: "ID",
+                        GridHeight: GridHeight,
+                        BaseColumns: BaseColumn,
+                        // frozenColumnsJson: frozenColumnsJson,
+                        UserID: "<%=User.ID %>",
+                        queryParams: SelectDataqueryParams,
+                        fitColumns: true,
+                        toolbarDIV: "#tb",
+                        // hasHeaderSearch: true,
+                        SaveResid: "510339948762",
+                        hasDblClickRowEvent: true,
+                        HasOnSortEvent: false,
+                        HasLoadSuccessEvent: true,
+                        ReportGetDataUrl: CommonGetDataUrl,
+                        // ReportGetDataQueryParams: ReportGetDataQueryParams,
+                        ExcelName: "<%=ReportTitle%>",
+                        DynamicHeadReportStr: _DynamicHeadReportStr
+                    }
+                    _DataGridData = DataGridData
+                    // InitializationUserDataGrid("", "", DataGridData)
+                    InitializationUserDataGridOfHasChild("", "", DataGridData)
+                }, error: function (o) {
+                    debugger
+                }
+            })
+        }
+
+        function LoadSuccessEvent() {
+            var sj = $("#UserDataGrid_TB_<%=ReportKey %>").datagrid("getRows")
+
+            if (sj.length == 0) {
+                alert("数据库中无【" + SelectYear + "年" + SelectMonth + "月】的考勤数据，请先导入数据！")
+            }
+        }
+
+
+        function ImportData() {
+            SelectYear = $("#year").val();
+            SelectMonth = $("#month").val();
+            SelectEmp = $("#ygzh").val();
+
+            if (SelectYear == "" || SelectMonth == "") {
+                alert("年月不能为空！")
+                return;
+            }
+
+            var sj = $("#UserDataGrid_TB_<%=ReportKey %>").datagrid("getRows")
+
+            if (sj.length > 0) {
+                alert("数据库中已存在【" + SelectYear + "年" + SelectMonth + "月】的考勤数据，不能重复导入！")
+                return;
+            }
+
+            if (!confirm("是否立即导入【" + SelectYear + "年" + SelectMonth + "月】的考勤数据？")) {
+                return;
+            }
+
+            var DialogWidth = 500
+            var DialogHeight = 200
+            var title = "导入考勤数据【" + SelectYear + "年" + SelectMonth + "月】"
+            
+            var url = '../CommonPage/UploadFile_DQFL.aspx?key=DLKQ&OpenDiv=divReportPage&gridID=UserDataGrid_TB_<%=ReportKey %>&argYear=' + SelectYear + '&argMonth=' + SelectMonth
+            if (DialogHeight == 0)
+                DialogHeight = parent.$("#westModel_id").height() + 10;
+            if (DialogWidth == 0) {
+                DialogWidth = document.documentElement.clientWidth - 190;
+                if (DialogWidth > 1200) DialogWidth = 1200;
+            }
+
+            ImportDataOptionModel = eval('[' + _ExcelOptionModelStr + ']')[0]
+            ImportParams = {
+                argUserID: '0040',
+                argCity: ''
+            }
+            ImportDataOptionModel.KeyType = "导入考勤记录";
+            ImportDataOptionModel.ReadSheetStr = "三盟";
+            ImportParams.argTableResid = "434801499553"
+            ImportParams.argYear = SelectYear;
+            ImportParams.argMonth = SelectMonth;
+            ImportParams.tip = "【导入考勤记录】导入成功";
+
+            $('#divReportPage').append($("<iframe scrolling='no' id='FromInfo' frameborder='0' marginwidth='0' marginheight='0' style='width:100%;height:100%;'></iframe")).dialog({
+                title: title,
+                width: DialogWidth,
+                height: DialogHeight,
+                cache: false,
+                closed: true,
+                shadow: false,
+                closable: true,
+                draggable: true,
+                resizable: false,
+                onClose: function () {
+                    $('#FromInfo:gt(0)').remove();
+                },
+                modal: true
+            });
+            var index = url.indexOf("?");
+            if (index != "-1") {
+                url = url + "&height=" + DialogHeight;
+            } else {
+                url = url + "?height=" + DialogHeight;
+            }
+            $('#FromInfo')[0].src = encodeURI(url);
+            $('#divReportPage').dialog('open');
+        }
+         
+        function SendMessage() {
+            if (!confirm("是否汇总【" + SelectYear + "年" + SelectMonth + "月】的考勤信息？")) {
+                return;
+            }
+            var MessageUrl = "http://unionsoft.vigorddns.com:9090/DoEvent/DoEventByName?argEventName=SendWorkAttendanceReportInfo&year=" + SelectYear + "&month=" + SelectMonth;
+            var index = layer.load(1); //换了种风格
+            $.ajax({
+                type: "POST",
+                url: encodeURI(MessageUrl),
+                success: function (o) {
+                    layer.close(index);
+                    alert("汇总成功！")
+                }
+            })
+        }
+
+        function ExportKQJL() {
+
+            SelectYear = $("#year").val();
+            SelectMonth = $("#month").val();
+            SelectEmp = $("#ygzh").val();
+
+            if (SelectYear == "" || SelectMonth == "") {
+                alert("年月不能为空！")
+                return;
+            }
+
+            var sj = $("#UserDataGrid_TB_<%=ReportKey %>").datagrid("getRows")
+
+            if (sj.length == 0) {
+                alert("数据库中无【" + SelectYear + "年" + SelectMonth + "月】的考勤数据，请先导入数据！")
+                return
+            }
+
+
+            var baseURL = window.location.protocol + "//" + window.location.host + "/webflow/Document/ToExcel/DoEventByExcel_ajax.aspx"
+            var OptionModel = eval('[' + _ExcelOptionModelStr + ']')[0]
+
+            var _UserID = '<%=User.ID%>';
+            var NewSavePath = "../../PrintTemp/" + "考勤报表" + "_" + _UserID + ".xls";
+            OptionModel.KeyType = "导出考勤报表";
+            OptionModel.ReadSheetStr = "Sheet1";
+            OptionModel.StartRowNum = 2;
+            OptionModel.StartColumnNum = 1;
+            OptionModel.FilePath = NewSavePath;
+            OptionModel.IsCopyReadExcel = false;
+            OptionModel.HasTitle = true;
+            OptionModel.GetAjaxType = -1;
+            OptionModel.IsReplaceWorkBook = true;
+            OptionModel.IsSetColumnWidth = false;
+
+            DC_Params = {
+                GetExcelHelperOptionModelStr: JSON.stringify(OptionModel),
+                argUserID: _UserID,
+                argCity: "",
+                argTableResid: "",
+                argYear: SelectYear,
+                argMonth: SelectMonth
+            }
+
+            var isPrint = false
+            var index = layer.load(1); //换了种风格
+
+            $.ajax({
+                type: "POST",
+                data: DC_Params,
+                url: encodeURI(baseURL),
+                success: function (o) {
+                    layer.close(index);
+
+                    var Result = eval('[' + o + ']')[0];
+                    if (Result.ErrorStr != "") {
+                        alert(Result.ErrorStr)
+                    }
+                    else {
+                        if (isPrint && Result.DownUrl != "") {
+                            window.open(window.location.protocol + "//" + window.location.host + "/webflow/Document/NewOfficeEdit/NewOfficeEditor.aspx?IsCheckOut=2&DocumentPath=" + encodeURI(Result.DownUrl) + "&IsHideBtnSave=1&IsShowBtnPrint=1&UserId=" + _UserID)
+                        } else if (Result.DownUrl != "" && Result.DownUrlName != "") {
+                            var MyUrl = "/webflow/PrintTemp/" + Result.DownUrlName
+                            alert("文件导出成功，稍后将自动下载！")
+                            window.open(MyUrl)
+                        }
+                        else {
+                            alert(tip + "，共导入 " + Result.Result + " 条数据！")
+                        }
+                    }
+                },
+                error: function (o) {
+                    debugger
+                }
+            });
+        }
+
+    </script>
+</head>
+<body style="padding: 0px; overflow-y: hidden">
+    <div id="search_panel<%=ReportKey %>" class="easyui-panel" style="overflow: hidden;" border="false">
+        <div id="search_panel1<%=ReportKey %>" class="easyui-panel" style="overflow: hidden" border="false">
+            <div style="height: 35px; font-size: 25px; text-align: center;">
+                <%=ReportTitle%>
+                <%--<span style="float: right; margin-right: 10px; position: relative; top: 5px;">如要检索为空的值， <span style="color: red; margin-right: 30px">请输入一个英文空格 </span>如要检索不为空的值，<span style="color: red"> 请输入两个英文空格 </span>
+                </span>--%>
+            </div>
+        </div>
+    </div>
+
+    <div id="UserDataGrid_<%=ReportKey %>" style="height: 650px; margin-left: auto; margin-right: auto">
+        <table id="UserDataGrid_TB_<%=ReportKey %>">
+        </table>
+        <div id="tb" style="height: 35px; display: none">
+            <div style="margin-top: 0.3%; margin-left: 1%;">
+                年份：
+                <input type="text" id="year" onchange="GetSelect(1)" class="Wdate" onfocus="WdatePicker({dateFmt:'yyyy'})" value='<%=DateTime.Today.ToString("yyyy") %>' style="width: 60px;" />
+                &nbsp;&nbsp;
+                月份：<input type="text" id="month" onchange="GetSelect(1)" class="Wdate" onfocus="WdatePicker({dateFmt:'M'})" value='<%=DateTime.Today.AddMonths(-1).ToString(" M").Trim() %>' style="width: 60px;" />&nbsp;&nbsp;
+                员工账号：<select id="ygzh" onchange="GetSelect(1)" style="width: 100px; height: 25px">
+                    <%=Common.GetOptionStrBySql("SELECT DISTINCT EmpCode,EmpName FROM dbo.Hr WHERE [State]='在职'","EmpCode","EmpName","1","") %>
+                </select>
+
+                <% if (hasPermission == "1")
+                    { %>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-Export',plain:true,disabled:false" onclick="SendMessage()" style="float: right; margin-right: 1%;">发送汇总信息</a>
+                <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-Export',plain:true,disabled:false" onclick="ImportData()" style="float: right; margin-right: 1%;">导入考勤数据</a>
+               <%-- <a href="javascript:void(0)" class="easyui-linkbutton" data-options="iconCls:'icon-Export',plain:true,disabled:false" onclick="ExportKQJL()" style="float: right; margin-right: 1%;">导出考勤报表</a>--%>
+                <%} %>
+            </div>
+        </div>
+    </div>
+    <div closed="true" class="easyui-window" id="divReportPage" style="overflow: hidden; text-align: center" />
+    <input id="headerSearchStr" type="hidden" value="" />
+    <input id="ExpandRow" type="hidden" value="" />
+</body>
+</html>

@@ -1,0 +1,41 @@
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="ViewRecordHistory.aspx.vb" Inherits="Cms.Web.ViewRecordHistory" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>ViewRecordHistory</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<LINK href="/cmsweb/css/cmsstyle.css" type="text/css" rel="stylesheet">
+	</HEAD>
+	<body MS_POSITIONING="GridLayout">
+		<form id="Form1" method="post" runat="server">
+			<TABLE style="PADDING-LEFT: 4px; PADDING-TOP: 1px" cellSpacing="0" cellPadding="0" width="774"
+				border="0">
+				<tr>
+					<td>
+						<TABLE class="toolbar_table" cellSpacing="0" border="0">
+							<TR>
+								<TD width="8"></TD>
+								<TD vAlign="bottom" noWrap align="left" width="55">&nbsp;</TD>
+								<TD align="center" width="8"><IMG src="/cmsweb/images/icons/saprator.gif" align="absMiddle" width="2" height="18">
+								</TD>
+								<TD noWrap align="left" width="55">&nbsp;</TD>
+								<TD align="center" width="8"><IMG src="/cmsweb/images/icons/saprator.gif" align="absMiddle" width="2" height="18">
+								</TD>
+								<TD noWrap align="left" width="55"><asp:image id="Image3" runat="server" ImageUrl="/cmsweb/images/imagebuttons/exit.gif"></asp:image>&nbsp;<asp:linkbutton id="lnkExit" Runat="server" Visible="False">ÍË³ö</asp:linkbutton></TD>
+								<TD align="center" width="8"><IMG src="/cmsweb/images/icons/saprator.gif" align="absMiddle" width="2" height="18">
+								</TD>
+								<TD noWrap align="left" width="80">&nbsp;</TD>
+								<TD align="right">&nbsp;
+									<asp:Label id="lblHeader" runat="server"></asp:Label>
+								</TD>
+							</TR>
+						</TABLE>
+					</td>
+				</tr>
+			</TABLE>
+		</form>
+	</body>
+</HTML>

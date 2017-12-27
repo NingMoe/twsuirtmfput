@@ -1,0 +1,45 @@
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="AdminChangeFlowState.aspx.vb" Inherits="Unionsoft.Workflow.Web.AdminChangeFlowState"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>AdminChangeFlowState</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<link href="../css/flowstyle.css" rel="stylesheet" type="text/css">
+	</HEAD>
+	<body>
+		<form id="Form1" method="post" runat="server">
+			<table width="500" border="1" cellpadding="0" cellspacing="0" class="ListBox">
+				<tr>
+					<td colspan="2" class="ListHeader">
+						<asp:Label id="lblTitle" runat="server"></asp:Label>
+					</td>
+				</tr>
+				<tr>
+					<td width="70">流程名称:</td>
+					<td><asp:Label id="lblFlowName" runat="server"></asp:Label></td>
+				</tr>
+				<tr>
+					<td>流程描述:</td>
+					<td><asp:Label id="lblFlowDescription" runat="server"></asp:Label></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="ListHeader">
+						<asp:Button id="btnChangeState" runat="server"></asp:Button>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</body>
+</HTML>
+

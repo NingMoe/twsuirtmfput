@@ -1,0 +1,13 @@
+﻿2013-11-15 09:26:14   ERROR DB InsertRow失败，Table=FLW_FORM ExMsg: 不能设置 DataSourceType。 ExFileLine: []
+2013-11-15 09:26:14   ERROR 保存流程上的表单设置发生错误. ExMsg: 不能设置 DataSourceType。 ExFileLine: []
+2013-11-15 09:26:14   ERROR 保存流程上的表单设置发生错误. 
+2013-11-15 09:26:14   ERROR 保存流程信息发生错误. ExMsg: 保存流程上的表单设置发生错误. ExFileLine: []
+2013-11-15 09:26:14   ERROR 保存流程信息发生错误. 
+2013-11-15 09:26:14   ERROR 保存流程产生错误. ExMsg: 保存流程信息发生错误. ExFileLine: []
+2013-11-15 09:28:15    WARN 表单FLW_FORM中不存在列DataSourceType 数据库表单有不一致现象。 
+2013-11-15 09:28:29   ERROR DB InsertRow失败，Table=FLW_FORM ExMsg: 不能设置 DataSourceType。 ExFileLine: []
+2013-11-15 09:28:29   ERROR 保存流程上的表单设置发生错误. ExMsg: 不能设置 DataSourceType。 ExFileLine: []
+2013-11-15 09:28:29   ERROR 保存流程上的表单设置发生错误. 
+2013-11-15 09:28:29   ERROR 保存流程信息发生错误. ExMsg: 保存流程上的表单设置发生错误. ExFileLine: []
+2013-11-15 09:28:29   ERROR 保存流程信息发生错误. 
+2013-11-15 09:28:29   ERROR 保存流程产生错误. ExMsg: 保存流程信息发生错误. ExFileLine: []

@@ -1,0 +1,36 @@
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="DictWorkflowItems.aspx.vb" Inherits="Unionsoft.Workflow.Web.DictWorkflowItems"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <title>DictWorkflowItems</title>
+    <meta name=vs_defaultClientScript content="JavaScript">
+    <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
+    <link href="../css/flowstyle.css" type="text/css" rel="stylesheet">
+  </HEAD>
+  <body MS_POSITIONING="GridLayout">
+
+    <form id="Form1" method="post" runat="server">
+		<table width="100%" align="center" border="1" cellpadding="0" cellspacing="0" class="ListBox">
+			<thead>
+			<tr class="ListHeader">
+				<td colspan="2">流程名称</td>
+			</tr>
+			</thead>
+			<asp:Repeater id="FlowRepeater" runat="server">
+			<ItemTemplate>
+			<tr class="ListItem">
+				<td>
+					<img src="../images/flow.ico" align="absmiddle"><%#DataBinder.Eval(Container.DataItem,"NAME")%>
+				</td>
+				<td width="30" align="center">
+					<a href="#" onclick="window.returnValue='<%#DataBinder.Eval(Container.DataItem,"ID")%>|<%#DataBinder.Eval(Container.DataItem,"NAME")%>';window.close();">选择</a>
+				</td>
+			</tr>
+			</ItemTemplate>
+			</asp:Repeater>
+		</table>
+    </form>
+
+  </body>
+</HTML>
+

@@ -1,0 +1,28 @@
+<%@ Import Namespace="System.Data"%>
+<%@ import namespace="NetReusables"%>
+<%@ Import namespace="Unionsoft.Workflow.Items"%>
+<%@ Import namespace="Unionsoft.Workflow.Platform"%>
+<%@ Import namespace="Unionsoft.Workflow.Engine"%>
+<%@ Import namespace="Unionsoft.Platform"%>
+<%@ Page Language="vb" AutoEventWireup="false" Inherits="Unionsoft.Workflow.Web.UserPageBase" %>
+
+<%
+Dim lngResourceID As Long = CLng(Request.QueryString("ResourceID"))
+Dim lngDocumentID As Long = CLng(Request.QueryString("DocumentID"))
+
+Dim datDoc As DataDocument
+datDoc = CmsDocFlow.GetOneAttachment(CmsPassport.GenerateCmsPassportForInnerUse(""), lngResourceID, lngDocumentID, True)
+                
+Dim strFileName As String = datDoc.strDOC2_NAME & "." & datDoc.strDOC2_EXT
+strFileName = System.Web.HttpUtility.UrlEncode(strFileName, Encoding.GetEncoding("UTF-8"))
+Response.AddHeader("Content-Disposition", "inline;filename=" & strFileName)
+Response.ContentType = "application/octet-stream"
+
+'开始向客户端写文件流
+Response.BinaryWrite(datDoc.bytDOC2_FILE_BIN)
+Response.Flush()
+
+datDoc.bytDOC2_FILE_BIN = Nothing '手动清除文档所占内存
+datDoc = Nothing
+Response.End()
+%>

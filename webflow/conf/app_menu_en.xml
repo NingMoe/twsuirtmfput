@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <MENU_RECORD HASHOST="1" HASREL="1" MNUNAME="Record">
+        <MENU_RECADD_INREL MNUNAME="Add Record" MNUCMD="MenuRecordAdd" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_RECADD_INREL>
+        <MENU_RECEDIT MNUNAME="Edit Record" MNUCMD="MenuRecordEdit" MNURIGHTS="5" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_RECEDIT>
+        <MENU_RECDELETE MNUNAME="Del Record" MNUCMD="MenuRecordDelete" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=images/titleicon/delete.gif;;mnuconfirm=记录信息删除后不能恢复，确定要删除当前选中的记录吗？</MENU_RECDELETE>
+        <MENU_RECVIEW MNUNAME="View Record" MNUCMD="MenuRecordView" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_RECVIEW>
+        <MENU_RECCUT MNUNAME="Cut Record" MNUCMD="MenuRecordCut" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=images/cut.jpg</MENU_RECCUT>
+        <MENU_RECPASTE MNUNAME="Paste Record" MNUCMD="MenuRecordPaste" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/paste.jpg</MENU_RECPASTE>
+        <MENU_SEP>-</MENU_SEP>
+		<MENU_DATATEMPLATE MNUNAME="Paste Template" MNUCMD="MenuRecordCopyDataTemplate" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=;;mnuimage=;;mnuconfirm=确定要复制当前模板记录吗？;;mnurestype=TWOD;;sysfunc=FUNC_DATA_TEMPLATE</MENU_DATATEMPLATE>
+		<MENU_DATATEMPLATE_DELETE MNUNAME="Del Template" MNUCMD="MenuRecordDeleteDataTemplate" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=;;mnuimage=;;mnuconfirm=确定要删除当前模板记录吗？;;mnurestype=TWOD;;sysfunc=FUNC_DATA_TEMPLATE_DELETE</MENU_DATATEMPLATE_DELETE>
+		<MENU_DICTTEMPLATE MNUNAME="Dictionary Template" MNUCMD="" MNURIGHTS="3" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/DictTemplateCopy.aspx;;mnuimage=;;mnurestype=TWOD;;sysfunc=FUNC_DICT_TEMPLATE</MENU_DICTTEMPLATE>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_RECPRINT MNUNAME="Print Record" MNUCMD="" MNURIGHTS="17" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/RecordPrintSimple.aspx;;mnuimage=images/record_print.gif;;sysfunc=FUNC_PRINTFORM;;newwin_left=20;;newwin_top=20;;newwin_width=775;;newwin_height=580;;newwin_menubar=yes;;newwin_toolbar=yes;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes</MENU_RECPRINT>
+        <MENU_PRINT_LIST MNUNAME="Print Table" MNUCMD="" MNURIGHTS="4294967297" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/RecordPrintList.aspx?mnunopost=yes;;mnuimage=;;newwin_left=20;;newwin_top=20;;newwin_width=760;;newwin_height=560;;newwin_menubar=yes;;newwin_toolbar=yes;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes;;newwin_titlebar=no;;newwin_fullscreen=no</MENU_PRINT_LIST>
+		<!--此菜单Key: MENU_STARTFLOW 已经被固定写入代码，所以不能修改-->
+		<!--<MENU_STARTFLOW MNUNAME="启用工作流" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=;;mnuimage=;;sysfunc=FUNC_WORKFLOW</MENU_STARTFLOW>-->
+        <MENU_SHOWRELTABLES MNUNAME="Show Relation Table" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ConfigRelTables.aspx;;mnuimage=</MENU_SHOWRELTABLES>
+        <MENU_EMAIL MNUNAME="Send Email/SMS" MNUCMD="" MNURIGHTS="268435457" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/CommSendRecord.aspx;;mnuimage=images/titleicon/email.gif;;sysfunc=FUNC_COMM_EMAILPHONE</MENU_EMAIL>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_REFRESH MNUNAME="Refresh" MNUCMD="MenuRecordRefresh" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/refresh.gif</MENU_REFRESH>
+    </MENU_RECORD>
+    <MENU_DOC HASHOST="1" HASREL="1" MNUNAME="Document">
+        <MENU_DOCADD MNUNAME="Add Document" MNUCMD="MenuRecordAdd" MNURIGHTS="3" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_DOCADD>
+        <MENU_DOCEDIT MNUNAME="Edit Document Prop" MNUCMD="MenuRecordEdit" MNURIGHTS="5" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_DOCEDIT>
+        <MENU_DOCDELETE MNUNAME="Del Document" MNUCMD="MenuRecordDelete" MNURIGHTS="9" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=images/titleicon/delete.gif;;mnuconfirm=记录信息删除后不能恢复，确定要删除当前选中的记录吗？</MENU_DOCDELETE>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_CHECKOUT MNUNAME="Check Out" MNUCMD="DocCheckout" MNURIGHTS="65" MENUFROM="1" MNUTYPE="POPUPDOC" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="">MNUURL=/cmsweb/DocRetrieve.aspx;;mnuimage=;;newwin_left=20;;newwin_top=20;;newwin_width=700;;newwin_height=500;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes</MENU_CHECKOUT>
+        <MENU_CHECKIN MNUNAME="Check In" MNUCMD="MenuDocCheckin" MNURIGHTS="33" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">mnuimage=</MENU_CHECKIN>
+        <MENU_GETDOC MNUNAME="Get Document" MNUCMD="DocGet" MNURIGHTS="129" MENUFROM="1" MNUTYPE="POPUPDOC" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="">MNUURL=/cmsweb/DocRetrieve.aspx;;mnuimage=;;newwin_left=20;;newwin_top=20;;newwin_width=700;;newwin_height=500;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes</MENU_GETDOC>
+        <MENU_ONLINEVIEW MNUNAME="Online View" MNUCMD="" MNURIGHTS="257" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocAgent.aspx?cmsdocmode=1;;mnuimage=;;sysfunc=FUNC_ONLINEVIEW;;newwin_left=10;;newwin_top=10;;newwin_width=950;;newwin_height=660;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes;;newwin_titlebar=no;;newwin_fullscreen=no</MENU_ONLINEVIEW>
+		<MENU_ONLINEEDIT MNUNAME="Online Edit" MNUCMD="" MNURIGHTS="17179869185" MENUFROM="1" MNUTYPE="POPUP" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocAgent.aspx?cmsdocmode=2;;mnuimage=;;sysfunc=FUNC_ONLINEEDIT;;newwin_left=10;;newwin_top=10;;newwin_width=950;;newwin_height=660;;newwin_menubar=no;;newwin_toolbar=no;;newwin_location=no;;newwin_resizable=yes;;newwin_scrollbars=yes;;newwin_titlebar=no;;newwin_fullscreen=no</MENU_ONLINEEDIT>
+		<!--此菜单Key: MENU_DOCHISTORY 已经被固定写入代码，所以不能修改-->
+        <MENU_DOCHISTORY MNUNAME="View History" MNUCMD="" MNURIGHTS="513" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocHistoryList.aspx;;mnuimage=;;sysfunc=FUNC_DOCHISTORY</MENU_DOCHISTORY>
+        <MENU_SHARE MNUNAME="Share Document" MNUCMD="" MNURIGHTS="1025" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="1" MNUTARGET="content">MNUURL=/cmsweb/DocShare.aspx;;mnuimage=</MENU_SHARE>
+        <MENU_SEP>-</MENU_SEP>
+    </MENU_DOC>
+    <MENU_RESACTION HASHOST="1" HASREL="1" MNUNAME="Resource">
+        <MENU_RIGHTSSET MNUNAME="User Rights" MNUCMD="" MNURIGHTS="65537" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/RightsSet.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/key1.gif</MENU_RIGHTSSET>
+        <MENU_COLUMNSET MNUNAME="Table Column" MNUCMD="" MNURIGHTS="131073" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceColumnSet.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/field.gif;;sysfunc=FUNC_COLUMN_SET</MENU_COLUMNSET>
+        <MENU_COLUMNSHOWSET MNUNAME="Table Show" MNUCMD="" MNURIGHTS="262145" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceColumnShowSet.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/table.gif;;sysfunc=FUNC_COLUMNSHOW_SET</MENU_COLUMNSHOWSET>
+        <MENU_INPUTFORM MNUNAME="Input-Form Design" MNUCMD="" MNURIGHTS="524289" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/FormDesign.aspx?mnuformtype=0;;mnuallowadmin=1;;mnuimage=images/treeimages/res_twod.gif</MENU_INPUTFORM>
+        <MENU_PRINTFORM MNUNAME="Print-Form Design" MNUCMD="" MNURIGHTS="1048577" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/FormDesign.aspx?mnuformtype=1;;mnuallowadmin=1;;mnuimage=images/titleicon/print.gif;;sysfunc=FUNC_PRINTFORM</MENU_PRINTFORM>
+        <MENU_RELATEDTABLE MNUNAME="Relation Table" MNUCMD="" MNURIGHTS="2097153" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceRelationList.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/associated2.gif;;sysfunc=FUNC_RELATION_TABLE</MENU_RELATEDTABLE>
+        <MENU_FORMULA MNUNAME="Formula" MNUCMD="" MNURIGHTS="2147483649" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/FieldAdvCalculationList.aspx;;mnuallowadmin=1;;mnuimage=;;sysfunc=FUNC_FORMULA</MENU_FORMULA>
+        <MENU_ROWCOLOR MNUNAME="Row Color" MNUCMD="" MNURIGHTS="4194305" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceRowColor.aspx;;mnuallowadmin=1;;mnuimage=;;sysfunc=FUNC_RES_ROWCOLOR</MENU_ROWCOLOR>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_RESEXPORT MNUNAME="Export Resource" MNUCMD="" MNURIGHTS="67108865" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceExport.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/window.gif;;sysfunc=FUNC_RES_EXT_OTHERTABLE</MENU_RESEXPORT>
+        <MENU_RESEXPORT_SEARCH MNUNAME="Export Search" MNUCMD="" MNURIGHTS="67108865" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceExport.aspx?getsearchresult=1;;mnuallowadmin=1;;mnuimage=images/titleicon/window.gif;;sysfunc=FUNC_RES_EXT_OTHERTABLE</MENU_RESEXPORT_SEARCH>
+        <MENU_RESIMPORT MNUNAME="Import Resource" MNUCMD="" MNURIGHTS="134217729" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/ResourceImportStep1.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/window.gif;;sysfunc=FUNC_RES_IMP_OTHERTABLE</MENU_RESIMPORT>
+        <MENU_EMAILSMSSET MNUNAME="Email/SMS Column" MNUCMD="" MNURIGHTS="16777217" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/EmailSmsConfig.aspx;;mnuallowadmin=1;;mnuimage=;;sysfunc=FUNC_COMM_EMAILPHONE</MENU_EMAILSMSSET>
+        <MENU_BATCHUPDATE_FIELD MNUNAME="Batch Edit" MNUCMD="" MNURIGHTS="1073741825" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/BatchUpdateField.aspx;;mnuallowadmin=1;;mnuimage=images/titleicon/creat.gif;;sysfunc=FUNC_RES_BATCHUPDATEROW</MENU_BATCHUPDATE_FIELD>
+    </MENU_RESACTION>
+    <MENU_SEARCH HASHOST="1" HASREL="1" MNUNAME="Search">
+        <MENU_SEARCH MNUNAME="Search" MNUCMD="MenuSearch" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/icons/xpLens.gif</MENU_SEARCH>
+        <MENU_SEARCH_CONTINUE MNUNAME="Search Again" MNUCMD="MenuSearchAgain" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/icons/xpLens2.gif;;sysfunc=FUNC_SEARCH_CONTINUE</MENU_SEARCH_CONTINUE>
+        <MENU_SEARCH_FULLTABLE MNUNAME="Full-Table Search" MNUCMD="MenuSearchFullTable" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FULLTABLE_SEARCH;;mnurestype=TWOD</MENU_SEARCH_FULLTABLE>
+		<!--此菜单Key: MENU_FTSEARCH 已经被固定写入代码，所以不能修改-->
+        <MENU_FTSEARCH MNUNAME="Full-Text Search" MNUCMD="MenuSearchFullText" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=images/Icons/oMessage.gif;;mnurestype=DOC;;sysfunc=FUNC_FULLTEXT_SEARCH</MENU_FTSEARCH>
+        <MENU_SEARCH_CANCEL MNUNAME="Cancel Search" MNUCMD="MenuRecordRefresh" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_SEARCH_CANCEL>
+        <MENU_SEP>-</MENU_SEP>
+		<MENU_SEARCH_MULTITABLE MNUNAME="Multi-Table Statistics" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearchColDef.aspx?mtstype=2;;mnuimage=;;sysfunc=FUNC_MULTITABLE_SEARCH;;mnurestype=TWOD</MENU_SEARCH_MULTITABLE>
+        <MENU_SEARCH_MULTITABLE_LIST MNUNAME="Multi-Table Stat. List" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearch.aspx?mtstype=1;;mnuimage=;;sysfunc=FUNC_MULTITABLE_SEARCH;;mnurestype=TWOD</MENU_SEARCH_MULTITABLE_LIST>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_GENERAL_ROWWHERE MNUNAME="General Row-Filter" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearch.aspx?mtstype=3;;mnuimage=;;sysfunc=FUNC_ROWWHERE;;mnurestype=TWOD</MENU_GENERAL_ROWWHERE>
+        <MENU_PERSONAL_ROWWHERE MNUNAME="Personal Row-Filter" MNUCMD="" MNURIGHTS="1" MENUFROM="1" MNUTYPE="GET" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">MNUURL=/cmsweb/MTableSearch.aspx?mtstype=4;;mnuimage=;;sysfunc=FUNC_ROWWHERE;;mnurestype=TWOD</MENU_PERSONAL_ROWWHERE>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_SUM MNUNAME="Column Sum" MNUCMD="MenuStatisticSum" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_SUM>
+        <MENU_AVG MNUNAME="Column Average" MNUCMD="MenuStatisticAvg" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_AVG>
+        <MENU_MAX MNUNAME="Column Max" MNUCMD="MenuStatisticMax" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_MAX>
+        <MENU_MIN MNUNAME="Column Min" MNUCMD="MenuStatisticMin" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="content">mnuimage=;;sysfunc=FUNC_FORMULA</MENU_MIN>
+        <MENU_UNIQUE MNUNAME="No-Repeat Column" MNUCMD="MenuStatisticUnique" MNURIGHTS="1" MENUFROM="1" MNUTYPE="POST" MNURESLOCATE="1" MNUSELREC="0" MNUTARGET="content">mnuimage=</MENU_UNIQUE>
+    </MENU_SEARCH>
+    <MENU_RESMANAGER HASHOST="1" HASREL="1" MNUNAME="Favorite">
+        <MENU_DAILYWORK_ADD MNUNAME="Add Resource" MNUCMD="MenuFavoriteAdd" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_ADD>
+        <MENU_DAILYWORK_DEL MNUNAME="Remove Resource" MNUCMD="MenuFavoriteDel" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_DEL>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_DAILYWORK_MOVEUP MNUNAME="Move up" MNUCMD="MenuFavoriteMoveUp" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_MOVEUP>
+        <MENU_DAILYWORK_MOVEDOWN MNUNAME="Move down" MNUCMD="MenuFavoriteMoveDown" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_MOVEDOWN>
+        <MENU_SEP>-</MENU_SEP>
+        <MENU_DAILYWORK_REFRESH MNUNAME="Refresh" MNUCMD="MenuFavoriteRefresh" MNURIGHTS="0" MENUFROM="4" MNUTYPE="POST" MNURESLOCATE="3" MNUSELREC="0" MNUTARGET="tree">mnuimage=</MENU_DAILYWORK_REFRESH>
+    </MENU_RESMANAGER>
+</CONFIG>

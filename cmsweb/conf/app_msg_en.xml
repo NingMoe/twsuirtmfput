@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <DATA_UI>
+      <TITLE_HOME>Home</TITLE_HOME>
+        <TITLE_WORKFLOW>Work Flow</TITLE_WORKFLOW> 
+        <TITLE_CMS>Content</TITLE_CMS>
+        <TITLE_FAVORITE>Favorites</TITLE_FAVORITE>
+        <TITLE_SYSTEM_FUNC>System Function</TITLE_SYSTEM_FUNC>
+        <TITLE_SYSTEM>System Manager</TITLE_SYSTEM>
+        <TITLE_TOOLS>Tools</TITLE_TOOLS>
+        <TITLE_HELP>Help</TITLE_HELP>
+        <TITLE_EXIT>Exit</TITLE_EXIT>
+        <TITLE_MENU_YINGSHOU>Account Receivable</TITLE_MENU_YINGSHOU>
+        <TITLE_MENU_YINGFU>Account Payable</TITLE_MENU_YINGFU>
+        <TITLE_MENU_DEP>Department</TITLE_MENU_DEP>
+        <TITLE_MENU_EMP>Employee</TITLE_MENU_EMP>
+	<TITLE_MENU_ONLINEUSER>OnlineUser</TITLE_MENU_ONLINEUSER>
+        <TITLE_MENU_RES>Resource</TITLE_MENU_RES>
+        <TITLE_MENU_BIZALLOT>Account Allot</TITLE_MENU_BIZALLOT>
+        <TITLE_MENU_LOG>Log</TITLE_MENU_LOG>
+        <TITLE_MENU_EMAIL_CONFIG>SMTP Server</TITLE_MENU_EMAIL_CONFIG>
+        <TITLE_MENU_CLIENT_CODE>Client Code</TITLE_MENU_CLIENT_CODE>
+        <TITLE_MENU_SYS_OPTION>System Option</TITLE_MENU_SYS_OPTION>
+        <TITLE_MENU_USER_MANUAL>User Manual</TITLE_MENU_USER_MANUAL>
+        <TITLE_MENU_SYSTEM_MANUAL>System Manual</TITLE_MENU_SYSTEM_MANUAL>
+        <TITLE_MENU_PRODCODE>Product Code</TITLE_MENU_PRODCODE>
+        <TITLE_MENU_LICCODE>License Code</TITLE_MENU_LICCODE>
+        <TITLE_MENU_ABOUT>About Us</TITLE_MENU_ABOUT>
+        <TITLE_MENU_EDIT_PASS>Update Password</TITLE_MENU_EDIT_PASS>
+        <TITLE_MENU_EDIT_PROFILE>Update Profile</TITLE_MENU_EDIT_PROFILE>
+        <TITLE_MENU_GETLOG>Get Log</TITLE_MENU_GETLOG>
+        <TITLE_LOGINUSER>Login User</TITLE_LOGINUSER>
+        <TREE_DAILYWORK>Favorite</TREE_DAILYWORK>
+        <CONT_MNU_REC>Record</CONT_MNU_REC>
+        <CONT_MNU_DOC>Document</CONT_MNU_DOC>
+        <CONT_MNU_RESACTION>Resource</CONT_MNU_RESACTION>
+        <CONT_MNU_EXT>Extension</CONT_MNU_EXT>
+        <CONT_MNU_SEARCH>Search</CONT_MNU_SEARCH>
+        <CONT_MNU_SEARCH_START>Search</CONT_MNU_SEARCH_START>
+        <CONT_MNU_SEARCH_AGAIN>Search Again</CONT_MNU_SEARCH_AGAIN>
+        <CONT_MNU_SEARCH_FTABLE>Full-table Search</CONT_MNU_SEARCH_FTABLE>
+        <CONT_MNU_SEARCH_CANCEL>Cancel Search</CONT_MNU_SEARCH_CANCEL>
+        <CONT_REC_NUM>Total</CONT_REC_NUM>
+        <TITLE_STATISTICS>Statistics Report</TITLE_STATISTICS>
+        <TITLE_FORMULA>Formulas</TITLE_FORMULA>
+        <TITLE_GENERAL_ROWFILTER>General Row Filter</TITLE_GENERAL_ROWFILTER>
+        <TITLE_PERSONAL_ROWFILTER>Personal Row Filter</TITLE_PERSONAL_ROWFILTER>
+        <TITLE_BATCH_SEND>Email/Sms Batch</TITLE_BATCH_SEND>
+        <TITLE_SYSFUNC_SEARCHDOC>Search Document</TITLE_SYSFUNC_SEARCHDOC>
+        <TITLE_UPDATE_DATABASE>Update Database</TITLE_UPDATE_DATABASE>
+        <TITLE_MAINTAIN_DATABASE>Maintain System</TITLE_MAINTAIN_DATABASE>
+        <TITLE_UPDATE_SYSTEM>Update System</TITLE_UPDATE_SYSTEM>
+        <TITLE_SYSTEM_DEBUG>System Debug</TITLE_SYSTEM_DEBUG>
+        <TITLE_RECORD_SAVE>Save</TITLE_RECORD_SAVE>
+        <TITLE_RECORD_PRINT>Print</TITLE_RECORD_PRINT>
+        <TITLE_RECORD_NEW>New</TITLE_RECORD_NEW>
+        <TITLE_RECORD_EXIT>Exit</TITLE_RECORD_EXIT>
+        <TITLE_RECORD_EXT>Extension</TITLE_RECORD_EXT>
+        <TITLE_RECORD_SAVENEW>Save and New</TITLE_RECORD_SAVENEW>
+        <TITLE_RECORD_STATUS_ADD>New</TITLE_RECORD_STATUS_ADD>
+        <TITLE_RECORD_STATUS_EDIT>Edit</TITLE_RECORD_STATUS_EDIT>
+        <TITLE_RECORD_STATUS_VIEW>View</TITLE_RECORD_STATUS_VIEW>
+        <TITLE_CMD_ADD>Add</TITLE_CMD_ADD>
+        <TITLE_CMD_EDIT>Edit</TITLE_CMD_EDIT>
+        <TITLE_CMD_VIEW>View</TITLE_CMD_VIEW>
+        <TITLE_CMD_DEL>Delete</TITLE_CMD_DEL>
+        <TITLE_CMD_SAVE>Save</TITLE_CMD_SAVE>
+        <TITLE_CMD_REFRESH>Refresh</TITLE_CMD_REFRESH>
+        <RES_USERMGR>User Management</RES_USERMGR>
+        <TITLE_CONFIRM>OK</TITLE_CONFIRM>
+      <TITLE_CANCEL>Cancel</TITLE_CANCEL>
+    </DATA_UI>
+    <DATA_MSG>
+        <ERR_UNKNOWN>操作异常失败！</ERR_UNKNOWN>
+        <TIP_ADDDOC_LATER>您没有上传文档，以后请用文档操作菜单中的签入文档来为此条记录添加文档！</TIP_ADDDOC_LATER>
+        <ERR_COMM_SAVEFILE>保存待发送邮件的附件时异常出错！</ERR_COMM_SAVEFILE>
+        <TIP_COMM_EMAILSUCC>邮件发送成功！</TIP_COMM_EMAILSUCC>
+        <ERR_COMM_EMAILFAIL>邮件发送失败，请检验本系统邮件服务器配置中的SMTP服务器和邮件发送校验帐号和密码的设置信息是否正确！</ERR_COMM_EMAILFAIL>
+        <TIP_COMM_SMSSUCC>短信发送成功！</TIP_COMM_SMSSUCC>
+        <ERR_COMM_SMSFAIL>短信发送失败，请检验GSM Modem短信发送硬件设备是否正确连接在本系统服务器的串口上！</ERR_COMM_SMSFAIL>
+        <ERR_COMM_SMSFAILED_PHONES>以下手机号码的短信发送失败：</ERR_COMM_SMSFAILED_PHONES>
+        <RECORD_OPARATE>You need to select a valid record.</RECORD_OPARATE>
+        <RECORD_DELETE>ARE YOU SURE YOU WANT TO DELETE THIS RECORDING?</RECORD_DELETE>
+        <VIEW_DOCUMENT>It does not support the file type browse online.</VIEW_DOCUMENT>
+        <RECORD_PRINT>Print form does not exist, the first design printed form for this resource!</RECORD_PRINT>
+        <SEARCH_MSG>Invalid search criteria, please reset the search criteria!</SEARCH_MSG>
+        <NEW_RECORD>Failed to create a record, check the database links!</NEW_RECORD>
+        <DELETE_DOCUMENT>Failed to delete document! Document path:</DELETE_DOCUMENT>
+    </DATA_MSG>
+</CONFIG>

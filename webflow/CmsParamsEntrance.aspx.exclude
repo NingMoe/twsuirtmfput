@@ -1,0 +1,47 @@
+<%@ Page Language="vb" AutoEventWireup="false" %>
+<%@ Import NameSpace="System.Data" %>
+<%@ Import NameSpace="NetReusables" %>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+  <head>
+    <title>CmsParamsEntrance</title>
+    <meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+    <meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+    <meta name=vs_defaultClientScript content="JavaScript">
+    <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
+  </head>
+  <body>
+  <script language="vb" runat="server">
+  '--------------------------------------------------------------------------------
+  '根据CMS中传入的 ResourceId，RecordId 获取所在流程实例的ID
+  '2009-5-14  CHENYU
+  '--------------------------------------------------------------------------------
+  Function GetWorkflowInstanceId(ByVal ResourceId As Long,ByVal RecordId As Long) As Long
+	Dim strSql As String = "select * from WF_INSTANCE where ResourceId=" & ResourceId & " and RecordId=" & RecordId
+	Dim dt As DataTable = SDBStatement.Query(strSql).Tables(0)
+	If dt.Rows.Count>0 Then
+		Return CLng(dt.Rows(0)("ID"))
+	Else
+		Return 0
+	End If
+  End Function
+  </script>
+  <%
+  Dim RecordId As Long = 0
+  Dim ResourceId  As Long = 0
+  If Not Request.QueryString("mnuhostrecid") Is Nothing And  Not Request.QueryString("mnuhostresid") Is Nothing Then
+	RecordId = Clng(Request.QueryString("mnuhostrecid"))
+	ResourceId = Clng(Request.QueryString("mnuhostresid"))
+	Dim WorkflowInstanceId As Long = 0
+	WorkflowInstanceId = GetWorkflowInstanceId(ResourceId,RecordId)
+	If WorkflowInstanceId<>0 Then 
+		Response.Redirect("ViewFlowHistroy.aspx?action=&WorkflowId=" & CStr(WorkflowInstanceId))
+	Else
+		Response.Write("未能找到:<b>ResourceId=" & ResourceId & ",RecordId=" & RecordId & "</b>的流程实例.")
+	End If
+  Else
+	Response.Write("没有传入参数:<b>mnuhostresid,mnuhostrecid</b>.")
+  End If
+  %>
+  </body>
+</html>

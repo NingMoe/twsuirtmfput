@@ -1,0 +1,102 @@
+<%@ Register TagPrefix="uc1" TagName="CtlFlowHistory" Src="controls/CtlFlowHistory.ascx" %>
+<%@ Register TagPrefix="ActionBar" NameSpace="Unionsoft.Workflow.Web" Assembly="Unionsoft.Workflow.Web"%>
+<%@ Register TagPrefix="cc1" Namespace="Unionsoft.CMSWebControls" Assembly="Unionsoft.CMSWebControls" %>
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="WorkflowForm.aspx.vb" Inherits="Unionsoft.Workflow.Web.WorkflowForm"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+  <HEAD>
+    <title>WorkflowForm</title>
+    <meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+    <meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+    <meta name=vs_defaultClientScript content="JavaScript">
+    <meta name=vs_targetSchema content="http://schemas.microsoft.com/intellisense/ie5">
+    <LINK href="css/flowstyle.css" type="text/css" rel="stylesheet">
+    <script src="script/Valid.js" type="text/javascript"></script>
+	<script src="script/jscommon.js" type="text/javascript"></script>
+	<script src="script/base.js" type="text/javascript"></script>
+	<script src="script/CmsScript.js" type="text/javascript"></script>
+	<script language="javascript" src="script/FlowCommonScript.js"></script>
+</HEAD>
+  <body MS_POSITIONING="GridLayout">
+    <form id="Form1" method="post" runat="server">
+    <ACTIONBAR:NODEACTIONBAR id="NodeActionBar1" runat="server" SetIsExigence="True" CssName="ToolBar"></ACTIONBAR:NODEACTIONBAR>
+	<table cellSpacing="0" cellPadding="0" border="0">
+		<tr>
+			<td height="3"></td>
+		</tr>
+	</table>
+	<asp:Panel id="PanelMemo" runat="server">
+<TABLE class=MemoTable border=0 cellSpacing=1 cellPadding=0 
+width="<%=FormWidth%>">
+  <THEAD>
+  <TR>
+    <TD>处理意见</TD></TR></THEAD>
+  <TR>
+    <TD><asp:textbox id=txtMemo runat="server" TextMode="MultiLine" CssClass="MemoInput"></asp:textbox></TD></TR></TABLE>
+	</asp:Panel>
+	<table class="UserForm1" cellSpacing="0" cellPadding="0" border="0" height="<%=FormHeight%>">
+		<tr>
+			<td vAlign="top" height="400">
+			<cc1:CmsFormControl id=CmsFormControl1 runat="server" Width="280px" Height="152px"  style="POSITION: absolute; TOP: 140px; LEFT: 12px" BorderColor="#C0C0FF"></cc1:CmsFormControl>
+			</td>
+		</tr>
+	</table>
+	<asp:Panel id="PanelAttachment" runat="server">
+<TABLE border=0 cellSpacing=0 cellPadding=0 width="<%=FormWidth%>">
+  <TR>
+    <TD height=3></TD></TR></TABLE><asp:DataGrid id=AttachmentList DataKeyField="ID" Runat="server" width="790" AutoGenerateColumns="False">
+			<HeaderStyle Height="22" CssClass="ToolBar" Font-Bold="True"></HeaderStyle>
+			<ItemStyle Height="22"></ItemStyle>
+			<Columns>
+				<asp:TemplateColumn HeaderText="文件名称">
+					<ItemTemplate>
+						<asp:LinkButton ID="lnkDownloadFile" Runat="server"></asp:LinkButton>
+					</ItemTemplate>
+				</asp:TemplateColumn>
+				<asp:BoundColumn DataField="Size" HeaderText="大小">
+					<ItemStyle Width="80"></ItemStyle>
+				</asp:BoundColumn>
+				<asp:BoundColumn DataField="Ext" HeaderText="类型">
+					<ItemStyle Width="80"></ItemStyle>
+				</asp:BoundColumn>
+				<asp:BoundColumn DataField="EDTID" HeaderText="修改人">
+					<ItemStyle Width="80"></ItemStyle>
+				</asp:BoundColumn>
+				<asp:BoundColumn DataField="EditTime" HeaderText="加入时间" DataFormatString="{0:yy-MM-dd hh:mm}">
+					<ItemStyle Width="90"></ItemStyle>
+				</asp:BoundColumn>
+				<asp:TemplateColumn>
+					<ItemStyle HorizontalAlign="Center" Width="40"></ItemStyle>
+					<ItemTemplate>
+						<asp:Button ID="btnOpen" Runat="server" CssClass="ButtonCommon" CommandName="Open" Text="修改"></asp:Button>
+					</ItemTemplate>
+				</asp:TemplateColumn>
+				<asp:TemplateColumn>
+					<ItemStyle HorizontalAlign="Center" Width="40"></ItemStyle>
+					<ItemTemplate>
+						<asp:Button ID="btnDelete" Runat="server" CssClass="ButtonCommon" CommandName="Delete" Text="删除"></asp:Button>
+					</ItemTemplate>
+				</asp:TemplateColumn>
+			</Columns>
+		</asp:DataGrid><asp:Panel id=PanelAttachmentAdd runat="server">
+<TABLE border=0 cellSpacing=0 cellPadding=0 width="<%=FormWidth%>">
+  <TR>
+    <TD colSpan=5><INPUT style="WIDTH: 430px" id=UploadFile class=ButtonCommon 
+      type=file name=UploadFile runat="server"> <asp:Button id=btnUpload runat="server" CssClass="ButtonCommon" Text="上传"></asp:Button></TD></TR></TABLE></asp:Panel>
+	</asp:Panel>
+	<TABLE cellSpacing="0" cellPadding="0" width="<%=FormWidth%>" border="0" class="MemoTable">
+		<THEAD>
+			<TR>
+				<TD>流程历史信息</TD>
+			</TR>
+		</THEAD>
+		<TR>
+			<TD>
+				<uc1:CtlFlowHistory id="CtlFlowHistory1" runat="server"></uc1:CtlFlowHistory>
+			</TD>
+		</TR>
+	</TABLE>
+    </form>
+
+  </body>
+</HTML>

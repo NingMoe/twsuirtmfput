@@ -1,0 +1,1 @@
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeFile="JQueryCallService.aspx.cs" Inherits="Common_JQueryCallService" %>

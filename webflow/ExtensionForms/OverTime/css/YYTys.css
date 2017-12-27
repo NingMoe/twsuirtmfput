@@ -1,0 +1,108 @@
+
+body{
+	margin:0px;
+	text-align:center;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size:13px;
+}
+table{margin:0px auto ;}
+p{ margin:0px; padding:0px;}
+td{
+	padding:0px 0px 0px 0px;
+}
+th{
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:13px;
+	font-style:normal;
+	font-weight: normal;
+	font-variant: normal;
+	color: #666666;
+}
+form{margin:0px;}
+h1{
+	font-size: 18px;
+	line-height: 22px;
+	color: #003399;
+	text-decoration: none;
+	margin:10px;
+}
+.Bold_box{
+	font-size: 12px;
+	line-height: 18px;
+	color: #666666;
+	text-decoration: none;
+	border-top-width: 2px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 2px;
+	border-top-style: solid;
+	border-right-style: solid;
+	border-bottom-style: solid;
+	border-left-style: solid;
+	border-top-color: #67b2ec;
+	border-right-color: #67b2ec;
+	border-bottom-color: #67b2ec;
+	border-left-color: #67b2ec;	/*text-indent: 4px;*/
+	text-align: center;
+}
+.Bold_box td{
+	border:#67b2ec solid;border-width:0 1px 1px 0;
+}
+.F_center{
+	line-height:18px;
+	padding:5px;
+	background:#E3EFFC;
+	text-align: center;
+}
+.noborder {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: normal;
+	border: 1px solid #FFF;
+}
+.noborder_h18 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-style: normal;
+	font-weight: normal;
+	text-align: right;
+	border: 1px double #FFF;
+	height: 18px;
+}
+
+a:link {
+	text-decoration: none;
+}
+a:visited {
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: none;
+}
+a:active {
+	text-decoration: none;
+}
+
+.tab_line th{
+	font-weight: normal;
+	padding-left:5px;
+	border-right:1px solid #67b2ec;
+}
+.tab_line td{
+	border:none;
+	font-weight: normal;
+	padding-left:5px;
+}
+.box1{
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+	border-width: 1px;
+	border-style: solid;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #999999;
+	border-left-color: #FFFFFF;
+	height: 22px;
+}

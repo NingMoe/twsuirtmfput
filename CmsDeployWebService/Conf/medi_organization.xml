@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+    <!-- 部门结构管理的功能实现模块的配置信息 -->
+    <MEDI_DEPARTMENT>
+        <DLL>\bin\CmsImplement.dll;\CmsImplement.dll</DLL>
+        <IMPLEMENTATION>Cms.Implement.CmsDepartment</IMPLEMENTATION>
+        <ENABLE>1</ENABLE>
+    </MEDI_DEPARTMENT>
+    <!-- 人员管理的功能实现模块的配置信息 -->
+    <MEDI_EMPLOYEE>
+        <DLL>\bin\CmsImplement.dll;\CmsImplement.dll</DLL>
+        <IMPLEMENTATION>Cms.Implement.CmsEmployee</IMPLEMENTATION>
+        <ENABLE>1</ENABLE>
+    </MEDI_EMPLOYEE>
+</CONFIG>

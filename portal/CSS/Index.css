@@ -1,0 +1,42 @@
+﻿@charset "utf-8";
+/* CSS Document */
+/***
+ */
+*{font-size:9pt;border:0;margin:0;padding:0;}
+body{font-family:'微软雅黑'; margin:0 auto;min-width:980px;}
+ul{display:block;margin:0;padding:0;list-style:none;}
+li{display:block;margin:0;padding:0;list-style: none;}
+img{border:0;}
+dl,dt,dd,span{margin:0;padding:0;display:block;}
+a,a:focus{text-decoration:none;color:#000;outline:none;blr:expression(this.onFocus=this.blur());}
+a:hover{color:#00a4ac;text-decoration:none;}
+table{border-collapse:collapse;border-spacing: 0;}
+cite{font-style:normal;}
+h2{font-weight:normal;}
+ 
+
+/*top.html*/
+.header{height:37px;}
+.topleft{height:37px;background:url(topleft.jpg) no-repeat;float:left; width:180px;}
+.topleft img{margin-top:-3px;margin-left:10px;}
+.topright{height:37px;background:url(topright.jpg) no-repeat right;float:right;width:170px;}
+.nav{float:left;}
+.nav li{float:left;width:87px;height:37px; text-align:center;}
+.nav li a{display:block;width:87px;padding-top:12px;height:37px;-moz-transition: none; transition: background-color 0.3s linear; -moz-transition: background-color 0.3s linear; -webkit-transition: background-color 0.3s linear; -o-transition: background-color 0.3s linear; }
+.nav li a.selected{background:url(../images/Icon/navbg.png) no-repeat;}
+.nav li a:hover{display:block;background:#000;color:#fff;background: none repeat scroll 0% 0% rgb(43, 127, 181);}
+.nav li img{margin-top:10px;}
+.nav li a{display:block;}
+.nav a h2{font-size:14px;color:#0b3a58;font-weight:800; }
+.nav a:hover h2{color:#fff;}
+.topright1 ul{padding-top:15px; float:right; padding-right:2px;}
+.topright1 ul li{float:left; padding-left:2px; padding-right:9px; background:url(../images/Icon/line.gif) no-repeat right;}
+.topright1 ul li:last-child{background:none;}
+.topright1 ul li a{font-size:13px; color:#ffffff;}
+.topright1 ul li a:hover{color:#ff6a00;}
+.topright1 ul li span{margin-top:2px;float:left;padding-right:3px;}
+.user{width:160px; height:30px;background:url(../images/Icon/ub1.png) repeat-x;clear:both;margin-top:5px; margin-right:5px;border-radius:30px; behavior:url(pie.htc); white-space:nowrap;position:relative;}
+.user span{display:inline-block;padding-right:10px; background:url(../images/Icon/user.png) no-repeat 10px 7px; line-height:30px; font-size:14px;color:#bfbfbf; padding-left:20px; padding-left:35px;}
+.user b{display:inline-block;width:20px;height:18px; background:url(../images/Icon/msg.png);text-align:center; font-weight:normal; color:#fff;font-size:14px;margin-right:13px; margin-top:2px; line-height:18px;}
+.user i{display:inline-block;margin-right:5px;font-style:normal;line-height:30px; font-size:14px;color:#bfbfbf;}
+

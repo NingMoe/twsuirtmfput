@@ -1,0 +1,249 @@
+Option Strict On
+Option Explicit On 
+
+Imports NetReusables
+Imports Unionsoft.Platform
+
+Public Class FormCustomize
+    Inherits CmsPage
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents lblTitle As System.Web.UI.WebControls.Label
+    Protected WithEvents lblResName As System.Web.UI.WebControls.Label
+    Protected WithEvents txtResName As System.Web.UI.WebControls.TextBox
+    Protected WithEvents btnExit As System.Web.UI.WebControls.Button
+    Protected WithEvents lbtnAdd As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents Label3 As System.Web.UI.WebControls.Label
+    Protected WithEvents Label4 As System.Web.UI.WebControls.Label
+    Protected WithEvents Label5 As System.Web.UI.WebControls.Label
+    Protected WithEvents DataGrid1 As System.Web.UI.WebControls.DataGrid
+    Protected WithEvents ddlForms As System.Web.UI.WebControls.DropDownList
+    Protected WithEvents ddlAction As System.Web.UI.WebControls.DropDownList
+    Protected WithEvents txtUrl As System.Web.UI.WebControls.TextBox
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    End Sub
+
+    Protected Overrides Sub CmsPageSaveParametersToViewState()
+        MyBase.CmsPageSaveParametersToViewState()
+
+        'If VStr("PAGE_COLNAME") = "" Then
+        '    ViewState("PAGE_COLNAME") = RStr("colname")
+        'End If
+    End Sub
+
+    Protected Overrides Sub CmsPageInitialize()
+        txtResName.Text = CmsPass.GetDataRes(VLng("PAGE_RESID")).ResName
+        txtResName.ReadOnly = True
+    End Sub
+
+    Protected Overrides Sub CmsPageDealFirstRequest()
+        '初始化窗体名称列表
+        ddlForms.Items.Clear()
+        ddlForms.Items.Add("")
+        Dim alistForms As ArrayList = CTableForm.GetDesignedFormNames(CmsPass, VLng("PAGE_RESID"), FormType.InputForm)
+        Dim strFormName As String
+        For Each strFormName In alistForms
+            ddlForms.Items.Add(New ListItem(strFormName, strFormName))
+        Next
+
+        '初始化记录操作定义列表
+        ddlAction.Items.Clear()
+        ddlAction.Items.Add("")
+        ddlAction.Items.Add(New ListItem("添加记录", CStr(CustFormAction.AddRecord)))
+        ddlAction.Items.Add(New ListItem("修改记录", CStr(CustFormAction.EditRecord)))
+        ddlAction.Items.Add(New ListItem("查阅记录", CStr(CustFormAction.ViewRecord)))
+
+        '显示定制窗体列表
+        GridDataBind(VLng("PAGE_RESID"))
+    End Sub
+
+    Protected Overrides Sub CmsPageDealPostBack()
+    End Sub
+
+    Protected Overrides Sub CmsPageDealAllRequestsBeforeExit()
+    End Sub
+
+    Private Sub btnExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExit.Click
+        Response.Redirect(VStr("PAGE_BACKPAGE"), False)
+    End Sub
+
+    Private Sub lbtnAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnAdd.Click
+        Try
+            If ddlForms.SelectedValue = "" Then
+                PromptMsg("请选择有效的输入窗体名称")
+                Return
+            End If
+            If ddlAction.SelectedValue = "" Then
+                PromptMsg("请选择有效的记录操作")
+                Return
+            End If
+
+            Dim intCustFrmAct As CustFormAction = CType(ddlAction.SelectedValue, CustFormAction)
+            CTableFormCustomize.AddCustForm(CmsPass, VLng("PAGE_RESID"), ddlForms.SelectedValue, intCustFrmAct, txtUrl.Text.Trim())
+
+            '显示定制窗体列表
+            GridDataBind(VLng("PAGE_RESID"))
+        Catch ex As Exception
+            PromptMsg("", ex, True)
+        End Try
+    End Sub
+
+    Private Sub DataGrid1_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGrid1.Init
+        If Session("CMS_PASSPORT") Is Nothing Then '用户尚未登录或者Session过期，转至登录页面
+            Response.Redirect("/cmsweb/Logout.aspx", True)
+            Return
+        End If
+        CmsPageSaveParametersToViewState() '将传入的参数保留为ViewState变量，便于在页面中提取和修改
+
+        WebUtilities.InitialDataGrid(DataGrid1) '初始化DataGrid属性
+        CreateDataGridColumn()
+    End Sub
+
+    Private Sub DataGrid1_ItemCreated(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataGridItemEventArgs) Handles DataGrid1.ItemCreated
+        '设置每行的唯一ID和OnClick方法，用于传回服务器做相应操作，如修改、删除等，下面代码与Html页面中部分代码联合使用
+        If DataGrid1.Items.Count > 0 And e.Item.ItemIndex = -1 Then
+            Dim lngRecIDClicked As Long = GetRecIDOfGrid()
+            Dim row As DataGridItem
+            For Each row In DataGrid1.Items
+                '设置客户端的记录ID和Javascript方法
+                Dim strRecID As String = row.Cells(0).Text.Trim()
+                If IsNumeric(strRecID) Then
+                    row.Attributes.Add("RECID", strRecID) '在客户端保存记录ID
+                    row.Attributes.Add("OnClick", "RowLeftClickNoPost(this)") '在客户端生成：点击记录的响应方法OnClick()
+
+                    If lngRecIDClicked > 0 And lngRecIDClicked = CLng(strRecID) Then
+                        row.Attributes.Add("bgColor", "#C4D9F9") '修改被点击记录的背景颜色
+                    End If
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub DataGrid1_DeleteCommand(ByVal source As Object, ByVal e As System.Web.UI.WebControls.DataGridCommandEventArgs) Handles DataGrid1.DeleteCommand
+        Try
+            Dim strRecID As String = e.Item.Cells(0).Text.Trim()
+            If IsNumeric(strRecID) Then
+                Dim lngRecID As Long = CLng(strRecID)
+                CTableFormCustomize.DeleteCustForm(CmsPass, lngRecID)
+            Else
+                PromptMsg("删除定制窗体异常失败！", Nothing, True)
+            End If
+        Catch ex As Exception
+            PromptMsg("", ex, True)
+        End Try
+
+        DataGrid1.EditItemIndex = CInt(e.Item.ItemIndex)
+        DataGrid1.EditItemIndex = -1
+
+        '显示定制窗体列表
+        GridDataBind(VLng("PAGE_RESID"))
+    End Sub
+
+    '------------------------------------------------------------------
+    '创建修改表结构的DataGrid的列
+    '------------------------------------------------------------------
+    Private Sub CreateDataGridColumn()
+        DataGrid1.AutoGenerateColumns = False
+        Dim intWidth As Integer = 0
+
+        Dim col As BoundColumn = New BoundColumn
+        col.HeaderText = "CCF_ID"
+        col.DataField = "CCF_ID"
+        col.ItemStyle.Width = Unit.Pixel(1)
+        col.Visible = False
+        DataGrid1.Columns.Add(col)
+
+        col = New BoundColumn
+        col.HeaderText = "CCF_RESID"
+        col.DataField = "CCF_RESID"
+        col.ItemStyle.Width = Unit.Pixel(1)
+        col.Visible = False
+        DataGrid1.Columns.Add(col)
+
+        col = New BoundColumn
+        col.HeaderText = "窗体名称"
+        col.DataField = "CCF_FORMNAME"
+        col.ItemStyle.Width = Unit.Pixel(150)
+        DataGrid1.Columns.Add(col)
+        intWidth += 150
+
+        col = New BoundColumn
+        col.HeaderText = "记录操作"
+        col.DataField = "CCF_ACTION22"
+        col.ItemStyle.Width = Unit.Pixel(80)
+        DataGrid1.Columns.Add(col)
+        intWidth += 80
+
+        col = New BoundColumn
+        col.HeaderText = "定制窗体URL"
+        col.DataField = "CCF_URL"
+        col.ItemStyle.Width = Unit.Pixel(360)
+        DataGrid1.Columns.Add(col)
+        intWidth += 360
+
+        Dim colDel As ButtonColumn = New ButtonColumn
+        colDel.HeaderText = CmsMessage.GetUI(CmsPass, "TITLE_CMD_DEL")
+        colDel.Text = CmsMessage.GetUI(CmsPass, "TITLE_CMD_DEL")
+        colDel.CommandName = "Delete"
+        colDel.ButtonType = ButtonColumnType.LinkButton
+        colDel.ItemStyle.Width = Unit.Pixel(40)
+        DataGrid1.Columns.Add(colDel)
+        col = Nothing
+        intWidth += 40
+
+        DataGrid1.Width = Unit.Pixel(intWidth)
+    End Sub
+
+    '---------------------------------------------------------------
+    '绑定数据
+    '---------------------------------------------------------------
+    Private Sub GridDataBind(ByVal lngResID As Long)
+        Dim ds As DataSet = GetDataSetForDataGrid(lngResID)
+        DataGrid1.DataSource = ds.Tables(0).DefaultView
+        DataGrid1.DataBind()
+    End Sub
+
+    '------------------------------------------------------------------
+    '获取所有关联表的列表
+    '------------------------------------------------------------------
+    Private Function GetDataSetForDataGrid(ByVal lngResID As Long) As DataSet
+        Dim ds As DataSet = CTableFormCustomize.GetCustomizeForms(CmsPass, lngResID)
+        ds.Tables(0).Columns.Add("CCF_ACTION22")
+        Dim datRes As DataResource = CmsPass.GetDataRes(lngResID)
+        Dim dv As DataView = ds.Tables(0).DefaultView
+        Dim drv As DataRowView
+        For Each drv In dv
+            drv.BeginEdit()
+            Dim intCustFrmAct As CustFormAction = CType(DbField.GetInt(drv, "CCF_ACTION"), CustFormAction)
+            If intCustFrmAct = CustFormAction.AddRecord Then
+                drv("CCF_ACTION22") = "添加记录"
+            ElseIf intCustFrmAct = CustFormAction.EditRecord Then
+                drv("CCF_ACTION22") = "修改记录"
+            ElseIf intCustFrmAct = CustFormAction.ViewRecord Then
+                drv("CCF_ACTION22") = "查阅记录"
+            Else
+                drv("CCF_ACTION22") = ""
+            End If
+            drv.EndEdit()
+        Next
+        Return ds
+    End Function
+End Class

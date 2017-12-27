@@ -1,0 +1,26 @@
+﻿<public:component>
+<public:attach event="onmouseover" onevent="onMover()" />
+<public:attach event="onmouseout" onevent="onMout()" />
+<script language="javascript">
+function onMover(){
+    //Banks Jin 2006-10-01 有Javascript错误发生，所以添加try Catch
+    try{
+	var el = event.srcElement;
+	if (el.tagName == "A")
+		el.parentNode.style.border = "1px solid #ffffff";
+	else
+		el.style.border = "1px solid #ffffff";
+    }catch(ex){
+    }
+}
+
+function onMout(el){
+    //Banks Jin 2006-10-01 有Javascript错误发生，所以添加try Catch
+    try{
+	var el = event.srcElement;
+	el.style.border = "";
+    }catch(ex){
+    }
+}
+</script>
+</public:component>

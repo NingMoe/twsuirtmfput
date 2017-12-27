@@ -1,0 +1,66 @@
+<%@ Page Language="vb" AutoEventWireup="false" Codebehind="AdminFlowList.aspx.vb" Inherits="Unionsoft.Workflow.Web.AdminFlowList"%>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+	<HEAD>
+		<title>AdminFlowList</title>
+		<meta name="GENERATOR" content="Microsoft Visual Studio .NET 7.1">
+		<meta name="CODE_LANGUAGE" content="Visual Basic .NET 7.1">
+		<meta name="vs_defaultClientScript" content="JavaScript">
+		<meta name="vs_targetSchema" content="http://schemas.microsoft.com/intellisense/ie5">
+		<link href="../css/flowstyle.css" rel="stylesheet" type="text/css">
+		<script type="text/javascript" src="../script/dragDiv.js"></script>
+		<script type="text/javascript" src="../script/prototype.js"></script>
+		<script language="javascript">		
+		function showEditorWindow(WorkflowId)
+		{
+			var url = "AdminEditPermissoin.aspx?WorkflowId=" + WorkflowId;
+			showMessageBox(650,450,url,"权限设置");
+			return false;
+		}
+		</script>
+	</HEAD>
+	<body>
+	<table width="98%" border="0" cellspacing="0" cellpadding="0" align="center">
+		<tr>
+			<td height="5"></td>
+		</tr>
+	</table>
+	<table width="99%" align="center" border="1" cellpadding="0" cellspacing="0" class="ListBox">
+		<tr class="ListHeader">
+			<td width="180">流程名称</td>
+			<td>流程说明</td>
+			<td></td>
+		</tr>
+		<asp:Repeater id="FlowRepeater" runat="server">
+			<ItemTemplate>
+				<tr class="ListItem">
+					<td>
+						<img src="../images/flow.ico" align="absmiddle"><%#DataBinder.Eval(Container.DataItem,"NAME")%>
+					</td>
+					<td><%#DataBinder.Eval(Container.DataItem,"DESCR")%>&nbsp;</td>
+					<td width="60" align="center"><a href="javascript:showEditorWindow('<%#DataBinder.Eval(Container.DataItem,"ID")%>');void(0);">设置权限</a></td>
+				</tr>
+				<tr class="ListItem" bgcolor="F5F5F5">
+					<td colspan="3">
+						<table width="100%" align="center" border="0" cellpadding="0" cellspacing="0">
+							<tr>
+								<td height="25" width="200"><a href="AdminActivities.aspx?WorkflowId=<%#DataBinder.Eval(Container.DataItem,"ID")%>">当前活动流程数</a></td>
+								<td><asp:Label id="lblActivityAmount" runat="server" ForeColor="red"></asp:label></td>
+							</tr>
+							<tr>
+								<td height="25"><a href="AdminPausedWorkflowInstances.aspx?WorkflowId=<%#DataBinder.Eval(Container.DataItem,"ID")%>">已挂起流程数</a></td>
+								<td><asp:Label id="lblPauseAmount" runat="server" ForeColor="red"></asp:label></td>
+							</tr>
+							<tr>
+								<td height="25"><a href="AdminEndFlows.aspx?WorkflowId=<%#DataBinder.Eval(Container.DataItem,"ID")%>">已结束流程数</a></td>
+								<td><asp:Label id="lblFinishAmount" runat="server" ForeColor="red"></asp:label></td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</ItemTemplate>
+		</asp:Repeater>
+	</table>
+	</body>
+</HTML>
+

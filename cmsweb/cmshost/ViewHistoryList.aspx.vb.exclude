@@ -1,0 +1,373 @@
+Imports NetReusables
+Imports Unionsoft.Platform
+Public Class ViewHistoryList
+    Inherits Cms.Web.CmsFrmContentBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents dgridHostTable As System.Web.UI.WebControls.DataGrid
+    Protected WithEvents Cmspager1 As Cms.Web.CmsPager
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+
+    'ItemCreated事件会被触发2次，第一次是视图状态恢复时，没有意义的一次，不必处理；第二次是真正输出HTML页面前，所以应该处理。
+    Private m_intItemCreatedCounter As Integer = 0
+
+    'ItemCreated事件会被触发2次，第一次是视图状态恢复时，没有意义的一次，不必处理；第二次是真正输出HTML页面前，所以应该处理。
+    Private m_intItemCreatedCounterOfSubTable As Integer = 0
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        '在此处放置初始化页的用户代码
+    End Sub
+    Protected Overrides Sub CmsPageSaveParametersToViewState()
+        MyBase.CmsPageSaveParametersToViewState()
+    End Sub
+
+    Protected Overrides Sub CmsPageInitialize()
+        If CmsPass.EmpIsSysAdmin Or CmsPass.EmpIsSysSecurity Then '系统管理员和系统安全员员不能进入内容管理
+            Response.Redirect("/cmsweb/Logout.aspx", True)
+            Return
+        End If
+    End Sub
+    Private Sub dgridHostTable_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles dgridHostTable.Init
+        If Session("CMS_PASSPORT") Is Nothing Then '用户尚未登录或者Session过期，转至登录页面
+            Response.Redirect("/cmsweb/Logout.aspx", True)
+            Return
+        End If
+        CmsPageSaveParametersToViewState()
+
+        '调整主界面窗体的SIZE
+        'CmsPass.InitWindowSize(RInt("content_width"), RInt("content_height"))
+        Dim lngResID As Long = RLng("mnuhostresid")
+        If lngResID <= 0 Then lngResID = CmsPass.LastNodeID
+        Try
+
+            Dim datRes As DataResource = CmsPass.GetDataRes(lngResID)
+            If CmsRights.HasRightsRecView(CmsPass, lngResID) = False Then
+                'Dim strMsg As String = "<script language=""javascript"">window.onload = new function() {alert('您对当前资源没有访问权限！');}</script>"
+                'Response.Write(strMsg)
+                Return '检验有无浏览权限
+            End If
+
+
+            '----------------------------------------------------------
+            '设置DataGrid显示属性
+            Dim intRowNum As Long = CmsPass.TableHostRowNum '获取每页显示行数
+            WebUtilities.InitialDataGrid(dgridHostTable, intRowNum, True, True, False, True)        '必须设置EnableViewState为True，否则DataGrid无法记住当前页
+            '----------------------------------------------------------
+
+            '----------------------------------------------------------
+            '必须在DataGrid1_Init()中创建列，否则之后不能进入PageIndexChanged、SortCommand等的事件入口
+            If CmsPass.HostResData.ResTableType <> "" Then
+                Dim dv As DataView = ResFactory.TableService(datRes.ResTableType).GetTableColumns(CmsPass, CmsPass.HostResData.ResID)
+                LoadResTableColumns(CmsPass, lngResID, dgridHostTable, dv)
+            End If
+            '----------------------------------------------------------
+        Catch ex As Exception
+            SLog.Err("主表DataGrid1_Init异常出错。", ex)
+        End Try
+    End Sub
+
+    '------------------------------------------------------------------
+    '创建资源数据表的列
+    '------------------------------------------------------------------
+    Private Sub LoadResTableColumns(ByRef pst As CmsPassport, ByVal lngResID As Long, ByRef DataGrid1 As DataGrid, ByRef dv As DataView, Optional ByVal strFirstColName As String = "", Optional ByVal blnEnableFormat As Boolean = True, Optional ByVal blnEnableCurrencyFormat As Boolean = True)
+        If dv Is Nothing Then Return '参数校验
+
+        Dim datRes As DataResource = pst.GetDataRes(lngResID)
+
+        '第一列是唯一ID，不显示，用于修改、删除时作为唯一ID用
+        DataGrid1.Columns.Clear()
+
+        Dim intTotalWidth As Integer = 0
+
+        Dim col As BoundColumn = New BoundColumn
+        col.HeaderText = "PRIID"
+        col.DataField = "PRIID"
+        col.ItemStyle.Width = Unit.Pixel(1)
+        col.Visible = False
+        col.ReadOnly = True
+        DataGrid1.Columns.Add(col)
+        'intTotalWidth += 10
+
+        col = New BoundColumn
+        col.HeaderText = "操作"
+        col.DataField = "optype"
+        col.ItemStyle.Width = Unit.Pixel(30)
+
+        col.ReadOnly = True
+        DataGrid1.Columns.Add(col)
+        intTotalWidth += 30
+
+        col = New BoundColumn
+        col.HeaderText = "操作人"
+        col.DataField = "opuser"
+        col.ItemStyle.Width = Unit.Pixel(55)
+
+        col.ReadOnly = True
+        DataGrid1.Columns.Add(col)
+        intTotalWidth += 55
+
+        col = New BoundColumn
+        col.HeaderText = "操作时间"
+        col.DataField = "optime"
+        col.DataFormatString = "{0:yy-MM-dd HH:mm:ss}" 'yyyy-MM-dd HH:mm:ss
+        col.ItemStyle.Width = Unit.Pixel(120)
+
+        col.ReadOnly = True
+        DataGrid1.Columns.Add(col)
+        intTotalWidth += 120
+        '获取指定用户的列字段权限信息
+        Dim strColsOfNoRights As String = CmsRights.GetRightsData(pst, lngResID, pst.EmpID).strQX_ACCESS_COLS
+
+
+        '创建所有需要显示的列
+
+        Dim strResTableType As String = datRes.ResTableType
+        Dim strBriefLanguage As String = CmsMessage.GetBriefLanguage(pst.EmpLanguage)
+        Dim drv As DataRowView
+        For Each drv In dv
+           
+            Dim intWidth As Integer = WebUtilities.CreateOneColumn(DataGrid1, drv, datRes.ResTable, blnEnableFormat, blnEnableCurrencyFormat, strColsOfNoRights, strBriefLanguage, strResTableType)
+            intTotalWidth += intWidth
+        Next
+
+        '1：在资源数据表单中显示记录创建人和创建时间；0：不显示
+        If datRes.IsShowCRT = 1 Then
+            Dim strID As String = ""
+            Dim strTime As String = ""
+            If strResTableType = "DOC" Then
+                strID = "DOC2_CRTID"
+                strTime = "DOC2_CRTTIME"
+            ElseIf strResTableType = "TWOD" Then
+                strID = "CRTID"
+                strTime = "CRTTIME"
+            End If
+
+            col = New BoundColumn
+            col.HeaderText = "创建人"
+            col.DataField = strID
+            col.SortExpression = datRes.ResTable & "." & col.DataField
+            col.ItemStyle.Width = Unit.Pixel(70)
+            intTotalWidth += 70
+            DataGrid1.Columns.Add(col)
+
+            col = New BoundColumn
+            col.HeaderText = "创建时间"
+            col.DataField = strTime
+            col.SortExpression = datRes.ResTable & "." & col.DataField
+            col.DataFormatString = "{0:yy-MM-dd HH:mm:ss}" 'yyyy-MM-dd HH:mm:ss
+            col.ItemStyle.Width = Unit.Pixel(120)
+            intTotalWidth += 120
+            DataGrid1.Columns.Add(col)
+        End If
+
+        '1：在资源数据表单中显示记录最后修改人和修改时间；0：不显示
+        If datRes.IsShowEDT = 1 Then
+            Dim strID As String = ""
+            Dim strTime As String = ""
+            If strResTableType = "DOC" Then
+                strID = "DOC2_EDTID"
+                strTime = "DOC2_EDTTIME"
+            ElseIf strResTableType = "TWOD" Then
+                strID = "EDTID"
+                strTime = "EDTTIME"
+            End If
+
+            col = New BoundColumn
+            col.HeaderText = "修改人"
+            col.DataField = strID
+            col.SortExpression = datRes.ResTable & "." & col.DataField
+            col.ItemStyle.Width = Unit.Pixel(70)
+            intTotalWidth += 70
+            DataGrid1.Columns.Add(col)
+
+            col = New BoundColumn
+            col.HeaderText = "修改时间"
+            col.DataField = strTime
+            col.SortExpression = datRes.ResTable & "." & col.DataField
+            col.DataFormatString = "{0:yy-MM-dd HH:mm:ss}" 'yyyy-MM-dd HH:mm:ss
+            col.ItemStyle.Width = Unit.Pixel(120)
+            intTotalWidth += 120
+            DataGrid1.Columns.Add(col)
+        End If
+
+        DataGrid1.Width = Unit.Pixel(intTotalWidth)
+    End Sub
+    Private Sub dgridHostTable_ItemCreated(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataGridItemEventArgs) Handles dgridHostTable.ItemCreated
+        If dgridHostTable.Items.Count > 0 And e.Item.ItemIndex = -1 Then
+            'ItemCreated事件会被触发2次，第一次是视图状态恢复时，没有意义的一次，不必处理；第二次是真正输出HTML页面前，所以应该处理。
+            If m_intItemCreatedCounter < 1 Then
+                m_intItemCreatedCounter += 1
+                Return
+            End If
+
+            Dim i As Integer
+            Dim row As DataGridItem
+
+            '-----------------------------------------------------------
+            '找到文档Size字段所在列的序号
+            Dim intSizeColNO As Integer = -1
+            For i = 0 To dgridHostTable.Columns.Count - 1
+                Dim bc As BoundColumn = CType(dgridHostTable.Columns(i), BoundColumn)
+                If bc.DataField = "DOC2_SIZE" Then
+                    intSizeColNO = i
+                    Exit For
+                End If
+            Next
+            '-----------------------------------------------------------
+
+            '-----------------------------------------------------------
+            '找到行颜色设置的几个行的序号
+            Dim datRes As DataResource = CmsPass.HostResData
+            Dim intCol1() As Integer = {-1, -1, -1}
+            Dim intCol1Type() As Integer = {0, 0, 0}
+            Dim intCol2() As Integer = {-1, -1, -1}
+            Dim intCol2Type() As Integer = {0, 0, 0}
+            Dim intCol3() As Integer = {-1, -1, -1}
+            Dim intCol3Type() As Integer = {0, 0, 0}
+            For i = 0 To dgridHostTable.Columns.Count - 1
+                Dim bc As BoundColumn = CType(dgridHostTable.Columns(i), BoundColumn)
+                Dim j As Integer
+                For j = 0 To 2
+                    If datRes.RowColorCol1(j) <> "" And bc.DataField = datRes.RowColorCol1(j) Then
+                        intCol1(j) = i
+                        If IsNumeric(bc.FooterText) Then intCol1Type(j) = CInt(bc.FooterText)
+                    End If
+                Next
+                For j = 0 To 2
+                    If datRes.RowColorCol2(j) <> "" And bc.DataField = datRes.RowColorCol2(j) Then
+                        intCol2(j) = i
+                        If IsNumeric(bc.FooterText) Then intCol2Type(j) = CInt(bc.FooterText)
+                    End If
+                Next
+                For j = 0 To 2
+                    If datRes.RowColorCol3(j) <> "" And bc.DataField = datRes.RowColorCol3(j) Then
+                        intCol3(j) = i
+                        If IsNumeric(bc.FooterText) Then intCol3Type(j) = CInt(bc.FooterText)
+                    End If
+                Next
+            Next
+            '-----------------------------------------------------------
+
+            Dim alistRecIDs As ArrayList = StringDeal.Split(SStr("CMS_HOSTTABLE_RECID"), ",")
+            If alistRecIDs Is Nothing Then alistRecIDs = New ArrayList
+            If alistRecIDs.Count = 0 Then
+                Session("WorkFlowID") = "0"
+            Else
+                Session("WorkFlowID") = Convert.ToString(alistRecIDs(0))
+            End If
+            Dim strNoPost As String = RStr("mnunopost")
+            For Each row In dgridHostTable.Items
+                '-----------------------------------------------------------
+                '转换文档Size的显示： 13657  ->  14 KB
+                If intSizeColNO >= 0 Then
+                    Dim strTemp As String = WebUtilities.ConvertDocSize(row.Cells(intSizeColNO).Text)
+                    row.Cells(intSizeColNO).Text = strTemp
+                End If
+                '-----------------------------------------------------------
+
+                '设置客户端的记录ID和Javascript方法
+                If IsNumeric(row.Cells(0).Text.Trim()) Then
+                    Dim lngCurrentRecID As Long = CLng(row.Cells(0).Text.Trim()) '第1列必须是记录ID
+                    row.Attributes.Add("RECID", CStr(lngCurrentRecID)) '在客户端保存记录ID
+                    'If strNoPost <> "yes" And CmsPass.RelResList.Count > 0 Then '有相关表，则左键点击设为POST
+                    '    row.Attributes.Add("OnClick", "RowLeftClickInHostTablePost(this)") '在客户端生成：点击记录的响应方法OnClick()
+                    'Else '无相关表
+                    row.Attributes.Add("OnClick", "RowLeftClickInHostTableNoPost(this)") '在客户端生成：点击记录的响应方法OnClick()
+                    row.Attributes.Add("OndblClick", "DoubleClick(this)") '双击显示详细信息
+                    'End If
+
+                    '设置满足条件的行颜色
+                    Dim blnSet As Boolean = False
+                    blnSet = ResTableRowColor.SetRowColor(datRes, row, intCol1, intCol1Type, 1)
+                    If blnSet = False Then blnSet = ResTableRowColor.SetRowColor(datRes, row, intCol2, intCol2Type, 2)
+                    If blnSet = False Then ResTableRowColor.SetRowColor(datRes, row, intCol3, intCol3Type, 3)
+
+                    If lngCurrentRecID > 0 And alistRecIDs.Contains(CStr(lngCurrentRecID)) Then
+                        row.Attributes.Add("bgColor", "#C4D9F9") '修改被点击记录的背景颜色
+                    End If
+                End If
+            Next
+        End If
+    End Sub
+
+    Private Sub dgridHostTable_SortCommand(ByVal source As Object, ByVal e As System.Web.UI.WebControls.DataGridSortCommandEventArgs) Handles dgridHostTable.SortCommand
+        Session("CMS_HOSTTABLE_RECID") = "" '必须清空当前选中记录ID
+
+        '每次点击替换排序次序
+        If SStr("HOSTTABLE_ORDERBY_TYPE") = "ASC" Then
+            Session("HOSTTABLE_ORDERBY_TYPE") = "DESC"
+        Else
+            Session("HOSTTABLE_ORDERBY_TYPE") = "ASC"
+        End If
+
+        '排序显示数据
+        Session("CMS_HOSTTABLE_ORDERBY") = e.SortExpression & " " & SStr("HOSTTABLE_ORDERBY_TYPE")
+        ShowTableData()
+    End Sub
+
+    Protected Overrides Sub CmsPageDealFirstRequest()
+
+        '---------------------------------------------------------------
+        '初始化分页控件
+        Cmspager1.EnableViewState = True
+        Cmspager1.PageRows = CmsPass.TableHostRowNum
+        Cmspager1.Language = CmsPass.EmpLanguage
+        Cmspager1.TableAlign = "right"
+        Cmspager1.ButtonAlign = "right"
+        Cmspager1.WordAlign = "right"
+        Cmspager1.TotalWidth = "250"
+        Cmspager1.ButtonsWidth = "130"
+        Cmspager1.CurrentPage = SInt("CMS_HOSTTABLE_PAGE" & CmsPass.HostResData.ResID)
+
+        ShowTableData()
+
+    End Sub
+
+    Private Sub ShowTableData()
+        Dim lngResID As Long = RLng("mnuresid")
+        Dim lngRecId As Long = RLng("mnurecid")
+        ''If blnResetToFirstPage = True Then strHostPageCommand = "MoveFirstPage"
+        'Cmspager1.DealPageCommandBeforeBind("MoveFirstPage")   '设置页数
+        Dim datRes As DataResource = CmsPass.GetDataRes(lngResID)
+
+        Dim strSql As String = " select * from " & datRes.ResTable & "_History where id=" & lngRecId
+
+        Dim intRecCount As Integer = 0
+        Dim ds As DataSet = CmsDbStatement.Query(CmsPass.Dbc, strSql, Cmspager1.RecStartOnCurPage, Cmspager1.PageRows, datRes.ResTable)
+
+        Dim strCountSql As String = " select count(*) from " & datRes.ResTable & "_History where id=" & lngRecId
+        intRecCount = CInt(CmsDbStatement.CountSql(CmsPass.Dbc, strCountSql)) '获得实际记录数量
+
+        Cmspager1.TotalRecordNumber = intRecCount
+
+        '绑定数据集
+        Dim dv As DataView = ds.Tables(0).DefaultView
+        'dgridHostTable.VirtualItemCount = dv.Count
+        dgridHostTable.DataSource = dv
+        dgridHostTable.DataBind()
+    End Sub
+    Protected Overrides Sub CmsPageDealPostBack()
+        ShowTableData()
+    End Sub
+
+    Private Sub Cmspager1_Click(ByVal sender As System.Object, ByVal eventArgument As String) Handles Cmspager1.Click
+        Cmspager1.DealPageCommandBeforeBind(eventArgument)
+        ShowTableData()
+    End Sub
+End Class

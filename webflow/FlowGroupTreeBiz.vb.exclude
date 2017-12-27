@@ -1,0 +1,27 @@
+Option Explicit On 
+Option Strict On
+
+Imports NetReusables
+Imports Microsoft.Web.UI.WebControls
+
+
+Public Class FlowGroupBiz
+    '-------------------------------------------------------------------------------
+    '以递归的方式生成树的字节点,尽管递归是很不好的方法,但这里我却不知道还有什么方法,都怪没有Key
+    '-------------------------------------------------------------------------------
+    Public Shared Sub InitTreeView(ByVal RootNode As TreeNode)
+        Dim i As Integer
+        Dim tvwNode As TreeNode
+        Dim dt As DataTable
+        dt = SDbStatement.Query("SELECT * FROM FLW_CLASS_MANAGE WHERE PID=" & RootNode.NodeData).Tables(0)
+        For i = 0 To dt.Rows.Count - 1
+            tvwNode = New TreeNode
+            tvwNode.Text = CStr(dt.Rows(i)("DESCR"))
+            tvwNode.NodeData = CStr(dt.Rows(i)("ID"))
+            tvwNode.Target = "FlowWorkPlat"
+            tvwNode.NavigateUrl = "FlowList.aspx"
+            RootNode.Nodes.Add(tvwNode)
+            InitTreeView(tvwNode)
+        Next
+    End Sub
+End Class

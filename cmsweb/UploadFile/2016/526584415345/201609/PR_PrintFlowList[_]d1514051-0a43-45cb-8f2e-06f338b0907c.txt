@@ -1,0 +1,30 @@
+DROP PROCEDURE PR_PrintFlowList
+
+GO
+
+CREATE PROCEDURE Pr_printflowlist (@EmployeesAccount VARCHAR(100),
+                                   @WorklistItemId   VARCHAR(100))
+AS
+  BEGIN
+      DECLARE @flowname VARCHAR(100)
+      DECLARE @Recid VARCHAR(100)
+      DECLARE @excelname VARCHAR(200)
+
+      SELECT @flowname = 流程名称,
+             @Recid = RecordID
+      FROM   Funciton_getcommonprocess('', '', '', '')
+      WHERE  WorklistItemId = 516806362220
+
+      IF @flowname = '档案利用申请'
+        BEGIN
+            SELECT '档案利用审批单.xls' '模板文件',
+                   FilesID       '1,3',
+	           JBBM          '2,1',
+                   LYFS          '3,1',
+                   mj            '3,3',
+                 -- DAWJMC       '4,1',
+				   ISNULL(dbo.Funciton_GetProcessReslut(@WorklistItemId,'秘密经办部门人'),'')  '4,1'
+            FROM   CT505408207814
+            WHERE  id = @Recid
+        END
+  END 

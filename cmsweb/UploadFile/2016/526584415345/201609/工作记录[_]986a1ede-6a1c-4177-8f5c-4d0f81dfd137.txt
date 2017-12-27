@@ -1,0 +1,80 @@
+大佛寺
+新大通：账号：1061485082 密码：5267
+
+
+
+
+中锐服务器：
+
+ip: 222.66.114.181   username: sanmeng  pwd:123456
+
+访问地址   http://10.10.10.123/portal   username:liub   pwd:123456
+
+
+
+
+玉佛寺新大通：1065841455   密码：yufosi
+账号：admin 密码：jbj
+账户：aaa
+139 0172 1708   林立
+
+
+
+
+万佛寺
+VPN：192.168.1.88：8888  
+密码：icom
+cmsweb：http://wfs.vigorddns.com:88/cmsweb/Default.aspx
+
+
+
+天合汽车·
+新大通：955415895
+unionsoft
+sa密码：unionsoft@2016
+
+服务器密码：unionsoft@2015
+账号root 密码unionsoft277912
+
+
+
+交运大件
+远程：58.247.72.2
+密码：unionsoft@2012
+
+
+青岛润德：
+第一联系方式：大蚂蚁聊天工具
+网上下载即可
+
+链接服务器：sdrudder.iplink.com.cn 
+帐号：sanmeng1    sanmeng2  以上2个帐号都无密码 即可登录
+
+
+
+第二联系方式：对接人-于胜辉 
+手机：150-2008-6502
+微信号：QQ616642948
+
+VPN：sdrudder.f3322.net
+帐号：rudder2
+密码：123
+
+
+
+
+客户服务器 192.168.1.11
+admin
+123
+
+http://192.168.1.11:8000/portal/login.aspx
+
+
+
+本地服务器
+http://192.168.8.11:1104/portal/login.aspx
+
+后台帐号：admin 密码123456
+配置帐号：test 无密码
+
+

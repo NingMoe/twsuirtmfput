@@ -1,0 +1,79 @@
+Imports Unionsoft.Workflow.Items
+Imports Unionsoft.Workflow.Engine
+Imports Unionsoft.Workflow.Platform
+
+
+Public Class AdminFlowAdjust
+    Inherits UserPageBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents CtlFlowDiagram1 As CtlFlowDiagram
+    Protected WithEvents btnRollBack As System.Web.UI.WebControls.Button
+    Protected WithEvents btnModifyFormData As System.Web.UI.WebControls.Button
+    Protected WithEvents btnRedirect As System.Web.UI.WebControls.Button
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Dim lngWorkFlowID As Long
+
+
+    '-------------------------------------------------------------------------------   
+    ' 目的          : '当前流程图的显示类型
+    ' 传入参数      : 
+    ' 传出参数      : 
+    ' Author        : CHENYU   Date　: 2006-4-3
+    '-------------------------------------------------------------------------------   
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Response.Expires = 0
+        Response.Buffer = False
+        'Response.Flush()
+        lngWorkFlowID = CType(Request.QueryString("WorkFlowID"), Long)
+        Me.btnRollBack.Attributes.Add("onClick", "return window.confirm('确实要回退吗?')")
+
+        If Not Me.IsPostBack Then
+            CtlFlowDiagram1.GenerateWorkflowInstancePicture(lngWorkFlowID)
+            Session.Item("EntryUrl") = "AdminActivities.aspx"
+        End If
+
+    End Sub
+
+    '-------------------------------------------------------------------------------   
+    ' 目的          : 从当前的活动环节开始回退一个环节
+    ' 传入参数      : 
+    ' 传出参数      : 
+    ' Author        : CHENYU   Date　: 2006-4-4
+    '-------------------------------------------------------------------------------   
+    Private Sub btnRollBack_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRollBack.Click
+        Try
+            WorkflowManager.RollBack(lngWorkFlowID)
+            CtlFlowDiagram1.GenerateWorkflowInstancePicture(lngWorkFlowID)
+            Me.MessageBox("回退成功!可能由于缓存的原因,图片未能刷新,请点击右键刷新页面.")
+            Me.SetLocation("AdminFlowAdjust.aspx?action=&WorkflowId=" & lngWorkFlowID)
+        Catch ex As Exception
+            MyBase.MessageBox(ex.Message)
+        End Try
+    End Sub
+
+    Private Sub btnModifyFormData_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnModifyFormData.Click
+        Response.Redirect("AdminModifyFormData.aspx?WorkflowID=" & lngWorkFlowID)
+    End Sub
+
+    Private Sub btnRedirect_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnRedirect.Click
+        Response.Redirect("RedirectEmployeeSelect.aspx?WorkflowId=" & lngWorkFlowID)
+    End Sub
+End Class

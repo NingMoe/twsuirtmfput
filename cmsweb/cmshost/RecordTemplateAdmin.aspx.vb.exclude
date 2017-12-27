@@ -1,0 +1,355 @@
+Option Strict On
+Option Explicit On 
+
+Imports NetReusables
+Imports Unionsoft.Platform
+
+Public Class RecordTemplateAdmin
+    Inherits CmsPage
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents lblResName As System.Web.UI.WebControls.Label
+    Protected WithEvents DataGrid1 As System.Web.UI.WebControls.DataGrid
+    Protected WithEvents btnClearAll As System.Web.UI.WebControls.Button
+    Protected WithEvents lbtnAddHostRes As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents ddlHostResCols As System.Web.UI.WebControls.DropDownList
+    Protected WithEvents lbtnAddSubRes As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents ddlSubRes As System.Web.UI.WebControls.DropDownList
+    Protected WithEvents lbtnAddOtherRes As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents ddlOtherResCols As System.Web.UI.WebControls.DropDownList
+    Protected WithEvents btnExit As System.Web.UI.WebControls.Button
+    Protected WithEvents txtOtherRes As System.Web.UI.WebControls.TextBox
+    Protected WithEvents lbtnSelRes As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbtnMoveUp As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents lbtnMoveDown As System.Web.UI.WebControls.LinkButton
+    Protected WithEvents chkRunFormula As System.Web.UI.WebControls.CheckBox
+    Protected WithEvents Label1 As System.Web.UI.WebControls.Label
+    Protected WithEvents lblTitle As System.Web.UI.WebControls.Label
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+    End Sub
+
+    Protected Overrides Sub CmsPageSaveParametersToViewState()
+        MyBase.CmsPageSaveParametersToViewState()
+
+        If VLng("PAGE_TEMPLATETYPE") = 0 Then
+            ViewState("PAGE_TEMPLATETYPE") = RLng("datatmpltype")
+        End If
+    End Sub
+
+    Protected Overrides Sub CmsPageInitialize()
+        If CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType) = DataTemplateType.DataCopy Then
+            lblTitle.Text = "设置记录复制模板"
+        ElseIf CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType) = DataTemplateType.DataDelete Then
+            lblTitle.Text = "设置记录删除模板"
+        End If
+        lblResName.Text = CmsPass.GetDataRes(VLng("PAGE_RESID")).ResName
+    End Sub
+
+    Protected Overrides Sub CmsPageDealFirstRequest()
+        WebUtilities.LoadResColumnsInDdlist(CmsPass, VLng("PAGE_RESID"), ddlHostResCols) 'Load主资源的字段列表
+
+        WebUtilities.LoadSubResourcesInDdlist(CmsPass, VLng("PAGE_RESID"), ddlSubRes, True)
+
+        '-----------------------------------------------------------------
+        If RLng("selresid") <> 0 Then '刚从选择资源窗体回来
+            ViewState("PAGE_OTHER_DATARESID") = RLng("selresid")
+        Else
+            ViewState("PAGE_OTHER_DATARESID") = ""
+        End If
+        If VLng("PAGE_OTHER_DATARESID") <> 0 Then
+            Dim lngDataResID As Long = VLng("PAGE_OTHER_DATARESID")
+            txtOtherRes.Text = CmsPass.GetDataRes(lngDataResID).ResName
+            WebUtilities.LoadResColumnsInDdlist(CmsPass, lngDataResID, ddlOtherResCols)
+        Else
+            txtOtherRes.Text = ""
+            ddlOtherResCols.Items.Clear()
+        End If
+        '-----------------------------------------------------------------
+
+        GridDataBind() '绑定数据
+    End Sub
+
+    Protected Overrides Sub CmsPageDealPostBack()
+    End Sub
+
+    Private Sub btnClearAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnClearAll.Click
+        RecordTemplate.DeleteTemplateByHostResource(CmsPass, VLng("PAGE_RESID"), CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType))
+        GridDataBind() '绑定数据
+    End Sub
+
+    Private Sub btnExit_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnExit.Click
+        Response.Redirect(VStr("PAGE_BACKPAGE"), False)
+    End Sub
+
+    Private Sub lbtnAddHostRes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnAddHostRes.Click
+        Dim strHostColName As String = ddlHostResCols.SelectedValue
+        If strHostColName = "" Then
+            PromptMsg("请选择正添加的资源的有效字段！")
+            Return
+        End If
+
+        Dim lngHostResID As Long = VLng("PAGE_RESID")
+        Dim hashFieldVal As New Hashtable
+        hashFieldVal.Add("DTMPL_HOSTRESID", lngHostResID)
+        hashFieldVal.Add("DTMPL_DATARESID", lngHostResID)
+        hashFieldVal.Add("DTMPL_TYPE", CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType))
+        hashFieldVal.Add("DTMPL_COL1", strHostColName)
+        hashFieldVal.Add("DTMPL_COL2", strHostColName)
+        hashFieldVal.Add("DTMPL_RUNFORMULA", CLng(IIf(chkRunFormula.Checked, 1, 0)))
+        CmsDbBase.AddOrEditRecordByWhere(CmsPass, CmsTables.RecTemplate, hashFieldVal, "", "DTMPL_ID", "DTMPL_SHOWORDER")
+        GridDataBind() '绑定数据
+    End Sub
+
+    Private Sub lbtnAddSubRes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnAddSubRes.Click
+        Dim strSubRes As String = ddlSubRes.SelectedValue
+        If IsNumeric(strSubRes) = False Then
+            PromptMsg("请选择正确的子资源！")
+            Return
+        End If
+
+        Dim lngHostResID As Long = VLng("PAGE_RESID")
+        Dim lngDataResID As Long = CLng(strSubRes)
+        Dim datRelCols As DataRelatedColumn = CmsTableRelation.GetMainRelatedColumns(CmsPass, lngHostResID, lngDataResID, True)
+        If Not datRelCols Is Nothing Then
+            Dim hashFieldVal As New Hashtable
+            hashFieldVal.Add("DTMPL_HOSTRESID", lngHostResID)
+            hashFieldVal.Add("DTMPL_DATARESID", lngDataResID)
+            hashFieldVal.Add("DTMPL_TYPE", CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType))
+            hashFieldVal.Add("DTMPL_COL1", datRelCols.strHostColumn)
+            hashFieldVal.Add("DTMPL_COL2", datRelCols.strSubColumn)
+            hashFieldVal.Add("DTMPL_RUNFORMULA", CLng(IIf(chkRunFormula.Checked, 1, 0)))
+            CmsDbBase.AddOrEditRecordByWhere(CmsPass, CmsTables.RecTemplate, hashFieldVal, "", "DTMPL_ID", "DTMPL_SHOWORDER")
+        End If
+        GridDataBind() '绑定数据
+    End Sub
+
+    Private Sub lbtnAddOtherRes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnAddOtherRes.Click
+        Dim lngHostResID As Long = VLng("PAGE_RESID")
+        Dim lngDataResID As Long = VLng("PAGE_OTHER_DATARESID")
+        If lngDataResID = 0 Then
+            PromptMsg("请选择正确的其它资源！")
+            Return
+        End If
+        Dim strHostColName As String = ddlHostResCols.SelectedValue
+        If strHostColName = "" Then
+            PromptMsg("请选择主资源的有效字段！")
+            Return
+        End If
+        Dim strDataColName As String = ddlOtherResCols.SelectedValue
+        If strDataColName = "" Then
+            PromptMsg("请选择其它资源的有效字段！")
+            Return
+        End If
+
+        Dim hashFieldVal As New Hashtable
+        hashFieldVal.Add("DTMPL_HOSTRESID", lngHostResID)
+        hashFieldVal.Add("DTMPL_DATARESID", lngDataResID)
+        hashFieldVal.Add("DTMPL_TYPE", CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType))
+        hashFieldVal.Add("DTMPL_COL1", strHostColName)
+        hashFieldVal.Add("DTMPL_COL2", strDataColName)
+        hashFieldVal.Add("DTMPL_RUNFORMULA", CLng(IIf(chkRunFormula.Checked, 1, 0)))
+        CmsDbBase.AddOrEditRecordByWhere(CmsPass, CmsTables.RecTemplate, hashFieldVal, "", "DTMPL_ID", "DTMPL_SHOWORDER")
+        GridDataBind() '绑定数据
+    End Sub
+
+    Private Sub lbtnSelRes_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnSelRes.Click
+        Session("CMSBP_ResourceSelect") = "/cmsweb/cmshost/RecordTemplateAdmin.aspx?mnuresid=" & VLng("PAGE_RESID")
+        Response.Redirect("/cmsweb/cmsothers/ResourceSelect.aspx?mnuresid=" & VLng("PAGE_RESID"), False)
+    End Sub
+
+    Private Sub lbtnMoveUp_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnMoveUp.Click
+        Dim lngRecID As Long = GetRecIDOfGrid()
+        If lngRecID = 0 Then
+            PromptMsg("请选择需要操作的记录！")
+            Return
+        End If
+        CmsDbBase.MoveUpByWhere(CmsPass, CmsTables.RecTemplate, "DTMPL_ID=" & lngRecID, "DTMPL_HOSTRESID=" & VLng("PAGE_RESID") & " AND DTMPL_TYPE=" & VLng("PAGE_TEMPLATETYPE"), "DTMPL_SHOWORDER")
+        GridDataBind()
+    End Sub
+
+    Private Sub lbtnMoveDown_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lbtnMoveDown.Click
+        Dim lngRecID As Long = GetRecIDOfGrid()
+        If lngRecID = 0 Then
+            PromptMsg("请选择需要操作的记录！")
+            Return
+        End If
+        CmsDbBase.MoveDownByWhere(CmsPass, CmsTables.RecTemplate, "DTMPL_ID=" & lngRecID, "DTMPL_HOSTRESID=" & VLng("PAGE_RESID") & " AND DTMPL_TYPE=" & VLng("PAGE_TEMPLATETYPE"), "DTMPL_SHOWORDER")
+        GridDataBind()
+    End Sub
+
+    Private Sub DataGrid1_Init(ByVal sender As Object, ByVal e As System.EventArgs) Handles DataGrid1.Init
+        Try
+            If Session("CMS_PASSPORT") Is Nothing Then '用户尚未登录或者Session过期，转至登录页面
+                Response.Redirect("/cmsweb/Logout.aspx", True)
+                Return
+            End If
+            CmsPageSaveParametersToViewState() '将传入的参数保留为ViewState变量，便于在页面中提取和修改
+
+            WebUtilities.InitialDataGrid(DataGrid1) '设置DataGrid显示属性
+            CreateDataGridColumn()
+        Catch ex As Exception
+            PromptMsg("", ex, True)
+        End Try
+    End Sub
+
+    Private Sub DataGrid1_DeleteCommand(ByVal source As Object, ByVal e As System.Web.UI.WebControls.DataGridCommandEventArgs) Handles DataGrid1.DeleteCommand
+        Try
+            '获取关联信息的记录ID
+            Dim lngHostResID As Long = CLng(e.Item.Cells(1).Text.Trim())
+            Dim lngDataResID As Long = CLng(e.Item.Cells(2).Text.Trim())
+            RecordTemplate.DeleteTemplateByDataResource(CmsPass, lngHostResID, lngDataResID, CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType))
+        Catch ex As Exception
+            PromptMsg(ex.Message)
+        End Try
+
+        DataGrid1.EditItemIndex = CInt(e.Item.ItemIndex)
+        DataGrid1.EditItemIndex = -1
+        GridDataBind() '绑定数据
+    End Sub
+
+    Private Sub DataGrid1_ItemCreated(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.DataGridItemEventArgs) Handles DataGrid1.ItemCreated
+        '设置每行的唯一ID和OnClick方法，用于传回服务器做相应操作，如修改、删除等，下面代码与Html页面中部分代码联合使用
+        If DataGrid1.Items.Count > 0 And e.Item.ItemIndex = -1 Then
+            Dim lngRecIDClicked As Long = GetRecIDOfGrid()
+            Dim row As DataGridItem
+            For Each row In DataGrid1.Items
+                '设置客户端的记录ID和Javascript方法，第三列是关联表的资源ID
+                Dim strRecID As String = row.Cells(0).Text.Trim()
+                If IsNumeric(strRecID) Then
+                    row.Attributes.Add("RECID", strRecID) '在客户端保存记录ID
+                    row.Attributes.Add("OnClick", "RowLeftClickNoPost(this)") '在客户端生成：点击记录的响应方法OnClick()
+
+                    If lngRecIDClicked > 0 And lngRecIDClicked = CLng(strRecID) Then
+                        row.Attributes.Add("bgColor", "#C4D9F9") '修改被点击记录的背景颜色
+                    End If
+                End If
+            Next
+        End If
+    End Sub
+
+    '------------------------------------------------------------------
+    '创建修改表结构的DataGrid的列
+    '------------------------------------------------------------------
+    Private Sub CreateDataGridColumn()
+        Dim intWidth As Integer = 0
+
+        Dim col As BoundColumn = New BoundColumn
+        col.HeaderText = "DTMPL_ID" '关键字段
+        col.DataField = "DTMPL_ID"
+        col.ItemStyle.Width = Unit.Pixel(1)
+        col.Visible = False
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+
+        col = New BoundColumn
+        col.HeaderText = "DTMPL_HOSTRESID"
+        col.DataField = "DTMPL_HOSTRESID"
+        col.ItemStyle.Width = Unit.Pixel(1)
+        col.Visible = False
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+
+        col = New BoundColumn
+        col.HeaderText = "DTMPL_DATARESID"
+        col.DataField = "DTMPL_DATARESID"
+        col.ItemStyle.Width = Unit.Pixel(1)
+        col.Visible = False
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+
+        col = New BoundColumn
+        col.HeaderText = "主表资源"
+        col.DataField = "DTMPL_HOSTRESID2"
+        col.ItemStyle.Width = Unit.Pixel(130)
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+        intWidth += 130
+
+        col = New BoundColumn
+        col.HeaderText = "数据表资源"
+        col.DataField = "DTMPL_DATARESID2"
+        col.ItemStyle.Width = Unit.Pixel(130)
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+        intWidth += 130
+
+        col = New BoundColumn
+        col.HeaderText = "主表关联字段"
+        col.DataField = "DTMPL_COL12"
+        col.ItemStyle.Width = Unit.Pixel(140)
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+        intWidth += 140
+
+        col = New BoundColumn
+        col.HeaderText = "数据表关联字段"
+        col.DataField = "DTMPL_COL22"
+        col.ItemStyle.Width = Unit.Pixel(140)
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+        intWidth += 140
+
+        col = New BoundColumn
+        col.HeaderText = "运行计算公式"
+        col.DataField = "DTMPL_RUNFORMULA2"
+        col.ItemStyle.Width = Unit.Pixel(100)
+        DataGrid1.Columns.Add(col)
+        col = Nothing
+        intWidth += 100
+
+        Dim colDel As ButtonColumn = New ButtonColumn
+        colDel.HeaderText = CmsMessage.GetUI(CmsPass, "TITLE_CMD_DEL")
+        colDel.Text = CmsMessage.GetUI(CmsPass, "TITLE_CMD_DEL")
+        colDel.CommandName = "Delete"
+        colDel.ButtonType = ButtonColumnType.LinkButton
+        colDel.ItemStyle.Width = Unit.Pixel(60)
+        DataGrid1.Columns.Add(colDel)
+        col = Nothing
+        intWidth += 60
+
+        DataGrid1.Width = Unit.Pixel(intWidth)
+    End Sub
+
+    '---------------------------------------------------------------
+    '绑定数据
+    '---------------------------------------------------------------
+    Private Sub GridDataBind()
+        Try
+            Dim ds As DataSet = RecordTemplate.GetTemplateByDataSet(CmsPass, VLng("PAGE_RESID"), CType(VLng("PAGE_TEMPLATETYPE"), DataTemplateType))
+            DataGrid1.DataSource = ds.Tables(0).DefaultView
+            DataGrid1.DataBind()
+        Catch ex As Exception
+            PromptMsg(ex.Message)
+        End Try
+    End Sub
+
+    ''-----------------------------------------------------------------
+    ''显示当前资源的关联子资源列表
+    ''-----------------------------------------------------------------
+    'Private Sub ShowSubRelTables()
+    '    ddlSubRes.Items.Clear()
+    '    Dim alistSubRes As ArrayList = CmsTableRelation.GetSubRelatedResources(CmsPass, VLng("PAGE_RESID"), False, True)
+    '    Dim datRes As DataResource
+    '    For Each datRes In alistSubRes
+    '        ddlSubRes.Items.Add(New ListItem(datRes.ResName, CStr(datRes.ResID)))
+    '    Next
+    'End Sub
+End Class

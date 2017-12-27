@@ -1,0 +1,180 @@
+Imports System.IO
+Imports NetReusables
+Imports Unionsoft.Workflow.Items
+Imports Unionsoft.Workflow.Engine
+Imports Unionsoft.Workflow.Platform
+Imports Microsoft.Web.UI.WebControls
+
+Public Class RedirectEmployeeSelect
+    Inherits UserPageBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents lblSelectEmpInfo As System.Web.UI.WebControls.Label
+    Protected WithEvents tvwEmployees As Microsoft.Web.UI.WebControls.TreeView
+    Protected WithEvents btnOK As System.Web.UI.WebControls.Button
+    Protected WithEvents btnCancel As System.Web.UI.WebControls.Button
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        '在此处放置初始化页的用户代码
+        If Not Page.IsPostBack Then
+            GetCurrentTaskUser()
+            InitTree()
+        End If
+    End Sub
+
+    Private Sub InitTree()
+        Dim htDept As Hashtable = Workflow.Platform.Configuration.OrgImplement.GetDepartments("0")
+        Dim em As IEnumerator = htDept.GetEnumerator()
+        Dim tn As TreeNode = New TreeNode
+        tn.Text = "人员选择"
+        Me.tvwEmployees.Nodes.Add(tn)
+        While em.MoveNext
+            Dim Dept As Department = CType(CType(em.Current, DictionaryEntry).Value, Department)
+            If Dept.DeptType = OrgTypeConstants.ACTUAL Then
+                Dim tnDept As TreeNode = New TreeNode
+                tnDept.Text = Dept.Name
+                tnDept.Expanded = True
+                tn.Nodes.Add(tnDept)
+                GenerateDeptTreeNode(tnDept, Dept.Code)
+                GenerateEmployeeTreeNode(tnDept, Dept.Code)
+            End If
+        End While
+        tn.Expanded = True
+    End Sub
+
+    '生成部门结点
+    Private Sub GenerateDeptTreeNode(ByVal tn As TreeNode, ByVal DeptId As String)
+        Dim htDept As Hashtable = Workflow.Platform.Configuration.OrgImplement.GetDepartments(DeptId)
+        Dim em As IEnumerator = htDept.GetEnumerator()
+        While em.MoveNext
+            Dim Dept As Department = CType(CType(em.Current, DictionaryEntry).Value, Department)
+            If Dept.DeptType = OrgTypeConstants.ACTUAL Then
+                Dim tnDept As TreeNode = New TreeNode
+                tnDept.Text = Dept.Name
+                tn.Nodes.Add(tnDept)
+                GenerateDeptTreeNode(tnDept, Dept.Code)
+                GenerateEmployeeTreeNode(tnDept, Dept.Code)
+            End If
+        End While
+    End Sub
+    '生成人员结点
+    Private Sub GenerateEmployeeTreeNode(ByVal tn As TreeNode, ByVal DeptId As String)
+        Dim CurrentTaskUser As String = ViewState("CurrentTaskUser").ToString()
+        Dim htDept As Hashtable = Workflow.Platform.Configuration.OrgImplement.GetEmployees(DeptId)
+        Dim em As IEnumerator = htDept.GetEnumerator()
+        While em.MoveNext
+            Dim emp As Employee = CType(CType(em.Current, DictionaryEntry).Value, Employee)
+            Dim tnEmp As TreeNode = New TreeNode
+            tnEmp.Text = emp.Name
+            tnEmp.NodeData = emp.Code
+            tnEmp.CheckBox = True
+            If CurrentTaskUser.IndexOf("," & emp.Code & ",") > -1 Then
+                tnEmp.Checked = True
+            End If
+            tn.Nodes.Add(tnEmp)
+        End While
+    End Sub
+    Private Sub btnOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnOK.Click
+        Dim CurrenctTaskUser As String = ViewState("CurrentTaskUser").ToString()
+        Dim AllSelectedUser As String = GetAllSelectedUser()
+        Dim SelectedUsers() As String = AllSelectedUser.Split(CChar(","))
+        Dim CurrentTaskUsers() As String = CurrenctTaskUser.Split(CChar(","))
+        'Dim dbs As New DbStatement(SDbConnectionPool.GetDbConfig())
+        Try
+            'dbs.TransactionBegin()
+            'AddTaskUser()
+            For Each OneSelectedUser As String In SelectedUsers
+                If OneSelectedUser <> "" Then
+                    If CurrenctTaskUser.IndexOf("," & OneSelectedUser & ",") < 0 Then '该用户为新增用户
+                        Dim hst As Hashtable = New Hashtable
+                        hst("Id") = TimeId.CurrentMilliseconds(30)
+                        hst("TaskId") = ViewState("TaskId").ToString()
+                        hst("NodeId") = ViewState("NodeId").ToString()
+                        hst("IsCopyFor") = 0    '??需要判断是否抄送
+                        hst("TASKSTATUS") = TaskStatusConstants.Actived
+                        hst("EMPCODE") = OneSelectedUser
+                        hst("EMPNAME") = Workflow.Platform.Configuration.OrgImplement.GetEmployee(OneSelectedUser).Name
+                        hst("CreateTime") = Now()
+                        SDbStatement.InsertRow(hst, "Wf_UserTask")
+                    End If
+                End If
+            Next
+            'DeleteTaskUser()
+            For Each OneCurrentTaskUser As String In CurrentTaskUsers
+                If OneCurrentTaskUser <> "" Then
+                    If AllSelectedUser.IndexOf("," & OneCurrentTaskUser & ",") < 0 Then
+                        SDbStatement.DelRows("wf_usertask", "taskid=" & Viewstate("TaskId").ToString & " and empcode='" & OneCurrentTaskUser & "'")
+                    End If
+                End If
+            Next
+            Me.MessageBox("处理成功")
+            Me.SetLocation(CStr(Session.Item("EntryUrl")))
+        Catch ex As Exception
+            FlowException.Throw("流程重定向时发生错误.", True, ex)
+            'dbs.TransactionRollback()
+        End Try
+
+    End Sub
+
+    Private Sub GetCurrentTaskUser()
+        Dim lngWorkFlowID As Long = CType(Request.QueryString("WorkFlowID"), Long)
+        Dim oWorkflowInstance As WorkflowInstance = WorkflowFactory.LoadInstance(lngWorkFlowID.ToString())
+        Dim oActivityInstanceCollection As ActivityInstanceCollection = oWorkflowInstance.Activities
+
+        Dim CurrentActivityInstance As ActivityInstance
+        For i As Integer = 0 To oActivityInstanceCollection.Count - 1
+            Dim oActivityInstance As ActivityInstance = oActivityInstanceCollection.Item(i)
+            If oActivityInstance.Status = TaskStatusConstants.Actived Then
+                CurrentActivityInstance = oActivityInstance
+                Exit For
+            End If
+        Next
+        Dim TaskId As String = CurrentActivityInstance.Key
+        Dim strSql As String = " select empcode from wf_usertask where Taskid=" & TaskId
+        Dim dt As DataTable = SDbStatement.Query(strSql).Tables(0)
+        Dim CurrentTaskUser As String = ","
+        For Each dr As DataRow In dt.Rows
+            CurrentTaskUser = CurrentTaskUser & DbField.GetStr(dr, "empcode") & ","
+        Next
+        ViewState("CurrentTaskUser") = CurrentTaskUser
+        ViewState("TaskId") = TaskId
+        ViewState("NodeId") = CurrentActivityInstance.NodeTemplate.Key
+    End Sub
+
+    Private Function GetAllSelectedUser() As String
+        Dim SelectedUser As String = ","
+        GetSelectedUser(Me.tvwEmployees.Nodes(0), SelectedUser)
+        Return SelectedUser
+    End Function
+    Private Sub GetSelectedUser(ByVal tn As TreeNode, ByRef SelectedUser As String)
+        Dim oTreeNodeCollection As TreeNodeCollection = tn.Nodes
+        For Each oTreeNode As TreeNode In oTreeNodeCollection
+            If oTreeNode.Checked Then
+                SelectedUser = SelectedUser & oTreeNode.NodeData & ","
+            Else
+                GetSelectedUser(oTreeNode, SelectedUser)
+            End If
+        Next
+    End Sub
+
+    Private Sub btnCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnCancel.Click
+        Me.SetLocation(CStr(Session.Item("EntryUrl")))
+    End Sub
+End Class

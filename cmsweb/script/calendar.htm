@@ -1,0 +1,101 @@
+﻿<html>
+<head>
+<title>日历</title>
+<link rel="stylesheet" href="../css/style_p.css" type="text/css">
+</head>
+<script language="javascript" src="calendar_display.js"></script>
+<script language="javascript">
+var theDate = window.dialogArguments;
+var nowDate = new Date();
+if(theDate==null || theDate == "")
+{
+	theDate = nowDate.getFullYear() + "-" + (nowDate.getMonth()+1) + "-" + nowDate.getDate();
+}
+else
+{
+	if(!isDate(theDate))
+	{
+		theDate = nowDate.getFullYear() + "-" + (nowDate.getMonth()+1) + "-" + nowDate.getDate();
+	}
+}
+//alert(theDate);
+var m_startDate = new calendar("m_startDate",theDate,"400px","yyyy-MM-dd");
+m_startDate.showCalendar();
+function return_Value()
+{
+//	alert(m_startDate.txtDate.value);
+	var argu = window.dialogArguments;
+	var array = argu.split(" ");
+	if(array.length>=2)
+		window.returnValue = m_startDate.txtDate.value + " " + array[1];
+	else
+		window.returnValue = m_startDate.txtDate.value;
+	window.close();
+}
+function t()
+{
+//	alert(m_startDate.txtDate.value);
+	window.returnValue = "aaa";
+	window.close();
+}
+
+	function isDate(str,separator)
+	{
+		var array;
+		var year;
+		var month;
+		var day;
+		var date;
+		array = str.split(separator);
+		if(array.length!=3)
+			return false;
+		year = array[0];
+		month = array[1];
+		day = array[2];
+		date = new Date(year,month-1,day);
+		if(date.getFullYear()==year && date.getMonth()==(month-1) && date.getDate() == day)
+			return true;
+		else
+			return false;
+	}
+
+	function isDateTime(str,separator)
+	{//alert("D"+str);
+		var array;
+		var array1;
+		var array2;
+		var year;
+		var month;
+		var day;
+		var date;
+		var hr_num;
+		var min_num;
+		var sec_num;
+		array = str.split(" ");
+		if(array.length!=2)
+			return false;
+		array1 = array[0].split(separator);
+		array2 = array[1].split(":");
+		if(array1.length!=3 || array2.length!=3)
+			return false;
+		year = array1[0];
+		month = array1[1];
+		day = array1[2];
+		hr_num = array2[0];
+		min_num = array2[1];
+		sec_num = array2[2];
+//		alert(":"+year+":"+month+":"+day+":"+hr_num+":"+min_num+":"+sec_num);
+		date = new Date(year,month-1,day,hr_num,min_num,sec_num);
+//		alert(date.getHours());
+//		alert(date.getMinutes());
+		if(date.getFullYear()==year && date.getMonth()==(month-1) && date.getDate() == day && date.getHours()==(hr_num) && date.getMinutes()==(min_num) && date.getSeconds()==(sec_num))
+			return true;
+		else
+			return false;
+	}
+	
+</script>
+<input type=button onClick="t();" value="adf">
+<body>
+</body>
+</html>

@@ -1,0 +1,267 @@
+body {
+	margin: 0px;
+	background-color: #e1edfd;
+	overflow:auto;
+}
+.topbg{
+	background-image: url(../images/top-bg2.jpg);
+	background-repeat: repeat-x;
+	background-position: left top;
+}
+.img{
+	border: 1px solid #ccc;
+	padding:2px;
+	margin:8px;
+}
+.text1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	line-height: 22px;
+	color: #052c7c;
+	table-layout:fixed;
+}
+.text1 a{
+	font-size: 12px;
+	line-height: 22px;
+	color: #052c7c;
+	/*text-decoration:none;*/
+}
+.text1 a:hover{
+	font-size: 12px;
+	line-height: 22px;
+	color: #003399;
+	text-decoration:underline;
+}
+.text2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 18px;
+	color: #333333;
+}
+.text2 a{
+	font-size: 12px;
+	line-height: 18px;
+	color: #003399;
+	text-decoration:none;
+}
+.text2 a:hover{
+	font-size: 12px;
+	color: #0033CC;
+	text-decoration:underline;
+}
+.red {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #FF0000;
+}
+
+.use1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 22px;
+	color: #052c7c;
+}
+.copy {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #6081b2;
+}
+h1{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+	line-height: 22px;
+	color: #333333;
+	text-decoration: none;
+	margin:0px;
+}
+.link1 A:link {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #052c7c;
+	font-style: normal;
+	text-decoration: none;
+}
+.link1 A:visited {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #052c7c;
+	text-decoration: none;
+}
+.link1 A:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	color: #3399FF;
+	text-decoration: none;
+}
+.biaoti1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-weight: bold;
+	color: #052c7c;
+}
+.box1 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	color: #666666;
+	border: 1px solid #838383;
+	height: 20px;
+	display: block;
+	width: 123px;
+}
+.biaoti2 {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	line-height: 22px;
+	font-weight: bold;
+	color: #ffffff;
+}
+.bar{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #052c7c;
+	text-decoration: none;
+	border: 1px solid #9db0bc;
+	height: 20px;
+	background-color: #dfe7eb;
+	background-image: url(../images/input_bg.gif);
+	background-repeat: repeat-x;
+}
+.input{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+	
+	
+}
+.list1 {
+	border-right-width: 1px;
+	border-left-width: 1px;
+	border-right-style: solid;
+	border-left-style: solid;
+	border-right-color: #859bc4;
+	border-left-color: #859bc4;
+	background-color: #FFFFFF;
+}
+.link2 A{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
+	font-style: normal;
+	text-decoration: none;
+}
+
+.link2 A:hover {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	font-style: normal;
+	color: #FF6600;
+	text-decoration: none;
+}
+.top-nav{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-align:center;
+	background: url(../images/topnav-r.gif) no-repeat right bottom;
+}
+.top-nav a{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-align:center;
+	FILTER: dropshadow(color=#000000, offx=1, offy=1, positive=1);
+	/*CSS文字阴影*/
+}
+.side_nav{
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 30px;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+	background-image: url(../images/sidebar-bg.gif);
+	background-repeat: repeat-x;
+}
+.side_nav a{
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 30px;
+	font-size: 13px;
+	color: #000000;
+	text-decoration: none;
+	display:block;
+	padding-left:12px;
+	background-image: url(../images/sidebar-bg.gif);
+	background-repeat: repeat-x;
+}
+.side_nav a:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	line-height: 30px;
+	font-size: 13px;
+	color: #003399;
+	text-decoration: none;
+	padding-left:12px;
+	background-image: url(../images/sidebar-bg.gif);
+	background-repeat: repeat-x;
+}
+.abc{
+	FILTER: dropshadow(color=#666666, offx=1, offy=1, positive=1); FONT-FAMILY: "宋体"; FONT-SIZE: 9pt;COLOR: #ffffff;
+}
+
+.top-nav a:hover{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-decoration: none;
+	text-align:center;
+}
+
+/*表头不滚动的样式　start*/
+.Freezing 
+{
+	POSITION: relative;TOP: expression(this.offsetParent.scrollTop)
+}
+.Freezing TD {
+	BACKGROUND: url(images/page/btbg05.gif); BORDER-LEFT: #b7d1e2 1px solid; BORDER-BOTTOM: #b7d1e2 1px solid; HEIGHT: 20px
+}
+.imgborder
+{
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #b7d1e2;
+	border-left-width:2px;
+	border-left-style:solid;
+	border-left-color:#b7d1e2;	
+	border-top-width:2px;
+	border-top-style:solid;
+	border-top-color:#b7d1e2;	
+	border-right-width:2px;
+	border-right-style:solid;
+	border-right-color:#b7d1e2;
+}
+.imgborder1
+{
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+	border-bottom-color: #cccccc;
+	border-left-width:1px;
+	border-left-style:solid;
+	border-left-color:#cccccc;	
+	border-top-width:1px;
+	border-top-style:solid;
+	border-top-color:#cccccc;	
+	border-right-width:1px;
+	border-right-style:solid;
+	border-right-color:#cccccc;
+}
+.scrollRowThead {   
+	position: relative;    
+	left: ;   
+	z-index:0;   
+}
+/*表头不滚动的样式　end*/
+

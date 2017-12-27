@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Unionsoft.Workflow.Designer</name>
+    </assembly>
+    <members>
+        <member name="M:Unionsoft.Workflow.Designer.DBFieldMng.GetStr(System.Data.DataRow,System.String,System.Boolean)">
+            <summary>
+            DBField.GetStr =>
+            </summary>
+            <param name="dr"></param>
+            <param name="colname"></param>
+            <param name="blnTrim"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.DBFieldMng.GetDtm(System.Data.DataRow,System.String)">
+            <summary>
+            DBField.GetDtm =>
+            </summary>
+            <param name="dr"></param>
+            <param name="colname"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.DBFieldMng.GetLng(System.Data.DataRow,System.String)">
+            <summary>
+            DBField.GetLng =>
+            </summary>
+            <param name="dr"></param>
+            <param name="colname"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Unionsoft.Workflow.Designer.Encrypt.DES_KEY">
+            <summary>
+            DES算法的入口参数有三个：Key、Data、Mode。
+            其中Key为8个字节共64位，是DES算法的工作密钥；
+            Data也为8个字节64位，是要被加密或被解密的数据；
+            </summary>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.Encrypt.Encrypt_Renamed(System.String,System.String)">
+            <summary>
+            DES算法加密
+            </summary>
+            <param name="Input">需要加密的字符串</param>
+            <param name="Key">加密密钥,KEY必须是8个字节的字符串</param>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.Encrypt.Encrypt_Renamed(System.String)">
+            <summary>
+            DES算法加密
+            </summary>
+            <param name="Input">需要加密的字符串</param>
+            <returns>加密后的字符串</returns>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.Encrypt.Decrypt(System.String,System.String)">
+            <summary>
+            DES算法解密
+            </summary>
+            <param name="Input">需要解密的字符串</param>
+            <param name="Key">解密密钥,KEY必须是8个字节的字符串</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.Encrypt.Decrypt(System.String)">
+            <summary>
+            DES算法解密,使用系统默认的Key
+            </summary>
+            <param name="Input">需要解密的字符串</param>
+            <returns>解密后的字符串</returns>
+        </member>
+        <member name="F:Unionsoft.Workflow.Designer.WorkflowUI.frmTableSelect.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.WorkflowUI.frmTableSelect.Dispose(System.Boolean)">
+            <summary>
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Unionsoft.Workflow.Designer.WorkflowUI.frmTableSelect.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="T:My.Resources.Resources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:My.Resources.Resources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:My.Resources.Resources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+    </members>
+</doc>

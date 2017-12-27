@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="GB2312" ?>
+<CONFIG>
+	<!--组织机构的实现-->
+	<MEDI_ORGANIZATION>
+		<DLL>\Bin\Unionsoft.Workflow.Organization.dll</DLL> 
+		<IMPLEMENTATION>Unionsoft.Workflow.Organization.Organization</IMPLEMENTATION>
+		<ENABLE>1</ENABLE> 
+	</MEDI_ORGANIZATION>
+
+	<MEDI_MAILMESSAGE>
+		<DLL>\bin\MessageSend.dll</DLL>
+		<IMPLEMENTATION>MessageSend.SimpleMail</IMPLEMENTATION>
+		<SendFrom>shmgc@shmgc.com</SendFrom>
+		<SmtpServer>mail.shmgc.com</SmtpServer>
+		<User>shmgc@shmgc.com</User>
+		<Password>liuyan</Password>
+		<ENABLE>1</ENABLE> 
+	</MEDI_MAILMESSAGE>
+
+	<MEDI_MOBILEMESSAGE>
+		<DLL>\bin\MessageSend.dll</DLL>
+		<IMPLEMENTATION>MessageSend.SendSms</IMPLEMENTATION>
+		<SMSTITLE>【上海三盟软件有限公司】</SMSTITLE>
+		<Port>1</Port>
+		<UserID>805860</UserID>
+		<Account>admin</Account>
+		<Password>3LH14M</Password> 
+		<ENABLE>0</ENABLE>
+</MEDI_MOBILEMESSAGE>
+
+	<!--是否启用紧急流程设置  1:表示启用,0:未启用-->
+	<ISEXIGENCESETTINGS>
+		<VALUE>0</VALUE>
+	</ISEXIGENCESETTINGS>
+	
+	<!--
+	不使用OFFICE在线编辑控件的人员,将人员账号放在EMPLOYEECODE节中
+	全部不使用用*表示,多个人员用","分割,请保证,开始,结束.如: ,tq,
+	-->
+	<OFFICECONTROLEXCEPTANT>
+		<EMPLOYEECODE></EMPLOYEECODE>
+	</OFFICECONTROLEXCEPTANT>
+	
+	<!--0:不在调试状态 , 1:在调试状态-->
+	<SYS_DEBUG>
+		<DEBUG>0</DEBUG>
+	</SYS_DEBUG>
+	
+</CONFIG>

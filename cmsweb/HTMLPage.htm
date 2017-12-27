@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head>
+    <title>无标题页</title>
+</head>
+<body>
+<style> 
+*{margin:0;} 
+</style> 
+<script language="JavaScript"> 
+function createDiv(left,top,width,height) 
+{ 
+    var rect=document.createElement("DIV"); 
+    rect.id="rect"; 
+    rect.style.position="absolute"; 
+    rect.style.left=left; 
+    rect.style.top=top; 
+    rect.style.width=width; 
+    rect.style.height=height; 
+    rect.style.border="2px solid #eb545d"; 
+    document.body.appendChild(rect); 
+    
+    var info=document.createElement("DIV"); 
+    info.id="info"; 
+    info.style.position="absolute"; 
+    info.style.marginTop=5; 
+    info.style.left=left; 
+    info.style.top=top+height; 
+    info.style.width=width; 
+    info.style.height=height/2; 
+    info.style.backgroundColor="#eb545d"; 
+    info.innerHTML="文本"; 
+    document.body.appendChild(info); 
+} 
+function removeDiv() 
+{ 
+    var rect=document.getElementById("rect"); 
+    if(rect) 
+    { 
+        document.body.removeChild(rect); 
+    } 
+    var info=document.getElementById("info"); 
+    if(info) 
+    { 
+        document.body.removeChild(info); 
+    } 
+} 
+
+</script> 
+<img src="http://www.baidu.com/img/baidu_logo.gif" border="0" usemap="#SystemMap" id="img1" style="margin:0"/> 
+<map id="SystemMap" name="SystemMap"> 
+<area shape="rect" coords="0,0,108,130" href="http://www.baidu.com/" alt="Bai" onmouseover="createDiv(0,0,108,130)" onmouseout="removeDiv()"/> 
+<area shape="rect" coords="108,0,160,130" href="http://www.baidu.com/" alt="Logo" onmouseover="createDiv(108,0,52,130)" onmouseout="removeDiv()"/> 
+<area shape="rect" coords="10,7,81,12,38,45,122,41" href="http://www.baidu.com/" alt="百度" onmouseover="createDiv(10,7,81,12,38,45,122,41)" onmouseout="removeDiv()"/> 
+</map>
+</body>
+</html>

@@ -1,0 +1,24 @@
+2009-04-16 至 2009-05-14  CHENYU
+1）产品更新至2009版的新界面
+2）简化了Unionsoft.Workflow.Engine中的接口。
+3）在Unionsoft.Workflow.Web增加了，数据库更改的检查和安装功能。
+4）在Unionsoft.Workflow.Web改善了流程管理功能
+
+2009-05-25
+1)处理了代办任务中重复显示的问题（同一任务显示2个）
+
+2009/10/9  ChenYu  功能性改善，程序结构改善
+-在环节上增加消息设定
+-FLW_NODE_COPYFORORGANIZATION 更名为 FLW_NODE_CCORGANIZATION
+-FLW_NODE表ISCopyForORGSELECT 更名为 ISCCORGSELECT
+-FLW_NODE表 增加2个字段 MessageEmail (smallint) , MessageSms (smallint)
+-FLW_NODE表 更改字段 NODEID VARCHAR(50) , NODEKEY VARCHAR(50)  可为空
+-FLW_LINK表 更改字段 LINKID VARCHAR(50) , LINKKEY VARCHAR(50)  可为空
+
+2009/10/26 ChenYu 未增加到自动更新程序
+-FLW_NODE 表字段 DEFFROM 长度改成400
+
+2009-11-17 ChenYu
+1)增加表 WF_ALARMSERVICE  用于流程的任务超时提醒
+
+

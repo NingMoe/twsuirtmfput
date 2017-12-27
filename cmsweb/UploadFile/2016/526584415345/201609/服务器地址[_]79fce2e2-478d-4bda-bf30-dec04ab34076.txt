@@ -1,0 +1,12 @@
+58.247.72.2  交运大件  63230303   付先生  66790315 财务
+114.80.253.143	华安会计事务所	6688  张东生  13311827758  administrator 2016@unionsoft#	win08R2	SQL08R2  
+192.168.3.66    立远会计事务所  88      administrator	unionsoft@2016  张能明 13636657824
+lyCPA.vigorddns.com:66
+
+192.168.1.179:8088  unicview.hgip.net:8088  优唯   曾征  15921795375
+
+版本控制器管理员账号   admin  unionsoft@admin
+
+
+
+13917300584  zhang

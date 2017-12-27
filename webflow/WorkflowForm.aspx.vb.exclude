@@ -1,0 +1,134 @@
+'--------------------------------------------------------------
+'使用CMS的表单的流程页面
+'--------------------------------------------------------------
+
+Imports System.IO
+Imports NetReusables
+Imports Unionsoft.Workflow.Items
+Imports Unionsoft.Workflow.Engine
+Imports Unionsoft.Workflow.Platform
+Imports Microsoft.Web.UI.WebControls
+
+Public Class WorkflowForm
+    Inherits UserPageBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents CmsFormControl1 As Unionsoft.CMSWebControls.CmsFormControl
+    Protected WithEvents NodeActionBar1 As Unionsoft.Workflow.Web.NodeActionBar
+    Protected WithEvents AttachmentList As System.Web.UI.WebControls.DataGrid
+    Protected WithEvents btnUpload As System.Web.UI.WebControls.Button
+    Protected WithEvents PanelAttachmentAdd As System.Web.UI.WebControls.Panel
+    Protected WithEvents PanelAttachment As System.Web.UI.WebControls.Panel
+    Protected WithEvents UploadFile As System.Web.UI.HtmlControls.HtmlInputFile
+    Protected WithEvents txtMemo As System.Web.UI.WebControls.TextBox
+    Protected WithEvents PanelMemo As System.Web.UI.WebControls.Panel
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Protected FormWidth As Long = 790    '窗体的默认宽度
+    Protected FormHeight As Long = 790    '窗体的默认宽度
+
+    Private _ResourceId As Long = 0
+    Private _RecordId As Long = 0
+    Private _FormName As String = ""
+
+    Private oWorklistItem As WorklistItem
+    Private WorklistItemId As Long = 0
+
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        If Request.QueryString("WorklistItemId") <> "" Then WorklistItemId = CLng(Request.QueryString("WorklistItemId"))
+        'oWorklistItem = New WorklistItem(_taskid.ToString())
+        oWorklistItem = Worklist.GetWorklistItem(WorklistItemId.ToString())
+
+        If Me.IsPostBack Then Return
+
+        _ResourceId = oWorklistItem.ActivityInstance.WorkflowInstance.ResourceID
+        _RecordId = oWorklistItem.ActivityInstance.WorkflowInstance.RecordID
+        _FormName = oWorklistItem.ActivityInstance.NodeTemplate.UseForm
+        CmsFormControl1.LoadRecordInForm(_ResourceId, _RecordId, _FormName)
+        FormWidth = CmsFormControl1.FormWidth
+        FormHeight = CmsFormControl1.FormHeight
+
+        '流程操作定义
+        If oWorklistItem.Status = TaskStatusConstants.Actived Or oWorklistItem.Status = TaskStatusConstants.Reserved Then
+            NodeActionBar1.Actions = oWorklistItem.ActivityInstance.NodeTemplate.Actions        '获取起始环节的出口动作
+        ElseIf oWorklistItem.Status = TaskStatusConstants.CarbonCopy Then
+            NodeActionBar1.Actions.Add(New ActionItem("0", "签阅"))
+        End If
+
+        '检查有无查看流程历史的权限
+        NodeActionBar1.ShowViewHistory = oWorklistItem.ActivityInstance.NodeTemplate.Permission.CanViewHistory
+        'CtlFlowHistory1.Visible = oWorklistItem.ActivityInstance.NodeTemplate.Permission.CanViewHistory
+
+        NodeActionBar1.ViewDiagramHref = "ViewFlowHistroy.aspx?WorkFlowID=" & oWorklistItem.ActivityInstance.WorkflowInstance.Key
+        NodeActionBar1.PrintWorkflowPageUrl = "PrintWorkflow.aspx?UserTaskID=" & WorklistItemId
+        NodeActionBar1.PrintWorkflow = oWorklistItem.ActivityInstance.NodeTemplate.Permission.CanPrintWorkflow
+        'If oWorklistItem.ActivityInstance.NodeTemplate.Permission.MustInputMemo = True Then
+        '    Me.txtMemo.Attributes.Add("mInput", "true")
+        '    Me.txtMemo.Attributes.Add("errmsg", "处理意见")
+        'End If
+
+        '检查有无增加附件的权限,起始环节不判断权限
+        If oWorklistItem.ActivityInstance.NodeTemplate.Type = NodeTypeConstants.StartNode Then
+            Me.PanelAttachmentAdd.Visible = True
+            Me.btnUpload.Visible = True
+        Else
+            Me.PanelAttachmentAdd.Visible = oWorklistItem.ActivityInstance.NodeTemplate.Permission.CanAddAttach
+            Me.btnUpload.Visible = oWorklistItem.ActivityInstance.NodeTemplate.Permission.CanAddAttach
+            '检查有无附件编辑的权限
+            If oWorklistItem.ActivityInstance.NodeTemplate.Permission.CanAddAttach = True Then
+                Me.PanelAttachmentAdd.Visible = True
+                Me.btnUpload.Visible = True
+            Else
+                Me.PanelAttachmentAdd.Visible = False
+                Me.btnUpload.Visible = False
+            End If
+        End If
+
+    End Sub
+
+    Private Sub NodeActionBar1_ItemCommand(ByVal sender As Object, ByVal e As String) Handles NodeActionBar1.ItemCommand
+        CmsFormControl1.SaveCmsFormValues()
+
+        Dim oCmsResource As New CmsResource(CurrentUser.Code, CurrentUser.Password)
+        oWorklistItem.FormFieldValues = oCmsResource.GetRecordFieldValue(oWorklistItem.ActivityInstance.WorkflowInstance.ResourceID, oWorklistItem.ActivityInstance.WorkflowInstance.RecordID) '本资源的字段信息
+        oWorklistItem.Action = CType(oWorklistItem.ActivityInstance.NodeTemplate.Actions.Item(e), ActionItem)
+        'oWorklistItem.Memo = Me.txtMemo.Text
+
+
+        '如果后续环节不需要进行人员的选择,则按条件自动处理此流程
+        If oWorklistItem.ActivityInstance.WorkflowInstance.Status = NodeStatusConstants.NoActive Then
+            Worklist.StartWorkflowInstance(oWorklistItem, AddressOf RedirectEmployeeSelect)       '处理任务
+        Else
+            Worklist.TransactWorklistItem(oWorklistItem, AddressOf RedirectEmployeeSelect)        '处理任务
+        End If
+
+        Me.MessageBox("处理成功!")
+        'Me.SetLocation(CStr(Session.Item("EntryUrl")))
+        'Response.Redirect(_url)
+    End Sub
+
+    Private Sub RedirectEmployeeSelect(ByVal oWorklistItem As WorklistItem, ByVal NextNode As NodeItem)
+        'Session("TASK_MEMO") = Me.txtMemo.Text
+        Response.Redirect("EmployeeSelect.aspx?ActionId=" + oWorklistItem.Action.Key + "&WorklistItemId=" & oWorklistItem.Key & "&nodekey=" & NextNode.Key & "&IsExigence=" & Me.NodeActionBar1.IsExigence & "&url=" & "", True)
+        Response.End()
+    End Sub
+
+End Class

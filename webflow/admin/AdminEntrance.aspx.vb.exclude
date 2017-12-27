@@ -1,0 +1,58 @@
+
+Imports NetReusables
+Imports Unionsoft.Platform
+Imports Unionsoft.Workflow.Items
+Imports Unionsoft.Workflow.Engine
+Imports Unionsoft.Workflow.Platform
+
+
+Public Class AdminEntrance
+    Inherits System.Web.UI.Page
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        Dim oEmployee As Employee
+        Dim strAminPass As String = Request.QueryString("ucode")
+
+        Try
+            If Not CmsPassport.GenerateCmsPassportWithEncryptPass("admin", strAminPass, "") Is Nothing Then
+                oEmployee = OrganizationFactory.Implementation.GetEmployee("admin")
+                '解编码
+                Dim inByte As Byte() = System.Convert.FromBase64String(strAminPass)
+                strAminPass = System.Text.Encoding.GetEncoding("UTF-16").GetString(inByte)
+                oEmployee.Password = CmsEncrypt.Decrypt(strAminPass)
+                'oEmployee.Password = strAminPass
+                Session("User") = oEmployee
+                If oEmployee.Code <> "" Then
+                    Response.Redirect("AdminIndex.aspx")
+                Else
+                    RegisterClientScriptBlock("LoginError", "<script>alert('用户登录帐号或密码错误，请重新输入！');history.back();</script>")
+                End If
+            End If
+        Catch ex As Exception
+            SLog.Err("检查用户登录产生异常。", ex)
+            RegisterClientScriptBlock("LoginError", "<script>alert('用户登录帐号或密码错误，请重新输入！');history.back();</script>")
+        End Try
+
+    End Sub
+
+
+End Class

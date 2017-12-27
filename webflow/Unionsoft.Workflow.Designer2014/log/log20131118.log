@@ -1,0 +1,120 @@
+﻿2013-11-18 13:35:00   ERROR DB InsertRow失败，Table=FLW_NODE ExMsg: 语句已终止。
+不能将值 NULL 插入列 'ISSELECTONE'，表 'yangli1.dbo.FLW_NODE'；列不允许有空值。INSERT 失败。 ExFileLine: []
+2013-11-18 13:35:00   ERROR 保存环节属性时发生错误.Source:NodeTransact.SaveNodeItem::NodeStart ExMsg: 语句已终止。
+不能将值 NULL 插入列 'ISSELECTONE'，表 'yangli1.dbo.FLW_NODE'；列不允许有空值。INSERT 失败。 ExFileLine: []
+2013-11-18 13:35:01   ERROR 保存流程环节属性错误.FlowEngine.NodeTransact.Save ExMsg: 保存环节属性时发生错误.Source:NodeTransact.SaveNodeItem::NodeStart ExFileLine: []
+2013-11-18 13:35:01   ERROR 保存流程信息发生错误. ExMsg: 保存流程环节属性错误.FlowEngine.NodeTransact.Save ExFileLine: []
+2013-11-18 13:35:01   ERROR 保存流程信息发生错误. 
+2013-11-18 13:35:01   ERROR 保存流程产生错误. ExMsg: 保存流程信息发生错误. ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节时发生错误 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---342013884590 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345297127265 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345297129546 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345297131906 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345297613671 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345297765562 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345297792875 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345298116687 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345298516375 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345549871203 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345550301062 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345550892953 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551072046 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551148734 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551275484 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551279765 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551493359 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551497062 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551498625 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551500562 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551502562 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551551109 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551676468 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551693593 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551703921 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551709093 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551714562 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551723453 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551850796 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551852500 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551854484 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551856406 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551858578 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551890593 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551894718 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551899578 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551907781 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551914250 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551954937 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551958796 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551960312 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551962359 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551964390 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345551966421 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552007953 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552009796 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552019093 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552023937 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552032781 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552037265 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552178000 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552186234 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552198000 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 13:40:42   ERROR 加载流程的环节连线时发生错误,环节Key---345552207515 ExMsg: Automation error
+The object invoked has disconnected from its clients.  ExFileLine: []
+2013-11-18 15:07:49   ERROR admin登陆失败！ ExMsg: [DBNETLIB][ConnectionOpen (Connect()).]SQL Server 不存在或拒绝访问。 ExFileLine: []
+2013-11-18 15:08:17   ERROR admin登陆失败！ ExMsg: [DBNETLIB][ConnectionOpen (Connect()).]SQL Server 不存在或拒绝访问。 ExFileLine: []

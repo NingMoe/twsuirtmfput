@@ -1,0 +1,74 @@
+Imports System.IO
+
+Public Class AdminLogFileView
+    Inherits AdminPageBase
+
+#Region " Web 窗体设计器生成的代码 "
+
+    '该调用是 Web 窗体设计器所必需的。
+    <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
+
+    End Sub
+    Protected WithEvents LogFilesList As System.Web.UI.WebControls.Repeater
+
+    '注意: 以下占位符声明是 Web 窗体设计器所必需的。
+    '不要删除或移动它。
+    Private designerPlaceholderDeclaration As System.Object
+
+    Private Sub Page_Init(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Init
+        'CODEGEN: 此方法调用是 Web 窗体设计器所必需的
+        '不要使用代码编辑器修改它。
+        InitializeComponent()
+    End Sub
+
+#End Region
+
+    Private Sub Page_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+        binddata()
+    End Sub
+
+    Private Sub LogFilesList_ItemCommand(ByVal source As Object, ByVal e As System.Web.UI.WebControls.RepeaterCommandEventArgs) Handles LogFilesList.ItemCommand
+        Dim strFileFolder As String = System.Web.HttpContext.Current.Request.PhysicalApplicationPath & "\log\"
+        Dim txt As TextBox
+        If Not e.Item.FindControl("FileName") Is Nothing Then
+            txt = CType(e.Item.FindControl("FileName"), TextBox)
+            If txt.Text <> "" Then
+                Select Case e.CommandName
+                    Case "download"
+                    Case "viewfile"
+                        Response.Redirect("log/" & txt.Text)
+                    Case "delete"
+                        If File.Exists(strFileFolder & txt.Text) Then File.Delete(strFileFolder & txt.Text)
+                End Select
+            End If
+        End If
+        binddata()
+    End Sub
+
+    Private Sub LogFilesList_ItemDataBound(ByVal sender As Object, ByVal e As System.Web.UI.WebControls.RepeaterItemEventArgs) Handles LogFilesList.ItemDataBound
+        If e.Item.ItemType = ListItemType.Item Or e.Item.ItemType = ListItemType.AlternatingItem Then
+            Dim txt As TextBox
+            If Not e.Item.FindControl("FileName") Is Nothing Then
+                txt = CType(e.Item.FindControl("FileName"), TextBox)
+                txt.Text = Right(CStr(e.Item.DataItem), 14)
+            End If
+
+            Dim lnk As LinkButton
+            If Not e.Item.FindControl("lnkDelete") Is Nothing Then
+                lnk = CType(e.Item.FindControl("lnkDelete"), LinkButton)
+                lnk.Attributes.Add("onClick", "return window.confirm('确实要删除吗?');")
+            End If
+        End If
+    End Sub
+
+    '--------------------------------------------------------------------------------------
+    '显示log文件夹中的所有文件
+    '--------------------------------------------------------------------------------------
+    Private Sub binddata()
+        Dim strFileFolder As String = System.Web.HttpContext.Current.Request.PhysicalApplicationPath & "\log\"
+        Dim filenames As String() = Directory.GetFiles(strFileFolder)
+        LogFilesList.DataSource = filenames
+        LogFilesList.DataBind()
+    End Sub
+
+End Class
