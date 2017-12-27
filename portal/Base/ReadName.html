@@ -8,10 +8,12 @@
 <body>
     <table>
         <tr>
-            <td><input type="text" id="iName" value="" /></td>
-            <td><input type="text" id="oName" value="" /></td>
-            <td><input type="button" id="btn1" value="Go" onclick="go()" /></td>
-            <td><input type="button" id="btn1" value="Back" onclick="back()" /></td>
+            <td><textarea type="text" id="iName" style="width:200px;height:100px;resize:none"></textarea></td>
+            <td><textarea type="text" id="oName" style="width:200px;height:100px;resize:none"></textarea></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="btn1" value=">>>>>>>>>>" style="width:206px;height:50px" onclick="go()" /></td>
+            <td><input type="button" id="btn1" value="<<<<<<<<<<" style="width:206px;height:50px" onclick="back()" /></td>
         </tr>
     </table>
 
@@ -60,7 +62,7 @@
             oName = iName.replace(re, function (matched) {
                 return mapObj[matched];
             });
-            document.getElementById("oName").setAttribute("value", oName);
+            document.getElementById("oName").value = oName;
         }
 
         function back() {
@@ -107,7 +109,7 @@
             iName = oName.replace(re, function (matched) {
                 return mapObj[matched];
             });
-            document.getElementById("iName").setAttribute("value", iName);
+            document.getElementById("iName").value = iName;
         }
     </script>
 </body>
