@@ -6,14 +6,18 @@
 	<meta charset="utf-8" />
 </head>
 <body>
-    <table>
+    <table align="center" border="0" >
         <tr>
-            <td><textarea type="text" id="iName" style="width:200px;height:100px;resize:none"></textarea></td>
-            <td><textarea type="text" id="oName" style="width:200px;height:100px;resize:none"></textarea></td>
+            <td><textarea id="iName" style="width:200px;height:100px;resize:none"></textarea></td>
+            <td><textarea id="oName" style="width:200px;height:100px;resize:none"></textarea></td>
         </tr>
         <tr>
             <td><input type="button" id="btn1" value=">>>>>>>>>>" style="width:206px;height:50px" onclick="go()" /></td>
-            <td><input type="button" id="btn1" value="<<<<<<<<<<" style="width:206px;height:50px" onclick="back()" /></td>
+            <td><input type="button" id="btn2" value="<<<<<<<<<<" style="width:206px;height:50px" onclick="back()" /></td>
+        </tr>
+        <tr>
+            <td><input type="button" id="btn3" value="复" style="width:206px;height:50px" onclick="copy1()" /></td>
+            <td><input type="button" id="btn4" value="制" style="width:206px;height:50px" onclick="copy2()" /></td>
         </tr>
     </table>
 
@@ -58,8 +62,9 @@
                 9:"1",
                 0:"2"
             };
-            var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
-            oName = iName.replace(re, function (matched) {
+            //.join(|)把keys.(mapObj)所有元素放入一个字符串，并用|分隔。不写则用逗号隔开。
+            var re = new RegExp(Object.keys(mapObj).join("|"), "g");//object.keys(mapObj)就是返回一个数组，该数组里的元素就是mapObj枚举出的每个对象元素或字符串元素（当前的是对象元素）
+            oName = iName.replace(re, function (matched) {//这不太懂
                 return mapObj[matched];
             });
             document.getElementById("oName").value = oName;
@@ -105,12 +110,24 @@
                 9:"7",
                 0:"8"
             };
-            var re = new RegExp(Object.keys(mapObj).join("|"), "gi");
+            var re = new RegExp(Object.keys(mapObj).join("|"), "g");
             iName = oName.replace(re, function (matched) {
                 return mapObj[matched];
             });
             document.getElementById("iName").value = iName;
         }
+
+        function copy1() {
+            document.getElementById("iName").select();
+            document.execCommand("copy");
+        }
+
+        function copy2() {
+            document.getElementById("oName").select();
+            document.execCommand("copy");
+        }
+
     </script>
+
 </body>
 </html>
