@@ -60,7 +60,7 @@
                     <table width="513" border="0" cellspacing="0" cellpadding="0">
 
                         <tr align="right" valign="middle">
-                            <td width="513" height="258" align="center" background="images/loginbg1.png" style="background-position:center;">
+                            <td width="513" height="258" align="center" background="images/loginbg1.pngµÇÂ¼±³¾°" style="background-position:center;">
                                 <table width="300" height="143" border="0" cellpadding="0" cellspacing="2">
                                     <tr>
                                         <td style="width:100px;" height="47" align="right" class="words">&nbsp;</td>

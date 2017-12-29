@@ -21,6 +21,10 @@ public partial class Index : UserPagebase
     public bool OpenOrCloseMessageDeliveryState = false;
     protected void Page_Load(object sender, EventArgs e)
     {
+        //string reloadPage = Request["reloadPage"];
+        //if (reloadPage == "yes") {
+        //    Response.Write("<script type='text/javascript'>alert('12312312312312312313');</script>"); 
+        //}
         oUserInfo = CurrentUser;
        
         Bind();
